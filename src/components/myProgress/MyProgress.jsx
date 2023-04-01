@@ -1,4 +1,5 @@
-import ProgressItem from '../progressItem/ProgressItem'
+import ProgressItem from "../progressItem/ProgressItem";
+import * as s from "./myProgressStyle";
 
 const task = [
   "Сколько раз вы сделали наклоны вперед?",
@@ -7,14 +8,15 @@ const task = [
 ];
 
 export default function MyProgress() {
-  
   return (
-    <div className="content">
-      <p className="title">Мой прогресс</p>
+    <s.Content>
+      <s.Title className="title">Мой прогресс</s.Title>
       <div className="list-item">
-        {task.map((item) => <ProgressItem key={item.toString()} title={item} />)}
+        {task.map((item) => (
+          <ProgressItem key={item.toString()} title={item} />
+        ))}
       </div>
       <button>Отправить</button>
-    </div>
+    </s.Content>
   );
 }
