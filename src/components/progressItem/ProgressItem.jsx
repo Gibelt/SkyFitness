@@ -1,12 +1,14 @@
+import * as s from "./ProgressItemStyle";
+
 export default function MyProgress({ title }) {
   return (
-    <div className="item">
-      <p className="item-title">{title}</p>
-      <input
+    <s.Item>
+      <s.Text>{title}</s.Text>
+      <s.Input
         type="number"
         className="item-value"
         placeholder="Введите значение"
       />
-    </div>
+    </s.Item>
   );
 }
