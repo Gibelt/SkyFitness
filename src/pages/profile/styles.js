@@ -99,6 +99,8 @@ export const CourseCardStub = styled.div`
   border: 1px solid black;
 `;
 
-export const ProfileActionButtonStub = styled.div``;
+export const ProfileActionButtonStub = styled.button`
+  width: 275px;
+`;
 
-export const CourseCardActionButtonStub = styled.div``;
+export const CourseCardActionButtonStub = styled.button``;
