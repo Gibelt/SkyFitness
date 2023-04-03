@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import MyProgress from "./components/myProgress/MyProgress";
 
+
 export default function AppRoutes() {
   return (
     <Routes>
@@ -8,7 +9,7 @@ export default function AppRoutes() {
       <Route path="/registration" element={"<Registration />"} />
       <Route path="/main" element={"<Main />"} />
       <Route path="/description" element={"<Description />"} />
-      <Route path="/profile" element={"<Profile />"} />
+      <Route path="/profile" element={<Profile />} />
       <Route path="/course" element={"<Course />"} />
     </Routes>
   );
