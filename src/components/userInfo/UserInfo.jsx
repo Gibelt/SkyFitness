@@ -1,6 +1,6 @@
 import * as s from "./UserInfoStyle";
 
-export default function Header() {
+export default function UserInfo() {
   return (
       <s.User>
         <s.UserImg />

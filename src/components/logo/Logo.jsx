@@ -1,11 +1,9 @@
 import * as s from "./LogoStyle";
-import logo from "../../logo.png";
 
-
-export default function Header() {
+export default function Logo({color}) {
   return (
       <s.Logo>
-        <s.LogoImg src={logo} />
+        <s.LogoImg src={color === "white" ? "/img/logo-white.svg" : "/img/logo-black.svg"} />
       </s.Logo>
   );
 }

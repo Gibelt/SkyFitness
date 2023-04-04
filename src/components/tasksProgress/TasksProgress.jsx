@@ -14,7 +14,7 @@ const colors = [
   { fill: "#E40045", bcg: "#fce6ec" },
 ];
 
-export default function Tasks({ complete = 8, goal = 15 }) {
+export default function Tasks({ complete = 1, goal = 15 }) {
   const getWidth = () => {
     if ((complete / goal) * 100 < 100) {
       return Math.floor((complete / goal) * 100) + "%";

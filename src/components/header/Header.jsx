@@ -1,12 +1,10 @@
 import * as s from "./HeaderStyle";
-import logo from "../../logo.png";
-
 
 export default function Header() {
   return (
     <s.Content>
       <s.Logo>
-        <s.LogoImg src={logo} />
+        <s.LogoImg src="/img/logo-black.svg" />
       </s.Logo>
       <s.User>
         <s.UserImg />
