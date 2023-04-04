@@ -4,7 +4,9 @@ import AppRoutes from "./routes";
 function App() {
   return (
     <div className="wrapper">
-      <AppRoutes />
+      <div className="content">
+        <AppRoutes />
+      </div>
     </div>
   );
 }

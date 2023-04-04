@@ -1,5 +1,5 @@
 import ProgressItem from "../progressItem/ProgressItem";
-import * as s from "./MyProgressStyle";
+import * as s from "./myProgressStyle";
 
 const task = [
   "Сколько раз вы сделали наклоны вперед?",
