@@ -1,15 +1,18 @@
 import { Routes, Route } from "react-router-dom";
-import Exercise from "./pages/exercise";
+import MyProgress from "./components/myProgress/MyProgress";
+import Main from "./pages/main/index";
+import LoginPage from "./pages/loginPage";
 
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={"<Main />"} />
+      <Route path="/" element={<MyProgress />} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/registration" element={"<Registration />"} />
-      <Route path="/main" element={"<Main />"} />
+      <Route path="/main" element={<Main />} />
       <Route path="/description" element={"<Description />"} />
       <Route path="/profile" element={"<Profile />"} />
-      <Route path="/exercise" element={<Exercise />} />
+      <Route path="/course" element={"<Course />"} />
     </Routes>
   );
 }
