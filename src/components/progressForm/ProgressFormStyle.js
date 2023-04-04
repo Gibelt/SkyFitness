@@ -6,11 +6,13 @@ export const Content = styled.div`
   align-items: center;
   width: 444px;
   border-radius: 12px;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 36px 41px 44px;
+  background: #fff;
+  box-sizing: border-box;
 `;
 
 export const Title = styled.p`

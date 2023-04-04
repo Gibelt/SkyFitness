@@ -17,4 +17,7 @@ body {
 .wrapper {
   width: 1440px;
   height: 100vh;
+  padding-left: calc(50% - 580px);
+  padding-right: calc(50% - 580px);
+  box-sizing: border-box;
 }

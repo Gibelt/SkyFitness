@@ -1,5 +1,5 @@
 import ProgressItem from "../progressItem/ProgressItem";
-import * as s from "./MyProgressStyle";
+import * as s from "./ProgressFormStyle";
 
 const task = [
   "Сколько раз вы сделали наклоны вперед?",
@@ -7,7 +7,7 @@ const task = [
   "Сколько раз вы сделали поднятие ног, согнутых в коленях?",
 ];
 
-export default function MyProgress() {
+export default function MyProgress({ onClick }) {
   return (
     <s.Content>
       <s.Title className="title">Мой прогресс</s.Title>
@@ -16,7 +16,7 @@ export default function MyProgress() {
           <ProgressItem key={item.toString()} title={item} />
         ))}
       </s.List>
-      <button>Отправить</button>
+      <button onClick={onClick}>Отправить</button>
     </s.Content>
   );
 }

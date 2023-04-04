@@ -1,15 +1,15 @@
 import { Routes, Route } from "react-router-dom";
-import MyProgress from "./components/myProgress/MyProgress";
+import Exercise from "./pages/exercise";
 
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<MyProgress />} />
+      <Route path="/" element={"<Main />"} />
       <Route path="/registration" element={"<Registration />"} />
       <Route path="/main" element={"<Main />"} />
       <Route path="/description" element={"<Description />"} />
       <Route path="/profile" element={"<Profile />"} />
-      <Route path="/course" element={"<Course />"} />
+      <Route path="/exercise" element={<Exercise />} />
     </Routes>
   );
 }
