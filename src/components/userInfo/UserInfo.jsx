@@ -1,13 +1,7 @@
-import * as s from "./HeaderStyle";
-import logo from "../../logo.png";
-
+import * as s from "./UserInfoStyle";
 
 export default function Header() {
   return (
-    <s.Content>
-      <s.Logo>
-        <s.LogoImg src={logo} />
-      </s.Logo>
       <s.User>
         <s.UserImg />
         <s.UserText>
@@ -17,6 +11,5 @@ export default function Header() {
           </s.UserArrow>
         </s.UserText>
       </s.User>
-    </s.Content>
   );
 }
