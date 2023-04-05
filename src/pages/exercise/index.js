@@ -9,6 +9,12 @@ const title = "Йога";
 const subtitle = "Красота и здоровье / Йога на каждый день / 2 день";
 const videoURL = "oqe98Dxivns";
 
+const tasksDefault = [
+  "Наклон вперед (10 повторений)",
+  "Наклон назад (10 повторений)",
+  "Поднятие ног, согнутых в коленях (5 повторений)",
+];
+
 export default function Exercise() {
   const [isProgressClick, setIsProgressClick] = useState(false);
   return (
@@ -32,8 +38,8 @@ export default function Exercise() {
         ></iframe>
       </s.Video>
       <s.TasksAndProgress>
-        <Tasks onClick={() => setIsProgressClick(true)} />
-        <Execution />
+        <Tasks tasks={tasksDefault} onClick={() => setIsProgressClick(true)} />
+        <Execution tasks={tasksDefault} />
       </s.TasksAndProgress>
     </s.Container>
   );
