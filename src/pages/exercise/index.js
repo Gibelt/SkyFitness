@@ -12,12 +12,14 @@ const videoURL = "oqe98Dxivns";
 export default function Exercise() {
   const [isProgressClick, setIsProgressClick] = useState(false);
   return (
-    <s.Container >
+    <s.Container>
       <Header />
       <s.Title>{title}</s.Title>
       <s.Subtitle>{subtitle}</s.Subtitle>
       {isProgressClick && (
-        <ProgressForm onClick={() => setIsProgressClick(false)} />
+        <ProgressForm
+          onClick={() => setTimeout(() => setIsProgressClick(false), 2000)}
+        />
       )}
       <s.Video>
         <iframe
