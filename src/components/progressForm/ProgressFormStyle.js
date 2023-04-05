@@ -64,6 +64,7 @@ export const Item = styled.div`
 export const Text = styled.p`
   font-size: 18px;
   line-height: 24px;
+  letter-spacing: -0.05px;
   color: #000000;
   max-width: 360px;
 `;

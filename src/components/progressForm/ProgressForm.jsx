@@ -2,21 +2,21 @@ import * as s from "./ProgressFormStyle";
 import { useState } from "react";
 import { Button } from "../commonComponents/button/button";
 
-const task = [
-  "Сколько раз вы сделали наклоны вперед?",
-  "Сколько раз вы сделали наклоны назад?",
-  "Сколько раз вы сделали поднятие ног, согнутых в коленях?",
+const tasksDefault = [
+  "Наклон вперед (10 повторений)",
+  "Наклон назад (10 повторений)",
+  "Поднятие ног, согнутых в коленях (5 повторений)",
 ];
 
-export default function ProgressForm({ onClick }) {
+export default function ProgressForm({ onClick, tasks = tasksDefault }) {
   const [isClick, setIsClick] = useState(false);
   const onSubmitClick = () => {
     onClick();
     setIsClick(true);
   };
-  const list = task.map((item) => (
+  const list = tasks.map((item) => (
     <s.Item key={item.toString()}>
-      <s.Text>{item}</s.Text>
+      <s.Text>Сколько раз вы сделали {item.split("(")[0].toLowerCase()}?</s.Text>
       <s.Input type="number" placeholder="Введите значение" />
     </s.Item>
   ));
