@@ -26,13 +26,11 @@ export const ProfileHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-right: 140px;
   margin-top: 24px;
 `;
 
 export const ProfilePageWrapper = styled.div`
   width: 100%;
-  margin-left: 140px;
 `;
 
 export const AppLogo = styled.img`
