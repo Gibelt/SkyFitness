@@ -11,7 +11,7 @@ const workoutsDefault = [
   {text: "Гибкость спины / Йога на каждый день / 5 день", complete: false},
 ];
 
-export default function ProgressForm({ workouts = workoutsDefault }) {
+export default function SelectWorkout({ workouts = workoutsDefault }) {
   const list = workouts.map((item) => (
     <s.Item key={item.text.toString()} style={{border: `${item.complete ? "1px solid #06B16E" : ''}`}}>
       <s.ItemText style={{color: `${item.complete ? "#06B16E" : ''}`}}>
