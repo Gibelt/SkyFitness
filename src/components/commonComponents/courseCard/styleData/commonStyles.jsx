@@ -1,51 +1,53 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
-export const StyledСourseCard = styled('div')`
-    height: ${(props) => props.style.height};
-    width: ${(props) => props.style.width};
+export const StyledСourseCard = styled("div")`
+  height: ${(props) => props.style.height};
+  width: ${(props) => props.style.width};
 
-    padding: 35px;
-    border-radius: 30px;
+  box-sizing: border-box;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+  padding: 35px;
+  border-radius: 30px;
 
-    background-image: url(${(props) => props.style.src});
-    background-color: #ffffff;
-    background-repeat: no-repeat;
-    background-position: top left;
-    background-size: 100% 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 
-    overflow: hidden;
+  background-image: url(${(props) => props.style.src});
+  background-color: #ffffff;
+  background-repeat: no-repeat;
+  background-position: top left;
+  background-size: 100% 100%;
 
-    &:hover {
-        transform: ${(props) =>
-            props.style.activity ? 'scale(1.05)' : 'scale(1)'};
-    }
-    &:active {
-        transform: ${(props) =>
-            props.style.activity ? 'scale(0.98)' : 'scale(1)'};
-    }
+  overflow: hidden;
 
-    transition: all 0.5s ease-out;
+  &:hover {
+    transform: ${(props) =>
+      props.style.activity ? "scale(1.05)" : "scale(1)"};
+  }
+  &:active {
+    transform: ${(props) =>
+      props.style.activity ? "scale(0.98)" : "scale(1)"};
+  }
 
-    cursor: ${(props) => (props.style.activity ? 'pointer' : 'default')};
+  transition: all 0.5s ease-out;
 
-    & h1 {
-        color: #000000;
-        font-family: 'Abhaya Libre ExtraBold';
-        font-family: 'StratosSkyeng', sans-serif;
-        font-size: 36px;
-        font-weight: 700;
-        line-height: 40px;
-    }
-`
+  cursor: ${(props) => (props.style.activity ? "pointer" : "default")};
 
-export const StyledCardContent = styled('div')`
-    flex-grow: 1;
+  & h1 {
+    color: #000000;
+    font-family: "Abhaya Libre ExtraBold";
+    font-family: "StratosSkyeng", sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 40px;
+  }
+`;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-`
+export const StyledCardContent = styled("div")`
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+`;
