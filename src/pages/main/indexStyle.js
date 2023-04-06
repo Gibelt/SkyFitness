@@ -54,8 +54,8 @@ export const tempCard = styled.div`
 
 export const groupBtnRedirect = styled.div`
   width: 100%;
-  height: 35px;
   display: flex;
   justify-content: center;
   padding-top: 34px;
+  padding-bottom: 60px;
 `;
