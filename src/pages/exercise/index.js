@@ -9,15 +9,24 @@ const title = "Йога";
 const subtitle = "Красота и здоровье / Йога на каждый день / 2 день";
 const videoURL = "oqe98Dxivns";
 
+const tasksExapmle = [
+  "Наклон вперед (10 повторений)",
+  "Наклон назад (10 повторений)",
+  "Поднятие ног, согнутых в коленях (5 повторений)",
+];
+
 export default function Exercise() {
   const [isProgressClick, setIsProgressClick] = useState(false);
   return (
-    <s.Container >
+    <s.Container>
       <Header />
       <s.Title>{title}</s.Title>
       <s.Subtitle>{subtitle}</s.Subtitle>
       {isProgressClick && (
-        <ProgressForm onClick={() => setIsProgressClick(false)} />
+        <ProgressForm
+        tasks={tasksExapmle}
+          onClick={() => setTimeout(() => setIsProgressClick(false), 2000)}
+        />
       )}
       <s.Video>
         <iframe
@@ -30,8 +39,8 @@ export default function Exercise() {
         ></iframe>
       </s.Video>
       <s.TasksAndProgress>
-        <Tasks onClick={() => setIsProgressClick(true)} />
-        <Execution />
+        <Tasks tasks={tasksExapmle} onClick={() => setIsProgressClick(true)} />
+        <Execution tasks={tasksExapmle} />
       </s.TasksAndProgress>
     </s.Container>
   );
