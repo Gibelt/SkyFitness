@@ -26,6 +26,6 @@
     Зарегистрироваться
     </Button.s18.white>
 
-2.  <Button.s24.white onClick={ФУНКЦИЯ_ВХОДА} width="80%" >
+2.  <Button.s24.green onClick={ФУНКЦИЯ_ВХОДА} width="80%" >
     Войти
-    </Button.s24.white>
+    </Button.s24.green>

@@ -3,7 +3,9 @@ import styled from "styled-components";
 export const StyledСourseCard = styled("div")`
   height: ${(props) => props.style.height};
   width: ${(props) => props.style.width};
+  
   box-sizing: border-box;
+
   padding: 35px;
   border-radius: 30px;
 
