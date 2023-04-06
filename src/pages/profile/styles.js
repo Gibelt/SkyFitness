@@ -83,7 +83,4 @@ export const ProfileCourses = styled.div`
 
 export const CourseCardActionButton = styled.div`
   margin-top: auto;
-  margin-bottom: 27px;
 `;
-
-export const CourseCardActionButtonStub = styled.button``;

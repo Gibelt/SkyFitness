@@ -48,9 +48,7 @@ export default function Profile() {
             }
           >
             <S.CourseCardActionButton>
-              <S.CourseCardActionButtonStub width="136px">
-                Перейти →
-              </S.CourseCardActionButtonStub>
+              <Button.s20.green width="136px">Перейти →</Button.s20.green>
             </S.CourseCardActionButton>
           </CourseCard>
         ))}
