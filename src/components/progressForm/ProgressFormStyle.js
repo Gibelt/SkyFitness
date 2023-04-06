@@ -15,12 +15,38 @@ export const Content = styled.div`
   box-sizing: border-box;
 `;
 
+export const ContentComplete = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 444px;
+  border-radius: 12px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding-top: 41px;
+  background: #fff;
+  box-sizing: border-box;
+`;
+
 export const Title = styled.p`
   text-align: center;
   font-size: 32px;
   line-height: 40px;
   color: #000000;
 `;
+
+export const TitleComplete = styled.p`
+  font-size: 40px;
+  line-height: 48px;
+  text-align: center;
+  color: #000000;
+  max-width: 268px;
+  margin-bottom: 12px;
+`;
+
+export const ImgComplete = styled.img``;
 
 export const List = styled.div`
   display: flex;
@@ -38,6 +64,7 @@ export const Item = styled.div`
 export const Text = styled.p`
   font-size: 18px;
   line-height: 24px;
+  letter-spacing: -0.05px;
   color: #000000;
   max-width: 360px;
 `;
@@ -62,6 +89,6 @@ export const Input = styled.input`
   color: #000000;
   border: none;
   border-bottom: 1px solid #d0cece;
-  padding-bottom: 8px;
+  padding-bottom: 7px;
   outline: none;
 `;
