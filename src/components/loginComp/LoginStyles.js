@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-unused-vars */
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
 export const CenterBlock = styled.div`
   height: 100vh;
@@ -20,11 +20,9 @@ export const LoginMainBlock = styled.div`
   flex-direction: column;
 `;
 
-export const LogoImg = styled.img`
-  height: 35px;
-  width: 220px;
+export const groupLogoImg = styled.div`
   background: transparent;
-  margin-top: 43px;
+  margin-top: 40px;
 `;
 
 export const LoginInputsBlock = styled.div`
@@ -38,15 +36,18 @@ export const InputField = styled.input`
   margin-top: 20px;
   height: 40px;
   width: 278px;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: -0.05px;
+  font-feature-settings: "pnum" on, "lnum" on;
   border: none;
+  color: #000000;
   border-bottom: 1px solid #d0cece;
   &::placeholder {
-    font-style: normal;
-    font-weight: 400;
     font-size: 18px;
     line-height: 24px;
     letter-spacing: -0.003em;
-    font-feature-settings: 'pnum' on, 'lnum' on;
+    font-feature-settings: "pnum" on, "lnum" on;
     color: #d0cece;
   }
 `;
@@ -64,53 +65,24 @@ export const ErrorSpan = styled.span`
   color: #f54021;
 `;
 
-export const ButtonLogIn = styled.button`
+export const groupButtonLogIn = styled.div`
   width: 278px;
   height: 52px;
-  background: #580ea2;
-  border-radius: 6px;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 24px;
-  letter-spacing: -0.003em;
-  font-feature-settings: 'pnum' on, 'lnum' on;
-  color: #ffffff;
   margin-top: 40px;
-  &:hover {
-    background: #3f007d;
-  }
-  &:active {
-    background: #271a58;
-  }
 `;
 
-export const ButtonGetSignUp = styled.button`
+export const groupButtonGetSignUp = styled.div`
   width: 278px;
   height: 52px;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 24px;
-  letter-spacing: -0.003em;
-  font-feature-settings: 'pnum' on, 'lnum' on;
-  color: #000000;
-  border: 1px solid #d0cece;
-  border-radius: 6px;
   margin-top: 20px;
-  ${({ $signUp }) => ($signUp
-    ? css`
-          margin-top: 10px;
+  ${({ $signUp }) =>
+    $signUp
+      ? css`
+          margin-top: 60px;
         `
-    : css`
+      : css`
           margin-top: 20px;
-        `)}; 
-  &:hover {
-    background: #f4f5f6;
-  }
-  &:active {
-    background: #d9d9d9;
-  }
+        `};
 `;
 
 export const ErrorUserNotExist = styled.p`

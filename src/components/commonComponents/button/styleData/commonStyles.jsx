@@ -2,13 +2,15 @@ import styled from "styled-components";
 
 export const StyledButton = styled("button")`
   /* height: 52px; */
+
   min-height: max-content;
   min-width: max-content;
   padding: ${(props) => props.style.size.padding};
   /* box-sizing: border-box; */
   border-radius: 46px;
 
-  border: 0px solid transparent;
+ /* border: 0px solid transparent; */
+  border: 1px solid #d0cece;
   background: ${(props) => props.style.color.bg.regular};
 
   &:hover {
@@ -18,6 +20,7 @@ export const StyledButton = styled("button")`
   &:active {
     background: ${(props) => props.style.color.bg.active};
     transform: scale(0.96);
+
   }
   &:disabled {
     background: lightgrey;
