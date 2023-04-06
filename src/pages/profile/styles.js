@@ -26,18 +26,12 @@ export const ProfileHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-right: 140px;
   margin-top: 24px;
+  align-items: center;
 `;
 
 export const ProfilePageWrapper = styled.div`
   width: 100%;
-  margin-left: 140px;
-`;
-
-export const AppLogo = styled.img`
-  width: 220px;
-  height: 35px;
 `;
 
 export const ProfileTextHeader = styled.h1`
@@ -80,7 +74,6 @@ export const ProfileInfoActions = styled.div`
 `;
 
 export const ProfileCourses = styled.div`
-  margin-right: 140px;
   display: flex;
   flex-direction: row;
   flex-flow: row wrap;
@@ -91,16 +84,6 @@ export const ProfileCourses = styled.div`
 export const CourseCardActionButton = styled.div`
   margin-top: auto;
   margin-bottom: 27px;
-`;
-
-export const CourseCardStub = styled.div`
-  width: 360px;
-  height: 480px;
-  border: 1px solid black;
-`;
-
-export const ProfileActionButtonStub = styled.button`
-  width: 275px;
 `;
 
 export const CourseCardActionButtonStub = styled.button``;

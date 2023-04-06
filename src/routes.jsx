@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Exercise from "./pages/exercise";
 import Main from "./pages/main/index";
 import LoginPage from "./pages/loginPage";
-import { Profile } from "./pages/profile";
+import Profile from "./pages/profile";
 
 export default function AppRoutes() {
   return (

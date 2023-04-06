@@ -1,9 +1,11 @@
 import React from "react";
-import appLogo from "../../images/logo.svg";
 import * as S from "../profile/styles";
 import { coursesImages } from "../../constants";
+import { CourseCard } from "../../components/commonComponents/courseCard/courseCard";
+import { Button } from "../../components/commonComponents/button/button";
+import Logo from "../../components/logo/Logo";
 
-export const Profile = () => {
+export default function Profile() {
   const myCourses = [
     { id: 1, title: "Йога" },
     { id: 2, title: "Стретчинг" },
@@ -13,7 +15,7 @@ export const Profile = () => {
   return (
     <S.ProfilePageWrapper>
       <S.ProfileHeader>
-        <S.AppLogo src={appLogo} alt="logo" />
+        <Logo />
         <S.ProfileName>
           <S.ProfileImg />
           <div>Сергей</div>
@@ -32,17 +34,13 @@ export const Profile = () => {
         </S.ProfileInfo>
       </div>
       <S.ProfileInfoActions>
-        <S.ProfileActionButtonStub width="275px">
-          Редактировать логин
-        </S.ProfileActionButtonStub>
-        <S.ProfileActionButtonStub width="275px">
-          Редактировать пароль
-        </S.ProfileActionButtonStub>
+        <Button.s18.blue width="275px">Редактировать логин</Button.s18.blue>
+        <Button.s18.blue width="275px">Редактировать пароль</Button.s18.blue>
       </S.ProfileInfoActions>
       <S.ProfileTextHeader2>Мои курсы</S.ProfileTextHeader2>
       <S.ProfileCourses>
         {myCourses.map((course) => (
-          <S.CourseCardStub
+          <CourseCard
             key={course.id}
             title={course.title}
             src={
@@ -54,9 +52,9 @@ export const Profile = () => {
                 Перейти →
               </S.CourseCardActionButtonStub>
             </S.CourseCardActionButton>
-          </S.CourseCardStub>
+          </CourseCard>
         ))}
       </S.ProfileCourses>
     </S.ProfilePageWrapper>
   );
-};
+}
