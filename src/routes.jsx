@@ -1,8 +1,10 @@
 import { Routes, Route } from "react-router-dom";
+
 import Exercise from "./pages/exercise";
 import Main from "./pages/main/index";
 import LoginPage from "./pages/loginPage";
 import Profile from "./pages/profile";
+import WorkoutVideoPage from "./pages/workoutVideo/workoutVideoPage";
 
 export default function AppRoutes() {
   return (
@@ -13,6 +15,7 @@ export default function AppRoutes() {
       <Route path="/description" element={"<Description />"} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/exercise" element={<Exercise />} />
+      <Route path="/workout" element={<WorkoutVideoPage />} />
     </Routes>
   );
 }
