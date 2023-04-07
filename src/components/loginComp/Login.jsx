@@ -1,12 +1,14 @@
+/* eslint-disable react/jsx-pascal-case */
 /* eslint-disable object-curly-newline */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useState, useEffect } from "react";
 //import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../commonComponents/button/button";
 //import { ContextTheme } from '../Others/Context';
 import * as S from "./LoginStyles";
 //import * as GS from '../../GlobalStyle';
-import Logo from "./img/logo.svg";
+import Logo from "../logo/Logo";
 /* import {
   loginDataSelector,
   loginDataLoadingSelector,
@@ -60,7 +62,9 @@ function Login() {
   return (
     <S.CenterBlock>
       <S.LoginMainBlock>
-        <S.LogoImg src={Logo} />
+        <S.groupLogoImg>
+          <Logo />
+        </S.groupLogoImg>
         <LoginBlock />
       </S.LoginMainBlock>
     </S.CenterBlock>
@@ -235,11 +239,18 @@ export function ButtonLogIn({ dispatch, loginStates, isLoading }) {
 
     //dispatch(fetchLogin(loginDataObj));
   }
-
+  /* disabled={isLoading} onClick={() => handelClickBtnLogin()} */
   return (
-    <S.ButtonLogIn disabled={isLoading} onClick={() => handelClickBtnLogin()}>
-      Войти
-    </S.ButtonLogIn>
+    <S.groupButtonLogIn>
+      <Button.s18.blue
+        width="278px"
+        height="52px"
+        disabled={isLoading}
+        onClick={() => handelClickBtnLogin()}
+      >
+        Войти
+      </Button.s18.blue>
+    </S.groupButtonLogIn>
   );
 }
 
@@ -267,9 +278,16 @@ function ButtonGetSignUp({ signUp, setSignUp, dispatch, loginStates }) {
       //dispatch(fetchSignUp(signUpDataObj));
     }
   }
+  /* $signUp={signUp} onClick={() => HandelClickBtnSignUp()} */
   return (
-    <S.ButtonGetSignUp $signUp={signUp} onClick={() => HandelClickBtnSignUp()}>
-      Зарегистрироваться
-    </S.ButtonGetSignUp>
+    <S.groupButtonGetSignUp $signUp={signUp}>
+      <Button.s18.white
+        width="278px"
+        height="52px"
+        onClick={() => HandelClickBtnSignUp()}
+      >
+        Зарегистироваться
+      </Button.s18.white>
+    </S.groupButtonGetSignUp>
   );
 }

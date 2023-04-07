@@ -1,42 +1,47 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
-export const StyledButton = styled('button')`
-    /* height: 52px; */
-    min-width: max-content;
-    padding: ${(props) => props.style.size.padding};
-    border-radius: 46px;
+export const StyledButton = styled("button")`
+  /* height: 52px; */
 
-    border: 0px solid transparent;
-    background: ${(props) => props.style.color.bg.regular};
+  min-height: max-content;
+  min-width: max-content;
+  padding: ${(props) => props.style.size.padding};
+  /* box-sizing: border-box; */
+  border-radius: 46px;
 
-    &:hover {
-        background: ${(props) => props.style.color.bg.hover};
-        transform: scale(1.05);
-    }
-    &:active {
-        background: ${(props) => props.style.color.bg.active};
-        transform: scale(0.95);
-    }
-    &:disabled {
-        background: lightgrey;
-    }
+ /* border: 0px solid transparent; */
+  border: 1px solid #d0cece;
+  background: ${(props) => props.style.color.bg.regular};
 
-    transition: all 0.5s ease-out;
+  &:hover {
+    background: ${(props) => props.style.color.bg.hover};
+    transform: scale(1.04);
+  }
+  &:active {
+    background: ${(props) => props.style.color.bg.active};
+    transform: scale(0.96);
 
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+  }
+  &:disabled {
+    background: lightgrey;
+  }
 
-    font-family: 'StratosSkyeng', sans-serif;
-    font-size: ${(props) => String(props.style.size.font) + 'px'};
-    line-height: ${(props) => String(props.style.size.font + 8) + 'px'};
-    font-weight: 400;
+  transition: all 0.5s ease-out;
 
-    color: ${(props) => props.style.color.text};
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 
-    overflow: hidden;
-    cursor: pointer;
-`
+  font-family: "StratosSkyeng", sans-serif;
+  font-size: ${(props) => String(props.style.size.font) + "px"};
+  line-height: ${(props) => String(props.style.size.font + 8) + "px"};
+  font-weight: 400;
+
+  color: ${(props) => props.style.color.text};
+
+  overflow: hidden;
+  cursor: pointer;
+`;
 
 // @font-face {
 //     font-family: 'StratosSkyeng';
