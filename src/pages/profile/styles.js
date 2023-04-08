@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ProfilePageWrapper = styled.div`
   width: 100%;
-  padding-bottom: 615px;
+  padding-bottom: 95px;
 `;
 
 export const ProfileTextHeader = styled.h1`
