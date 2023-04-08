@@ -12,10 +12,9 @@ export default function AppRoutes() {
       <Route path="/" element={<Main />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registration" element={"<Registration />"} />
-      <Route path="/description" element={"<Description />"} />
+      <Route path="/description" element={<WorkoutVideoPage />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/exercise" element={<Exercise />} />
-      <Route path="/workout" element={<WorkoutVideoPage />} />
     </Routes>
   );
 }
