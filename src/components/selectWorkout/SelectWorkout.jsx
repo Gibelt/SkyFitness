@@ -16,7 +16,7 @@ export default function SelectWorkout({ workouts = workoutsDefault }) {
     <s.Item key={item.text.toString()} style={{border: `${item.complete ? "1px solid #06B16E" : ''}`}}>
       <s.ItemText style={{color: `${item.complete ? "#06B16E" : ''}`}}>
       <s.ItemTitle>{item.text.split("/")[0]}</s.ItemTitle>
-      <s.ItemDesc>{item.text.split("/")[1] + "/" + item.text.split("/")[2]}</s.ItemDesc>
+      <s.ItemDesc>{`${item.text.split("/")[1]  }/${  item.text.split("/")[2]}`}</s.ItemDesc>
       </s.ItemText> {
         item.complete &&
       <s.ItemComplete src="/img/exercise-complete.svg" />

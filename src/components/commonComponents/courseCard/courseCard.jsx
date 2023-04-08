@@ -1,7 +1,7 @@
 // /* eslint-disable prettier/prettier */
 import { StyledСourseCard, StyledCardContent } from './styleData/commonStyles'
 
-export const CourseCard = ({
+export function CourseCard({
     title = 'Заголовок',
     width = '360px',
     height = '480px',
@@ -9,7 +9,7 @@ export const CourseCard = ({
     src = '',
     onClick = () => {},
     children = '',
-}) => {
+}) {
     return (
         <StyledСourseCard
             onClick={activity ? onClick : () => {}}

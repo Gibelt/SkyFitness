@@ -1,18 +1,18 @@
-import * as s from "../exercise/ExerciseSyle";
-import { useState } from "react";
-import Header from "../../components/header/Header";
-import Tasks from "../../components/tasks/Tasks";
-import Execution from "../../components/tasksProgress/TasksProgress";
-import ProgressForm from "../../components/progressForm/ProgressForm";
+import { useState } from 'react';
+import * as s from './ExerciseSyle';
+import Header from '../../components/header/Header';
+import Tasks from '../../components/tasks/Tasks';
+import Execution from '../../components/tasksProgress/TasksProgress';
+import ProgressForm from '../../components/progressForm/ProgressForm';
 
-const title = "Йога";
-const subtitle = "Красота и здоровье / Йога на каждый день / 2 день";
-const videoURL = "oqe98Dxivns";
+const title = 'Йога';
+const subtitle = 'Красота и здоровье / Йога на каждый день / 2 день';
+const videoURL = 'oqe98Dxivns';
 
 const tasksExapmle = [
-  "Наклон вперед (10 повторений)",
-  "Наклон назад (10 повторений)",
-  "Поднятие ног, согнутых в коленях (5 повторений)",
+  'Наклон вперед (10 повторений)',
+  'Наклон назад (10 повторений)',
+  'Поднятие ног, согнутых в коленях (5 повторений)',
 ];
 
 export default function Exercise() {
@@ -24,7 +24,7 @@ export default function Exercise() {
       <s.Subtitle>{subtitle}</s.Subtitle>
       {isProgressClick && (
         <ProgressForm
-        tasks={tasksExapmle}
+          tasks={tasksExapmle}
           onClick={() => setTimeout(() => setIsProgressClick(false), 2000)}
         />
       )}
@@ -36,7 +36,7 @@ export default function Exercise() {
           title={subtitle}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
-        ></iframe>
+        />
       </s.Video>
       <s.TasksAndProgress>
         <Tasks tasks={tasksExapmle} onClick={() => setIsProgressClick(true)} />

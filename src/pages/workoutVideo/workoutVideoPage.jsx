@@ -1,10 +1,10 @@
-import Header from "components/header/Header";
-import { Button } from "components/commonComponents/button/button";
-import Guide from "./workoutVideoPage/guide";
+import Header from '../../components/header/Header';
+import { Button } from '../../components/commonComponents/button/button';
+import Guide from './workoutVideoPage/guide';
 
-import Styled from "./workoutVideoPage/styledComponents";
+import Styled from './workoutVideoPage/styledComponents';
 
-export default function WorkoutVideoPage({ course = "yoga" }) {
+export default function WorkoutVideoPage({ course = 'yoga' }) {
   const settings = {
     yoga: {
       title: `Йога`,
@@ -13,20 +13,18 @@ export default function WorkoutVideoPage({ course = "yoga" }) {
   };
 
   const setting = settings[course];
-  const title = setting.title;
+  const {title} = setting;
   const src = `/img/pages/workoutVideo/title/${setting.bgFile}`;
 
   return (
-    <>
-      <Styled.Wrapper>
+    <Styled.Wrapper>
         <Header />
         <Main data={{ title, src }} />
       </Styled.Wrapper>
-    </>
   );
 }
 
-const Main = ({ data: { title, src } }) => {
+function Main({ data: { title, src } }) {
   return (
     <Styled.Main>
       <Title title={title} src={src} />
@@ -34,17 +32,17 @@ const Main = ({ data: { title, src } }) => {
       <Recording />
     </Styled.Main>
   );
-};
+}
 
-const Title = ({
-  title = "Заголовок",
-  width = "100%",
-  height = "300px",
+function Title({
+  title = 'Заголовок',
+  width = '100%',
+  height = '300px',
   activity = false,
-  src = "",
-  children = "",
-  bgColor = "#F5F5F5",
-}) => {
+  src = '',
+  children = '',
+  bgColor = '#F5F5F5',
+}) {
   return (
     <Styled.Title.Box
       style={{
@@ -59,15 +57,15 @@ const Title = ({
       <Styled.Title.Content>{children}</Styled.Title.Content>
     </Styled.Title.Box>
   );
-};
+}
 
-const Recording = ({
-  width = "100%",
-  height = "300px",
+function Recording({
+  width = '100%',
+  height = '300px',
   activity = false,
-  src = "/img/pages/workoutVideo/Signup.png",
-  bgColor = "#F9EBFF",
-}) => {
+  src = '/img/pages/workoutVideo/Signup.png',
+  bgColor = '#F9EBFF',
+}) {
   return (
     <Styled.Recording.Box
       style={{
@@ -88,7 +86,7 @@ const Recording = ({
           <Button.s18.blue
             width="max-content"
             onClick={() => {
-              console.log("Вы записаны на урок");
+              console.log('Вы записаны на урок');
             }}
           >
             Записаться на тренировку
@@ -97,4 +95,4 @@ const Recording = ({
       </Styled.Recording.Content>
     </Styled.Recording.Box>
   );
-};
+}

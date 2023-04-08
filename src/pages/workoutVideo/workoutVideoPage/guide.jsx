@@ -1,4 +1,4 @@
-import Styled from "./guide/styledComponents";
+import Styled from './guide/styledComponents';
 
 export default function Guide() {
   return (
@@ -59,7 +59,7 @@ const Recommendation = () => {
 };
 
 const CourseList = () => {
-  const Item = ({ children = "Item" }) => {
+  const Item = ({ children = 'Item' }) => {
     return (
       <p>
         <li>{children}</li>

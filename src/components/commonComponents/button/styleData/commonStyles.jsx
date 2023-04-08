@@ -33,8 +33,8 @@ export const StyledButton = styled("button")`
   justify-content: center;
 
   font-family: "StratosSkyeng", sans-serif;
-  font-size: ${(props) => String(props.style.size.font) + "px"};
-  line-height: ${(props) => String(props.style.size.font + 8) + "px"};
+  font-size: ${(props) => `${String(props.style.size.font)  }px`};
+  line-height: ${(props) => `${String(props.style.size.font + 8)  }px`};
   font-weight: 400;
 
   color: ${(props) => props.style.color.text};
