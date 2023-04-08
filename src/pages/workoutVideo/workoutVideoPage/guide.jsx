@@ -1,3 +1,6 @@
+/* eslint-disable react/function-component-definition */
+/* eslint-disable react/no-unstable-nested-components */
+/* eslint-disable arrow-body-style */
 import Styled from './guide/styledComponents';
 
 export default function Guide() {
