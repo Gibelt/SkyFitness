@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { FramedBlock } from "./styledComponents/framedBlock";
+import { FramedBlock } from './styledComponents/framedBlock';
 
 const Styled = {
-  Wrapper: styled("div")`
+  Wrapper: styled('div')`
     height: auto;
     width: 100%;
     padding-bottom: 20px;
@@ -13,7 +13,8 @@ const Styled = {
 
     gap: 75px;
   `,
-  Main: styled("div")`
+
+  Main: styled('div')`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -21,7 +22,7 @@ const Styled = {
 
     gap: 75px;
 
-    font-family: "StratosSkyeng", sans-serif;
+    font-family: 'StratosSkyeng', sans-serif;
     color: #000000;
 
     div {
@@ -32,23 +33,26 @@ const Styled = {
 
   Title: {
     Box: FramedBlock,
-    Content: styled("div")`
+    Content: styled('div')`
       flex-grow: 1;
+
+      padding: 10px 10px;
 
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      justify-content: flex-end;
     `,
   },
 
   Recording: {
     Box: FramedBlock,
-    Content: styled("div")`
+    Content: styled('div')`
       flex-grow: 1;
+
+      padding: 10px 10px;
 
       display: grid;
       grid-template-rows: auto 60px;
-      padding: 10px 10px;
       gap: 20px;
 
       p {

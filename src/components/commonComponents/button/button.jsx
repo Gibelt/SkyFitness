@@ -4,6 +4,7 @@ import { sizeStyles, colorStyles } from './styleData/dynemicStyles';
 function btn(fontSize, color) {
   function StyledButtonConstructor({
     width = '100%',
+    height = 'auto',
     onClick = () =>
       console.log(`I am a ${color} button with ${fontSize} font-size`),
     children,
@@ -14,6 +15,7 @@ function btn(fontSize, color) {
         onClick={onClick}
         style={{
           width,
+          height,
           size: sizeStyles[fontSize],
           color: colorStyles[fontSize][color],
         }}

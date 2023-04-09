@@ -3,7 +3,7 @@ import Exercise from './pages/exercise';
 import Main from './pages/main/index';
 import LoginPage from './pages/loginPage';
 import Profile from './pages/profile';
-import WorkoutVideoPage from './pages/workoutVideo/workoutVideoPage';
+import Description from './pages/description';
 
 export default function AppRoutes() {
   return (
@@ -11,7 +11,7 @@ export default function AppRoutes() {
       <Route path="/" element={<Main />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/registration" element='Registration' />
-      <Route path="/description" element={<WorkoutVideoPage />} />
+      <Route path="/description" element={<Description />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/exercise" element={<Exercise />} />
     </Routes>
