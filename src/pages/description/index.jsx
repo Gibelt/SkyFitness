@@ -1,8 +1,8 @@
-import Header from '../../components/header/Header';
-import { Button } from '../../components/commonComponents/button/button';
-import Guide from './workoutVideoPage/guide';
+import Header from 'components/header/Header';
+import { Button } from 'components/commonComponents/button/button';
+import Guide from './guide';
 
-import Styled from './workoutVideoPage/styledComponents';
+import Styled from './styledComponents';
 
 export default function WorkoutVideoPage({ course = 'yoga' }) {
   const settings = {
@@ -11,16 +11,14 @@ export default function WorkoutVideoPage({ course = 'yoga' }) {
       bgFile: `yoga.png`,
     },
   };
-
-  const setting = settings[course];
-  const {title} = setting;
-  const src = `/img/pages/workoutVideo/title/${setting.bgFile}`;
+  const { title, bgFile } = settings[course];
+  const src = `/img/pages/workoutVideo/title/${bgFile}`;
 
   return (
     <Styled.Wrapper>
-        <Header />
-        <Main data={{ title, src }} />
-      </Styled.Wrapper>
+      <Header />
+      <Main data={{ title, src }} />
+    </Styled.Wrapper>
   );
 }
 
@@ -40,7 +38,6 @@ function Title({
   height = '300px',
   activity = false,
   src = '',
-  children = '',
   bgColor = '#F5F5F5',
 }) {
   return (
@@ -54,7 +51,16 @@ function Title({
       }}
     >
       <h1>{title}</h1>
-      <Styled.Title.Content>{children}</Styled.Title.Content>
+      <Styled.Title.Content>
+        <Button.s18.blue
+          width="max-content"
+          onClick={() => {
+            console.log('Курс добавлен');
+          }}
+        >
+          Добавить курс
+        </Button.s18.blue>
+      </Styled.Title.Content>
     </Styled.Title.Box>
   );
 }
@@ -82,16 +88,16 @@ function Recording({
           выбором направления и тренера, с которым тренировки принесут здоровье
           и радость!
         </p>
-        <div>
-          <Button.s18.blue
-            width="max-content"
-            onClick={() => {
-              console.log('Вы записаны на урок');
-            }}
-          >
-            Записаться на тренировку
-          </Button.s18.blue>
-        </div>
+
+        <Button.s18.blue
+          width="max-content"
+          height="max-content"
+          onClick={() => {
+            console.log('Вы записаны на урок');
+          }}
+        >
+          Записаться на тренировку
+        </Button.s18.blue>
       </Styled.Recording.Content>
     </Styled.Recording.Box>
   );
