@@ -1,4 +1,4 @@
-import * as S from "./styles";
+import * as S from './styles';
 import { coursesImages } from '../../constants';
 import { CourseCard } from '../../components/commonComponents/courseCard/courseCard';
 import { Button } from '../../components/commonComponents/button/button';
@@ -6,9 +6,9 @@ import Header from '../../components/header/Header';
 
 export default function Profile() {
   const myCourses = [
-    { id: 1, title: 'Йога' },
-    { id: 2, title: 'Стретчинг' },
-    { id: 3, title: 'Бодифлекс' },
+    { id: 'ecf0abb07a6547e09abe876e4084a843', title: 'Йога' },
+    { id: 'fa860a88db7e4c839437427ab863bb1a', title: 'Стретчинг' },
+    { id: '37cd2b14182e4e69aad6e60e6c25015e', title: 'Бодифлекс' },
   ];
 
   return (
