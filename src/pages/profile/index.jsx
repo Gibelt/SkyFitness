@@ -1,15 +1,14 @@
-import React from "react";
-import * as S from "../profile/styles";
-import { coursesImages } from "../../constants";
-import { CourseCard } from "../../components/commonComponents/courseCard/courseCard";
-import { Button } from "../../components/commonComponents/button/button";
-import Header from "../../components/header/Header";
+import * as S from "./styles";
+import { coursesImages } from '../../constants';
+import { CourseCard } from '../../components/commonComponents/courseCard/courseCard';
+import { Button } from '../../components/commonComponents/button/button';
+import Header from '../../components/header/Header';
 
 export default function Profile() {
   const myCourses = [
-    { id: 1, title: "Йога" },
-    { id: 2, title: "Стретчинг" },
-    { id: 3, title: "Бодифлекс" },
+    { id: 1, title: 'Йога' },
+    { id: 2, title: 'Стретчинг' },
+    { id: 3, title: 'Бодифлекс' },
   ];
 
   return (
@@ -38,7 +37,7 @@ export default function Profile() {
               key={course.id}
               title={course.title}
               src={
-                coursesImages.find((ci) => ci.courseId === course.id)?.img ?? ""
+                coursesImages.find((ci) => ci.courseId === course.id)?.img ?? ''
               }
             >
               <S.CourseCardActionButton>

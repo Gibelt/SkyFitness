@@ -1,14 +1,14 @@
 /* eslint-disable react/jsx-pascal-case */
 /* eslint-disable object-curly-newline */
 /* eslint-disable no-unused-vars */
-import React, { useContext, useState, useEffect } from "react";
-//import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Button } from "../commonComponents/button/button";
-//import { ContextTheme } from '../Others/Context';
-import * as S from "./LoginStyles";
-//import * as GS from '../../GlobalStyle';
-import Logo from "../logo/Logo";
+import React, { useContext, useState, useEffect } from 'react';
+//  import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
+import { Button } from '../commonComponents/button/button';
+//  import { ContextTheme } from '../Others/Context';
+import * as S from './LoginStyles';
+//  import * as GS from '../../GlobalStyle';
+import Logo from '../logo/Logo';
 /* import {
   loginDataSelector,
   loginDataLoadingSelector,
@@ -32,22 +32,22 @@ import {
 
 const InputFields = [
   {
-    name: "login",
-    placeholder: "Логин(email)",
-    key: "1",
-    type: "email",
+    name: 'login',
+    placeholder: 'Логин(email)',
+    key: '1',
+    type: 'email',
   },
   {
-    name: "Password",
-    placeholder: "Пароль",
-    key: "2",
-    type: "password",
+    name: 'Password',
+    placeholder: 'Пароль',
+    key: '2',
+    type: 'password',
   },
   {
-    name: "ReturnPassword",
-    placeholder: "Повторите пароль",
-    key: "3",
-    type: "password",
+    name: 'ReturnPassword',
+    placeholder: 'Повторите пароль',
+    key: '3',
+    type: 'password',
   },
   /*   {
     name: "userName",
@@ -57,7 +57,7 @@ const InputFields = [
   }, */
 ];
 function Login() {
-  //const { theme, setTheme } = useContext(ContextTheme);
+  // const { theme, setTheme } = useContext(ContextTheme);
 
   return (
     <S.CenterBlock>
@@ -86,10 +86,10 @@ export function LoginBlock() {
   const idRefreshTokenInterval = useSelector(GetIdTokenRefIntSelector); */
   const isLoading = false;
   const errorMessage = {};
-  const [userName, setUserName] = useState("");
-  const [loginMail, setLoginMail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
+  const [userName, setUserName] = useState('');
+  const [loginMail, setLoginMail] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
   const loginStates = {
     states: {
       userName,
@@ -181,34 +181,34 @@ const LoginMenu = ({ list, count, loginStates, isLoading }) => {
   function ChangeInput(e) {
     const { target } = e;
     switch (target.name) {
-      case "userName":
+      case 'userName':
         funcStates.setUserName(target.value);
         break;
-      case "login":
+      case 'login':
         funcStates.setLoginMail(target.value);
         break;
-      case "Password":
+      case 'Password':
         funcStates.setPassword(target.value);
         break;
-      case "ReturnPassword":
+      case 'ReturnPassword':
         funcStates.setRepeatPassword(target.value);
         break;
       default:
-        throw new Error("Отсутствует поле в форме Login");
+        throw new Error('Отсутствует поле в форме Login');
     }
   }
   function getValue(key) {
     switch (key) {
-      case "1":
+      case '1':
         return states.loginMail;
-      case "2":
+      case '2':
         return states.password;
-      case "3":
+      case '3':
         return states.repeatPassword;
-      case "4":
+      case '4':
         return states.userName;
       default:
-        throw new Error("Отсутствует state в форме Login");
+        throw new Error('Отсутствует state в форме Login');
     }
   }
   list.forEach((inputElem, index) => {
@@ -237,7 +237,7 @@ export function ButtonLogIn({ dispatch, loginStates, isLoading }) {
       password: loginStates.password,
     };
 
-    //dispatch(fetchLogin(loginDataObj));
+    //  dispatch(fetchLogin(loginDataObj));
   }
   /* disabled={isLoading} onClick={() => handelClickBtnLogin()} */
   return (
@@ -269,13 +269,14 @@ function ButtonGetSignUp({ signUp, setSignUp, dispatch, loginStates }) {
     if (!signUp) {
       setSignUp((prev) => !prev);
     } else {
+      // eslint-disable-next-line no-lonely-if
       if (!CheckPassword()) {
         /* dispatch(
           FetchSignUpPassNotEqual({ SignUpPassNotEqual: "Пароли не совпадают" })
         ); */
-        return;
+        
       }
-      //dispatch(fetchSignUp(signUpDataObj));
+      // dispatch(fetchSignUp(signUpDataObj));
     }
   }
   /* $signUp={signUp} onClick={() => HandelClickBtnSignUp()} */

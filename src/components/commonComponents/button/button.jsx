@@ -1,22 +1,14 @@
-// /* eslint-disable prettier/prettier */
-import { StyledButton } from "./styleData/commonStyles";
-import { sizeStyles, colorStyles } from "./styleData/dynemicStyles";
-
-export const Button = {
-  s16: { blue: btn(16, "blue") },
-  s18: { blue: btn(18, "blue"), white: btn(18, "white") },
-  s20: { green: btn(20, "green") },
-  s24: { green: btn(24, "green") },
-};
+import { StyledButton } from './styleData/commonStyles';
+import { sizeStyles, colorStyles } from './styleData/dynemicStyles';
 
 function btn(fontSize, color) {
-  const StyledButtonConstructor = ({
-    width = "100%",
+  function StyledButtonConstructor({
+    width = '100%',
     onClick = () =>
       console.log(`I am a ${color} button with ${fontSize} font-size`),
     children,
     disabled = false,
-  }) => {
+  }) {
     return (
       <StyledButton
         onClick={onClick}
@@ -30,6 +22,13 @@ function btn(fontSize, color) {
         {children}
       </StyledButton>
     );
-  };
+  }
   return StyledButtonConstructor;
 }
+
+export const Button = {
+  s16: { blue: btn(16, 'blue') },
+  s18: { blue: btn(18, 'blue'), white: btn(18, 'white') },
+  s20: { green: btn(20, 'green') },
+  s24: { green: btn(24, 'green') },
+};
