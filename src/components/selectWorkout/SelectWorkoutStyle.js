@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Content = styled.div`
   display: flex;
@@ -40,6 +40,7 @@ export const Item = styled.div`
   border: 1px solid #000000;
   border-radius: 26px;
   padding: 12px 29px 17px;
+  cursor: pointer;
 `;
 
 export const ItemText = styled.div`
