@@ -1,39 +1,56 @@
-export const getCourseWorkouts = (courseId) => {
-  console.log(courseId); // временное решение, чтобы избежать ошибки eslint
-
-  const workouts = [
+/* используется для получения информации о курсе по его id */
+function getCourseById(courseId) {
+  const courses = [
     {
-      id: '73435a6b2dcb49fc85f125b587ba82ef',
-      order: 1,
-      name: 'Утренняя практика / Йога на каждый день / 1 день',
-      complete: true,
+      id: 'ecf0abb07a6547e09abe876e4084a843',
+      title: 'Йога',
+      img: '/img/SVG_for_Course_Cards/yoga.png',
     },
     {
-      id: 'b8c92b070eac49fe93acc5ea8605efa0',
-      order: 2,
-      name: 'Красота и здоровье / Йога на каждый день / 2 день',
-      complete: true,
+      id: 'fa860a88db7e4c839437427ab863bb1a',
+      title: 'Стретчинг',
+      img: '/img/SVG_for_Course_Cards/stretching.png',
     },
     {
-      id: '03080d6dc62248d38a0e5e7baa55c932',
-      order: 3,
-      name: 'Асаны стоя / Йога на каждый день / 3 день',
-      complete: false,
+      id: '37cd2b14182e4e69aad6e60e6c25015e',
+      title: 'Бодифлекс',
+      img: '/img/SVG_for_Course_Cards/bodyflex.png',
     },
     {
-      id: '5c82166356e24075aaef222f7b9c3c00',
-      order: 4,
-      name: 'Растягиваем мышцы бедра / Йога на каждый день / 4 день',
-      complete: true,
+      id: '2ed340464ea14d4db46cc34cb8046f40',
+      title: 'Танцевальный фитнес',
+      img: '/img/SVG_for_Course_Cards/dance-fitness.png',
     },
     {
-      id: '3e5747ba4c0d497e8fcc0947966ef6d0',
-      order: 5,
-      name: 'Гибкость спины / Йога на каждый день / 5 день',
-      complete: false,
+      id: 'faecf3d0549a47a18c81de625af61312',
+      title: 'Степ-аэробика',
+      img: '/img/SVG_for_Course_Cards/step-aerobics.png',
     },
   ];
+  return courses.find((c) => c.id === courseId);
+}
 
-  workouts.sort((a, b) => a.order - b.order);
-  return workouts;
-};
+/* возвращает список курсов для пользователя, насыщая данные называниями курсов 
+(это необходимая информация для карточки страницы авторизованного пользователя) */
+export function getUserCourses(userId) {
+  const usersCourses = [
+    { userId: 'testUser', courseId: 'ecf0abb07a6547e09abe876e4084a843' },
+    { userId: 'testUser', courseId: 'fa860a88db7e4c839437427ab863bb1a' },
+    { userId: 'testUser', courseId: '37cd2b14182e4e69aad6e60e6c25015e' },
+    { userId: 'testUser#2', courseId: '37cd2b14182e4e69aad6e60e6c25015e' },
+  ];
+
+  /* по id пользователя (userId) находим все курсы, которые у него есть (из userCourses)
+  дальше по id найденного курса (courseId) находим название курса из списка курсов (courses) */
+  return usersCourses
+    .filter((userCourse) => userCourse.userId === userId)
+    .map((userCourse) => {
+      const course = getCourseById(userCourse.courseId);
+
+      return {
+        id: userCourse.courseId,
+        title: course?.title,
+        imgSrc: course?.img,
+      };
+    });
+}
