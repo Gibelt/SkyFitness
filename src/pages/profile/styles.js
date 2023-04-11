@@ -1,37 +1,8 @@
 import styled from "styled-components";
 
-export const ProfileImg = styled.div`
-  width: 50px;
-  height: 50px;
-  background: #d9d9d9;
-  border-radius: 50px;
-`;
-
-export const ProfileName = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-  align-items: center;
-`;
-
-export const ProfileDropdown = styled.div`
-  transform: rotate(45deg);
-  border-right: 2px solid black;
-  border-bottom: 2px solid black;
-  width: 8px;
-  height: 8px;
-`;
-
-export const ProfileHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 24px;
-  align-items: center;
-`;
-
 export const ProfilePageWrapper = styled.div`
   width: 100%;
+  padding-bottom: 95px;
 `;
 
 export const ProfileTextHeader = styled.h1`
@@ -83,4 +54,10 @@ export const ProfileCourses = styled.div`
 
 export const CourseCardActionButton = styled.div`
   margin-top: auto;
+`;
+
+export const CourseCardWrapper = styled.div`
+  box-shadow: 10px -10px 16px rgba(0, 0, 0, 0.1),
+    -10px 10px 15.9988px rgba(0, 0, 0, 0.1);
+  border-radius: 30px;
 `;

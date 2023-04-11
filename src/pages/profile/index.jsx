@@ -1,27 +1,19 @@
-import React from "react";
-import * as S from "../profile/styles";
-import { coursesImages } from "../../constants";
-import { CourseCard } from "../../components/commonComponents/courseCard/courseCard";
-import { Button } from "../../components/commonComponents/button/button";
-import Logo from "../../components/logo/Logo";
+import * as S from "./styles";
+import { coursesImages } from '../../constants';
+import { CourseCard } from '../../components/commonComponents/courseCard/courseCard';
+import { Button } from '../../components/commonComponents/button/button';
+import Header from '../../components/header/Header';
 
 export default function Profile() {
   const myCourses = [
-    { id: 1, title: "Йога" },
-    { id: 2, title: "Стретчинг" },
-    { id: 3, title: "Бодифлекс" },
+    { id: 1, title: 'Йога' },
+    { id: 2, title: 'Стретчинг' },
+    { id: 3, title: 'Бодифлекс' },
   ];
 
   return (
     <S.ProfilePageWrapper>
-      <S.ProfileHeader>
-        <Logo />
-        <S.ProfileName>
-          <S.ProfileImg />
-          <div>Сергей</div>
-          <S.ProfileDropdown />
-        </S.ProfileName>
-      </S.ProfileHeader>
+      <Header />
       <div>
         <S.ProfileTextHeader>Мой профиль</S.ProfileTextHeader>
         <S.ProfileInfo>
@@ -40,17 +32,19 @@ export default function Profile() {
       <S.ProfileTextHeader2>Мои курсы</S.ProfileTextHeader2>
       <S.ProfileCourses>
         {myCourses.map((course) => (
-          <CourseCard
-            key={course.id}
-            title={course.title}
-            src={
-              coursesImages.find((ci) => ci.courseId === course.id)?.img ?? ""
-            }
-          >
-            <S.CourseCardActionButton>
-              <Button.s20.green width="136px">Перейти →</Button.s20.green>
-            </S.CourseCardActionButton>
-          </CourseCard>
+          <S.CourseCardWrapper>
+            <CourseCard
+              key={course.id}
+              title={course.title}
+              src={
+                coursesImages.find((ci) => ci.courseId === course.id)?.img ?? ''
+              }
+            >
+              <S.CourseCardActionButton>
+                <Button.s20.green width="136px">Перейти →</Button.s20.green>
+              </S.CourseCardActionButton>
+            </CourseCard>
+          </S.CourseCardWrapper>
         ))}
       </S.ProfileCourses>
     </S.ProfilePageWrapper>
