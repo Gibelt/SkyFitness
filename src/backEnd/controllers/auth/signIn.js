@@ -1,10 +1,20 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+export default (app) =>
+  ({ email, password }, responseFunc) =>
+    app.auth
+      .signInWithEmailAndPassword(email, password)
+      .then((response) => responseFunc(handler(response)))
+      .catch((response) => responseFunc({ error: response.code, response }));
 
-const SignIn = (email, password) => {
-  const auth = getAuth();
-  signInWithEmailAndPassword(auth, email, password)
-    .then(console.log)
-    .catch(console.error);
+const handler = (data) => {
+  const { user } = data;
+  return { token: user._delegate.stsTokenManager, user };
 };
 
-export default SignIn;
+// import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+
+// export default ({ email, password }, responseFunc) => {
+//   const auth = getAuth();
+//   signInWithEmailAndPassword(auth, email, password)
+//     .then((user) => responseFunc(user))
+//     .catch((response) => responseFunc({ error: response.code, response }));
+// };

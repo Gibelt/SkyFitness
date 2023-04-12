@@ -1,13 +1,45 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore/lite";
+import app from 'firebase/compat/app'; // 'firebase/app';
+import 'firebase/compat/database'; // 'firebase/database';
+import 'firebase/compat/auth'; // 'firebase/auth';
 
-import firebaseConfig from "./config/firebaseConfig";
+// import 'firebase/compat/firestore';
+// import 'firebase/storage';
+// import 'firebase/messaging';
 
-import Register from "./controllers/auth/register";
-import SignIn from "./controllers/auth/signIn";
+// import { getFirestore } from 'firebase/firestore';
+// import { getDatabase } from 'firebase/database';
+// import { initializeApp } from 'firebase/app'
 
-const firebaseApp = initializeApp(firebaseConfig);
-// const db = getFirestore(firebaseApp); // For Using Database
+import firebaseConfig from './config';
+import Reduser, * as funx from './funx';
 
-const requests = { SignIn, Register };
-export default requests;
+// ============================================================
+
+//  App
+
+app.initializeApp(firebaseConfig);
+// const app = initializeApp(firebaseConfig);
+const reducer = new Reduser(app);
+export default reducer;
+
+// DB
+
+const { db } = reducer;
+// const db = getDatabase(app);
+export { db };
+
+// Auth
+
+const CreateUser = funx.CreateUser(reducer);
+const SignIn = funx.SignIn(reducer);
+export { CreateUser, SignIn };
+
+//  Data
+
+const GetData = funx.GetData(reducer);
+export { GetData };
+
+// ============================================================
+
+// export { default as CreateUser } from './controllers/auth/create';
+// export { default as SignIn } from './controllers/auth/signIn';
