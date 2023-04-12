@@ -29,9 +29,9 @@ export default function SelectWorkout(props) {
     >
       <s.ItemText style={{ color: `${item.complete ? '#06B16E' : ''}` }}>
         <s.ItemTitle>{item.name.split('/')[0]}</s.ItemTitle>
-        <s.ItemDesc>{`${item.name.split('/')[1]}/${
-          item.name.split('/')[2]
-        }`}</s.ItemDesc>
+        <s.ItemDesc>
+          {item.name.slice(item.name.split('/')[0].length + 1)}
+        </s.ItemDesc>
       </s.ItemText>{' '}
       {item.complete && <s.ItemComplete src="/img/exercise-complete.svg" />}
     </s.Item>
