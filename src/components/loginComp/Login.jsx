@@ -1,24 +1,25 @@
 /* eslint-disable react/jsx-pascal-case */
 /* eslint-disable object-curly-newline */
 /* eslint-disable no-unused-vars */
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from 'react';
 import {
   usePostSignInWithPasswordQuery,
   usePostSignUpQuery,
-} from "../../pages/services/queryApi";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Button } from "../commonComponents/button/button";
+} from '../../pages/services/queryApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '../commonComponents/button/button';
 //import { ContextTheme } from '../Others/Context';
-import * as S from "./LoginStyles";
+import * as S from './LoginStyles';
 //import * as GS from '../../GlobalStyle';
-import Logo from "../logo/Logo";
+import Logo from '../logo/Logo';
 import {
   loginDataErrorMSGSelector,
   signUpSelector,
   logInSelector,
-} from "../../store/selectors/selectors";
-
+  loginDataSelector,
+} from '../../store/selectors/selectors';
+import { FetchLoginSuccess } from '../../store/actions/creators/creators';
 /* import {
   loginDataSelector,
   loginDataLoadingSelector,
@@ -34,7 +35,7 @@ import {
   fetchGetToken,
   fetchRefreshToken,
 } from '../../store/actions/thunks/thunks'; */
-import { FetchSignUpPassNotEqual } from "../../store/actions/creators/creators";
+import { FetchSignUpPassNotEqual } from '../../store/actions/creators/creators';
 
 const InputFields = [
   {
@@ -93,12 +94,12 @@ export function LoginBlock() {
   const RefreshToken = useSelector(RefreshTokenSelector);
   const idRefreshTokenInterval = useSelector(GetIdTokenRefIntSelector); */
   const isLoading = false;
-  const [userName, setUserName] = useState("");
-  const [loginMail, setLoginMail] = useState("");
-  const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState('');
+  const [loginMail, setLoginMail] = useState('');
+  const [password, setPassword] = useState('');
   const [skipSignUp, setSkipSignUp] = useState(true);
-  const [repeatPassword, setRepeatPassword] = useState("");
-
+  const [skipLogIn, setSkipLogIn] = useState(true);
+  const [repeatPassword, setRepeatPassword] = useState('');
 
   const loginStates = {
     states: {
@@ -113,6 +114,7 @@ export function LoginBlock() {
       setPassword,
       setRepeatPassword,
       setSkipSignUp,
+      setSkipLogIn,
     },
   };
   const {
@@ -126,16 +128,29 @@ export function LoginBlock() {
     },
     { skip: skipSignUp }
   );
+  const {
+    data: dataLogIn,
+    error: errorLogIn,
+    isLoading: isLoadingLogIn,
+  } = usePostSignInWithPasswordQuery(
+    {
+      email: loginMail,
+      password: password,
+    },
+    { skip: skipLogIn }
+  );
+
   if (errorSignUp) {
     errorMessage = { signUpError: errorSignUp.data.error.message };
   }
-  const logInData = useSelector(logInSelector);
-  //console.log(logInData);
+  const logInData = useSelector(loginDataSelector);
+  console.log(logInData);
   /*   useEffect(() => {
     if (idRefreshTokenInterval) {
       clearInterval(idRefreshTokenInterval);
     }
   }, []);
+  
   useEffect(() => {
     const getToken = loginData?.id > 0;
     if (getToken && AccessToken === null) {
@@ -163,6 +178,16 @@ export function LoginBlock() {
       navigate("/");
     }
   }, [loginData, AccessToken]); */
+
+  useEffect(() => {
+    if (dataLogIn) {
+      dispatch(FetchLoginSuccess(dataLogIn));
+    } else if (dataSignUp) {
+      dispatch(FetchLoginSuccess(dataSignUp));
+    }
+
+    //navigate("/");
+  }, [dataLogIn, dataSignUp]);
   return (
     <S.LoginInputsBlock>
       <LoginMenu
@@ -180,6 +205,7 @@ export function LoginBlock() {
         <ButtonLogIn
           isLoading={isLoading}
           loginStates={loginStates.states}
+          loginFunc={loginStates.funcStates}
           dispatch={dispatch}
         />
       )}
@@ -257,22 +283,16 @@ const LoginMenu = ({ list, count, loginStates, isLoading }) => {
   return content;
 };
 
-export function ButtonLogIn({ dispatch, loginStates, isLoading }) {
+export function ButtonLogIn({ dispatch, loginStates, isLoading, loginFunc }) {
   // eslint-disable-next-line consistent-return
-  const [skipLogIn, setSkipLogIn] = useState(true);
+
   const loginDataObj = {
     email: loginStates.loginMail,
     password: loginStates.password,
   };
 
-  const {
-    data: dataLogIn,
-    error: errorLogIn,
-    isLoading: isLoadingLogIn,
-  } = usePostSignInWithPasswordQuery(loginDataObj, { skip: skipLogIn });
   function handelClickBtnLogin() {
-    setSkipLogIn(false);
-
+    loginFunc.setSkipLogIn(false);
   }
 
   return (
@@ -314,12 +334,11 @@ function ButtonGetSignUp({
       // eslint-disable-next-line no-lonely-if
       if (!CheckPassword()) {
         dispatch(
-          FetchSignUpPassNotEqual({ SignUpPassNotEqual: "Пароли не совпадают" })
+          FetchSignUpPassNotEqual({ SignUpPassNotEqual: 'Пароли не совпадают' })
         );
         return;
       }
       loginFunc.setSkipSignUp(false);
-
     }
   }
 

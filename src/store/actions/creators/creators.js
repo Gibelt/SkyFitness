@@ -7,18 +7,18 @@ export const FetchSignUpPassNotEqual = (error) => ({
   },
 });
 
-
-///// old functions //////////
-export const FetchLoginStarted = () => ({
-  type: MyType.USER_LOGIN_STARTED,
-});
-
 export const FetchLoginSuccess = (loginData) => ({
   type: MyType.USER_LOGIN_SUCCESS,
   payload: {
     ...loginData,
   },
 });
+///// old functions //////////
+export const FetchLoginStarted = () => ({
+  type: MyType.USER_LOGIN_STARTED,
+});
+
+
 
 export const FetchLoginFailure = (error) => ({
   type: MyType.USER_LOGIN_FAILURE,
