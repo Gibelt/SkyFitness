@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_URL_AUTH, WEB_API_KEY } from "../../constants";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { BASE_URL_AUTH, WEB_API_KEY } from '../../constants';
 
 export const skyFitnessQueryApiAuth = createApi({
-  reducerPath: "skyFitness",
+  reducerPath: 'skyFitness',
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL_AUTH,
   }),
@@ -11,20 +11,20 @@ export const skyFitnessQueryApiAuth = createApi({
     postSignUp: builder.query({
       query: ({ email, password }) => ({
         url: `:signUp?key=${WEB_API_KEY}`,
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: `{"email":"${email}","password":"${password}","returnSecureToken":true}`,
       }),
-      providesTags: [{ type: "UserSignUp" }],
+      providesTags: [{ type: 'UserSignUp' }],
     }),
     postSignInWithPassword: builder.query({
       query: ({ email, password }) => ({
         url: `:signInWithPassword?key=${WEB_API_KEY}`,
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: `{"email":"${email}","password":"${password}","returnSecureToken":true}`,
       }),
-      providesTags: [{ type: "UserLogIn" }],
+      providesTags: [{ type: 'UserLogIn' }],
     }),
   }),
 });

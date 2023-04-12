@@ -18,6 +18,14 @@ export default function skyFitness(state = initialState, action) {
         ...state,
         errorMessage: action.payload,
       };
+      case MyType.USER_LOGIN_SUCCESS: {
+        return {
+          ...state,
+          loading: false,
+          error: null,
+          loginData: action.payload,
+        };
+      }
     default:
       return state;
   }

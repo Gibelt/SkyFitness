@@ -9,6 +9,7 @@ const apiSelectorUserSignUp =
 
 const apiSelectorUserLogIn =
   skyFitnessQueryApiAuth.endpoints.postSignInWithPassword.select();
+  //export const getThingForId = (state, id) => api.endpoints.getThingById.select(id)(state)?.data ?? {};
 
 export const loginDataErrorMSGSelector = (store) =>
   skyFitnessSelector(store)?.errorMessage ?? {};
@@ -21,6 +22,9 @@ export const logInSelector = createSelector(
   apiSelectorUserLogIn,
   (logInResult) => logInResult.data ?? []
 );
+
+export const loginDataSelector = (store) =>
+skyFitnessSelector(store)?.loginData || {};
 /*
  export const minMaxTrackId = (store) => {
   const data = spotyfySelector(store)?.playlist ?? [];
