@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import Popover from 'components/popover';
 import * as s from './SelectWorkoutStyle';
 import { getCourseWorkouts, getWorkoutStatus } from '../../mocks';
 
@@ -37,12 +38,9 @@ export default function SelectWorkout(props) {
     </s.Item>
   ));
   return (
-    <s.ContentWrapper>
-      <s.Content>
-        <s.PopupCloseBtn onClick={onCloseHandler} />
-        <s.Title>Выберите тренировку</s.Title>
-        <s.List>{list}</s.List>
-      </s.Content>
-    </s.ContentWrapper>
+    <Popover onClose={onCloseHandler}>
+      <s.Title>Выберите тренировку</s.Title>
+      <s.List>{list}</s.List>
+    </Popover>
   );
 }

@@ -1,23 +1,5 @@
 import styled from 'styled-components';
 
-const popupWidth = '444px';
-
-export const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: ${popupWidth};
-  max-height: 626px;
-  border-radius: 12px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 36px 41px 58px;
-  background: #fff;
-  box-sizing: border-box;
-`;
-
 export const Title = styled.p`
   text-align: center;
   font-size: 32px;
@@ -72,23 +54,4 @@ export const ItemComplete = styled.img`
   position: absolute;
   right: 12px;
   top: 12px;
-`;
-
-export const ContentWrapper = styled.div`
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  top: 0;
-  left: 0;
-`;
-
-export const PopupCloseBtn = styled.div`
-  width: 26px;
-  height: 26px;
-  position: absolute;
-  transform: translate(calc((${popupWidth} - 26px) / 2), -30px);
-  background-image: url('/img/x-solid.svg');
-  background-repeat: no-repeat;
-  cursor: pointer;
 `;
