@@ -4,38 +4,41 @@
 
 Пример импорта:
 
-`import reduser from 'sdkBackEnd'`
-`import { CreateUser } from 'sdkBackEnd'`
+`import reduser from 'BackEnd'`
+`import { createUser } from 'BackEnd'`
 
 # Использование
 
 В любую функцию передаются данные запроса (т.е. body request) и функция,
 которая будет вызвана после возварата данных от сервера (т.к. запрос асинхронный).
 В переданную функцию при вызове в свою очередь будут переданы в качестве аргумента данные ответа от сервера.
+Причем: первым аргументом передается функция, вторым - данные запроса.
 
-Пример использования:
+P.S.: некоторые функции бэк-енд не требуют данных запроса, а некоторые - даже не передают ответ (подробности см. ниже).
+
+# Пример использования
 
 function onClickBtn() {
 const requestData = `ДАННЫЕ ЗАПРОСА` <!-- в данном случае формат данных { email: 'XXX@google.ru', password: 'XXX' } -->
-const responseFunc = (responseData) => {console.log(responseData);}
-reduser.createUser(requestData, responseFunc); <!-- или --> CreateUser(requestData, responseFunc);
+const responseFunc = (responseData) => {console.log(responseData)}
+reduser.createUser(responseFunc, requestData); <!-- или --> createUser( responseFunc, requestData);
 }
-
 onClickBtn() <!-- выдаст в консоль `ДАННЫЕ ОТВЕТА`, которые вернет сервер -->
 
 # Список доступных функций
 
-По дефолту:
+<!-- Данные пользователя -->
 
-reduser
-.createUser `РЕГИСТРАЦИЯ`
-.signIn `АВТОРИЗАЦИЯ`
-.signOut
-.doPasswordUpdate
-.getData
+createUser - `РЕГИСТРАЦИЯ`
 
-Дополнительно:
+signIn - `АВТОРИЗАЦИЯ`
 
-CreateUser `РЕГИСТРАЦИЯ`
-SignIn `АВТОРИЗАЦИЯ`
-GetData
+signOut - `X`
+
+getUserStatus - `X`
+
+updatePassword - `X`
+
+<!-- БД -->
+
+getData - `X`
