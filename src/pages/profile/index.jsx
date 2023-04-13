@@ -1,5 +1,6 @@
 import SelectWorkout from 'components/selectWorkout/SelectWorkout';
 import { useState } from 'react';
+import LoginUpdate from 'components/loginUpdate';
 import * as S from './styles';
 import { CourseCard } from '../../components/commonComponents/courseCard/courseCard';
 import { Button } from '../../components/commonComponents/button/button';
@@ -7,30 +8,55 @@ import Header from '../../components/header/Header';
 import { getUserCourses } from '../../mocks';
 
 export default function Profile() {
+  const myCourses = getUserCourses('testUser');
+
+  // отображение поповера выбора тренировок
   const [
     { isSelectWorkoutVisible, courseIdProp },
-    toggleSelectWorkoutVisibility,
+    toggleSelectWorkoutPopoverVisibility,
   ] = useState({ isSelectWorkoutVisible: false, courseIdProp: false });
-
-  const myCourses = getUserCourses('testUser');
 
   function openCourseWorkoutsClickHandler(courseId) {
     return () => {
-      toggleSelectWorkoutVisibility({
+      toggleSelectWorkoutPopoverVisibility({
         isSelectWorkoutVisible: true,
         courseIdProp: courseId,
       });
     };
   }
 
-  function closeBtnClickHandler() {
-    return () => {
-      toggleSelectWorkoutVisibility({
-        isSelectWorkoutVisible: false,
-        courseIdProp: '',
-      });
-    };
-  }
+  const closeCourseWorkoutsClickHandler = () => {
+    toggleSelectWorkoutPopoverVisibility({
+      isSelectWorkoutVisible: false,
+      courseIdProp: '',
+    });
+  };
+
+  // отображение поповера смены логина
+  const [isLoginChangePopoverVisible, toggleLoginChangePopoverVisibility] =
+    useState(false);
+
+  const openLoginChangeClickHandler = () => {
+    toggleLoginChangePopoverVisibility(true);
+  };
+
+  const closeLoginChangeClickHandler = () => {
+    toggleLoginChangePopoverVisibility(false);
+  };
+
+  // отображение поповера смены пароля
+  const [
+    isPasswordChangePopoverVisible,
+    togglePasswordChangePopoverVisibility,
+  ] = useState(false);
+
+  const openPasswordChangeClickHandler = () => {
+    togglePasswordChangePopoverVisibility(true);
+  };
+
+  const closePasswordChangeClickHandler = () => {
+    togglePasswordChangePopoverVisibility(false);
+  };
 
   function appendCourseCard(course) {
     return (
@@ -64,8 +90,22 @@ export default function Profile() {
         </S.ProfileInfo>
       </div>
       <S.ProfileInfoActions>
-        <Button.s18.blue width="275px">Редактировать логин</Button.s18.blue>
-        <Button.s18.blue width="275px">Редактировать пароль</Button.s18.blue>
+        <Button.s18.blue width="275px" onClick={openLoginChangeClickHandler}>
+          Редактировать логин
+        </Button.s18.blue>
+        {isLoginChangePopoverVisible ? (
+          <LoginUpdate onCloseHandler={closeLoginChangeClickHandler} />
+        ) : (
+          ''
+        )}
+        <Button.s18.blue width="275px" onClick={openPasswordChangeClickHandler}>
+          Редактировать пароль
+        </Button.s18.blue>
+        {isPasswordChangePopoverVisible ? (
+          <LoginUpdate onCloseHandler={closePasswordChangeClickHandler} />
+        ) : (
+          ''
+        )}
       </S.ProfileInfoActions>
       <S.ProfileTextHeader2>Мои курсы</S.ProfileTextHeader2>
       <S.ProfileCourses>
@@ -74,7 +114,7 @@ export default function Profile() {
       {isSelectWorkoutVisible ? (
         <SelectWorkout
           courseId={courseIdProp}
-          onCloseHandler={closeBtnClickHandler()}
+          onCloseHandler={closeCourseWorkoutsClickHandler}
         />
       ) : (
         ''
