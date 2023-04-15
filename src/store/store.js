@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-//import thunk from 'redux-thunk';
 import skyFitness from "./reducers/skyFitness";
 import { skyFitnessQueryApiAuth } from "../pages/services/queryApi";
 

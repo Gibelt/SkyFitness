@@ -1,9 +1,10 @@
 /* eslint-disable no-restricted-syntax */
-import * as MyType from "../actions/types/types";
+import * as MyType from '../actions/types/types';
 
 export const initialState = {
+  userName: '',
   error: null,
-  loginData: {},
+  loginData: null,
   idRefTokenInt: null,
   refreshToken: null,
   errorMessage: {},
@@ -18,14 +19,25 @@ export default function skyFitness(state = initialState, action) {
         ...state,
         errorMessage: action.payload,
       };
-      case MyType.USER_LOGIN_SUCCESS: {
-        return {
-          ...state,
-          loading: false,
-          error: null,
-          loginData: action.payload,
-        };
-      }
+    case MyType.USER_LOGIN_SUCCESS: {
+      return {
+        ...state,
+        userLogIn: true,
+        loginData: action.payload,
+        userName: action.payload?.displayName,
+      };
+    }
+    case MyType.USER_UPDATE_NAME: {
+      return {
+        ...state,
+        userName: action.payload?.displayName,
+      };
+    }
+    case MyType.USER_LOGIN_FAILURE:
+      return {
+        ...state,
+        errorMessage: { ...action.payload },
+      };
     default:
       return state;
   }
