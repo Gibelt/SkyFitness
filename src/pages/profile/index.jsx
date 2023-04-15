@@ -1,6 +1,7 @@
 import SelectWorkout from 'components/selectWorkout/SelectWorkout';
 import { useState } from 'react';
 import LoginUpdate from 'components/loginUpdate';
+import PasswordUpdate from 'components/passwordUpdate';
 import * as S from './styles';
 import { CourseCard } from '../../components/commonComponents/courseCard/courseCard';
 import { Button } from '../../components/commonComponents/button/button';
@@ -102,7 +103,7 @@ export default function Profile() {
           Редактировать пароль
         </Button.s18.blue>
         {isPasswordChangePopoverVisible ? (
-          <LoginUpdate onCloseHandler={closePasswordChangeClickHandler} />
+          <PasswordUpdate onCloseHandler={closePasswordChangeClickHandler} />
         ) : (
           ''
         )}

@@ -20,7 +20,7 @@ export const Container = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 36px 41px 48px;
+  padding: 36px 41px 0;
   background: #fff;
   box-sizing: border-box;
 `;
@@ -32,4 +32,5 @@ export const PopoverCloseBtn = styled.div`
   background-image: url('/img/x-solid.svg');
   background-repeat: no-repeat;
   cursor: pointer;
+  z-index: 1000;
 `;

@@ -1,10 +1,8 @@
-import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import * as s from './ExerciseSyle';
 import Header from '../../components/header/Header';
 import Tasks from '../../components/tasks/Tasks';
 import Execution from '../../components/tasksProgress/TasksProgress';
-import ProgressForm from '../../components/progressForm/ProgressForm';
 import { getWorkoutInfo } from '../../mocks';
 
 export default function Exercise() {
@@ -12,18 +10,11 @@ export default function Exercise() {
 
   const { title, subtitle, videoURL, exercises } = getWorkoutInfo(workoutId);
 
-  const [isProgressClick, setIsProgressClick] = useState(false);
   return (
     <s.Container>
       <Header />
       <s.Title>{title}</s.Title>
       <s.Subtitle>{subtitle}</s.Subtitle>
-      {isProgressClick && (
-        <ProgressForm
-          tasks={exercises}
-          onClick={() => setTimeout(() => setIsProgressClick(false), 2000)}
-        />
-      )}
       <s.Video>
         <iframe
           width="100%"
@@ -35,7 +26,7 @@ export default function Exercise() {
         />
       </s.Video>
       <s.TasksAndProgress>
-        <Tasks tasks={exercises} onClick={() => setIsProgressClick(true)} />
+        <Tasks tasks={exercises} />
         <Execution tasks={exercises} />
       </s.TasksAndProgress>
     </s.Container>

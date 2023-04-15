@@ -1,18 +1,17 @@
 import Logo from 'components/logo/Logo';
 import Popover from 'components/popover';
+import ActionCompleted from 'components/actionCompleted';
 import { Button } from 'components/commonComponents/button/button';
 import { useState } from 'react';
-import ActionCompleted from 'components/actionCompleted';
 import * as S from './styles';
-import { InputField } from '../loginComp/LoginStyles'; // TODO: вынести в отдельный компонент
+import { InputField } from '../loginComp/LoginStyles';
 
-export default function LoginUpdate(props) {
+export default function PasswordUpdate(props) {
   const [isActionCompleted, setIsActionCompeleted] = useState(false);
   const { onCloseHandler } = props;
 
   const onSaveBtnHandler = () => {
     setIsActionCompeleted(true);
-
     setTimeout(() => {
       onCloseHandler();
     }, 700);
@@ -20,15 +19,17 @@ export default function LoginUpdate(props) {
 
   return isActionCompleted ? (
     <Popover closeBtnRequired={false}>
-      <ActionCompleted msg="Логин обновлён!" />
+      <ActionCompleted msg="Пароль изменён!" />
     </Popover>
   ) : (
     <Popover onClose={onCloseHandler}>
       <Logo />
       <S.ContentWrapper>
-        <S.Title>Новый логин:</S.Title>
+        <S.Title>Новый пароль:</S.Title>
         <S.FieldsBlock>
-          <InputField placeholder="Логин" />
+          {' '}
+          <InputField placeholder="Пароль" />
+          <InputField placeholder="Повторите пароль" />
         </S.FieldsBlock>
         <Button.s18.blue width="275px" onClick={onSaveBtnHandler}>
           Сохранить
