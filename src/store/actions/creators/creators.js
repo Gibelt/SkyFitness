@@ -13,7 +13,7 @@ export const FetchLoginSuccess = (loginData) => ({
     ...loginData,
   },
 });
-///// old functions //////////
+/// // old functions //////////
 export const FetchLoginStarted = () => ({
   type: MyType.USER_LOGIN_STARTED,
 });

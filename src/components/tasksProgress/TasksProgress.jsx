@@ -11,7 +11,6 @@ const colors = [
 export default function Tasks({ complete = 2, tasks }) {
   const getWidth = (item) => {
     const goal = parseInt(item.match(/\d+/), 10);
-    console.log(parseInt(item.match(/\d+/), 10))
     if ((complete / goal) * 100 < 100) {
       return `${Math.floor((complete / goal) * 100)  }%`;
     }

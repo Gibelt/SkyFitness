@@ -2,16 +2,16 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   usePostSignInWithPasswordQuery,
   usePostSignUpQuery,
 } from '../../pages/services/queryApi';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '../commonComponents/button/button';
-//import { ContextTheme } from '../Others/Context';
+//  import { ContextTheme } from '../Others/Context';
 import * as S from './LoginStyles';
-//import * as GS from '../../GlobalStyle';
+//  import * as GS from '../../GlobalStyle';
 import Logo from '../logo/Logo';
 import {
   loginDataErrorMSGSelector,
@@ -19,7 +19,7 @@ import {
   logInSelector,
   loginDataSelector,
 } from '../../store/selectors/selectors';
-import { FetchLoginSuccess } from '../../store/actions/creators/creators';
+import { FetchLoginSuccess, FetchSignUpPassNotEqual } from '../../store/actions/creators/creators';
 /* import {
   loginDataSelector,
   loginDataLoadingSelector,
@@ -35,7 +35,6 @@ import {
   fetchGetToken,
   fetchRefreshToken,
 } from '../../store/actions/thunks/thunks'; */
-import { FetchSignUpPassNotEqual } from '../../store/actions/creators/creators';
 
 const InputFields = [
   {
@@ -124,7 +123,7 @@ export function LoginBlock() {
   } = usePostSignUpQuery(
     {
       email: loginMail,
-      password: password,
+      password,
     },
     { skip: skipSignUp }
   );
@@ -135,7 +134,7 @@ export function LoginBlock() {
   } = usePostSignInWithPasswordQuery(
     {
       email: loginMail,
-      password: password,
+      password,
     },
     { skip: skipLogIn }
   );
@@ -186,7 +185,7 @@ export function LoginBlock() {
       dispatch(FetchLoginSuccess(dataSignUp));
     }
 
-    //navigate("/");
+    //  navigate("/");
   }, [dataLogIn, dataSignUp]);
   return (
     <S.LoginInputsBlock>
