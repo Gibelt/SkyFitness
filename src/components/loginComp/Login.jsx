@@ -1,34 +1,28 @@
 /* eslint-disable react/jsx-pascal-case */
 /* eslint-disable object-curly-newline */
 /* eslint-disable no-unused-vars */
-import React, { useContext, useState, useEffect } from 'react';
-//  import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import {
+  usePostSignInWithPasswordQuery,
+  usePostSignUpQuery,
+  usePostUpdatePasswordQuery,
+  usePostUpdateUserInfoQuery,
+} from '../../pages/services/queryApi';
 import { Button } from '../commonComponents/button/button';
-//  import { ContextTheme } from '../Others/Context';
 import * as S from './LoginStyles';
-//  import * as GS from '../../GlobalStyle';
 import Logo from '../logo/Logo';
-/* import {
-  loginDataSelector,
-  loginDataLoadingSelector,
-  loginDataErrorSelector,
+import {
   loginDataErrorMSGSelector,
-  AccessTokenSelector,
-  RefreshTokenSelector,
-  GetIdTokenRefIntSelector,
+  loginDataSelector,
 } from '../../store/selectors/selectors';
 import {
-  fetchLogin,
-  fetchSignUp,
-  fetchGetToken,
-  fetchRefreshToken,
-} from '../../store/actions/thunks/thunks';
-import {
-  FetchUserLogIn,
-  FetchRefreshTokenInterval,
   FetchSignUpPassNotEqual,
-} from '../../store/actions/creators/creators'; */
+  FetchLoginSuccess,
+  FetchLoginFailure,
+  FetchUpdateName
+} from '../../store/actions/creators/creators';
 
 const InputFields = [
   {
@@ -38,7 +32,7 @@ const InputFields = [
     type: 'email',
   },
   {
-    name: 'Password',
+    name: 'password',
     placeholder: 'Пароль',
     key: '2',
     type: 'password',
@@ -49,120 +43,222 @@ const InputFields = [
     key: '3',
     type: 'password',
   },
-  /*   {
-    name: "userName",
-    placeholder: "Имя пользователя",
-    key: "4",
-    type: "text",
-  }, */
 ];
-function Login() {
-  // const { theme, setTheme } = useContext(ContextTheme);
-
+const InputFieldsChangePassword = [
+  {
+    name: 'password',
+    placeholder: 'Пароль',
+    key: '1',
+    type: 'password',
+  },
+  {
+    name: 'ReturnPassword',
+    placeholder: 'Повторите пароль',
+    key: '2',
+    type: 'password',
+  },
+];
+const InputFieldsChangeLoginName = [
+  {
+    name: 'nameUser',
+    placeholder: 'Имя пользователя',
+    key: '1',
+    type: 'text',
+  },
+];
+function Login({ type = 'login' }) {
   return (
     <S.CenterBlock>
       <S.LoginMainBlock>
         <S.groupLogoImg>
           <Logo />
         </S.groupLogoImg>
-        <LoginBlock />
+        <LoginBlock typeBlock={type} />
       </S.LoginMainBlock>
     </S.CenterBlock>
   );
 }
 
 export default Login;
-function useDispatch() {}
-export function LoginBlock() {
+export function LoginBlock({ typeBlock }) {
   const [signUp, setSignUp] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  /*  const loginData = useSelector(loginDataSelector);
-  const isLoading = useSelector(loginDataLoadingSelector);
-  const error = useSelector(loginDataErrorSelector);
   const errorMessage = useSelector(loginDataErrorMSGSelector);
-  const AccessToken = useSelector(AccessTokenSelector);
-  const RefreshToken = useSelector(RefreshTokenSelector);
-  const idRefreshTokenInterval = useSelector(GetIdTokenRefIntSelector); */
-  const isLoading = false;
-  const errorMessage = {};
-  const [userName, setUserName] = useState('');
-  const [loginMail, setLoginMail] = useState('');
-  const [password, setPassword] = useState('');
-  const [repeatPassword, setRepeatPassword] = useState('');
+  const loginDataSelected = useSelector(loginDataSelector);
+  const [skipSignUp, setSkipSignUp] = useState(true);
+  const [skipLogIn, setSkipLogIn] = useState(true);
+  const [skipChangePassword, setSkipChangePassword] = useState(true);
+  const [skipChangeUserName, setSkipChangeUserName] = useState(true);
+  const [logInfo, setLogInfo] = useState(null);
   const loginStates = {
     states: {
-      userName,
-      loginMail,
-      password,
-      repeatPassword,
+      signUp,
     },
     funcStates: {
-      setUserName,
-      setLoginMail,
-      setPassword,
-      setRepeatPassword,
+      setSkipSignUp,
+      setSkipLogIn,
+      setSignUp,
+      setSkipChangePassword,
+      setSkipChangeUserName,
     },
   };
-  /*   useEffect(() => {
-    if (idRefreshTokenInterval) {
-      clearInterval(idRefreshTokenInterval);
-    }
-  }, []);
+  const {
+    data: dataSignUp,
+    error: errorSignUp,
+    isLoading: isLoadingSignUp,
+  } = usePostSignUpQuery(
+    {
+      email: logInfo?.login,
+      password: logInfo?.password,
+    },
+    { skip: skipSignUp }
+  );
+  const {
+    data: dataLogIn,
+    error: errorLogIn,
+    isLoading: isLoadingLogIn,
+  } = usePostSignInWithPasswordQuery(
+    {
+      email: logInfo?.login,
+      password: logInfo?.password,
+    },
+    { skip: skipLogIn }
+  );
+  const {
+    data: dataNewPassword,
+    error: errorNewPassword,
+    isLoading: isLoadingNewPassword,
+  } = usePostUpdatePasswordQuery(
+    {
+      idToken: loginDataSelected.idToken ?? '',
+      newPassword: logInfo?.password,
+    },
+    { skip: skipChangePassword }
+  );
+  const {
+    data: dataUpdateUserInfo,
+    error: errorUpdateUserInfo,
+    isLoading: isLoadingUpdateUserInfo,
+  } = usePostUpdateUserInfoQuery(
+    {
+      idToken: loginDataSelected.idToken ?? '',
+      newUserName: logInfo?.nameUser,
+    },
+    { skip: skipChangeUserName }
+  );
+
+  const isLoading =
+    isLoadingSignUp ||
+    isLoadingLogIn ||
+    isLoadingNewPassword ||
+    isLoadingUpdateUserInfo;
+
   useEffect(() => {
-    const getToken = loginData?.id > 0;
-    if (getToken && AccessToken === null) {
-      const TokenAccessDataObj = {
-        email: loginStates.states.loginMail,
-        password: loginStates.states.password,
-      };
-      dispatch(fetchGetToken(TokenAccessDataObj));
-    } else if (AccessToken !== null && RefreshToken !== null) {
-      const id = setInterval(() => {
-        dispatch(fetchRefreshToken());
-      }, 40000);
-      localStorage.setItem(
-        "MySpotyfyLoginData",
-        JSON.stringify({
-          id: loginData.id,
-          username: loginData.username,
-          refreshToken: RefreshToken,
-          accessToken: AccessToken,
-          idRefTokenInt: id,
-        })
-      );
-      dispatch(FetchRefreshTokenInterval(id));
-      dispatch(FetchUserLogIn(true));
-      navigate("/");
+    let errorMessageStore = {};
+    if (errorSignUp) {
+      errorMessageStore = { Error: errorSignUp.data.error.message };
+      dispatch(FetchLoginFailure(errorMessageStore));
+    } else if (errorLogIn) {
+      errorMessageStore = { Error: errorLogIn.data.error.message };
+      dispatch(FetchLoginFailure(errorMessageStore));
+    } else if (errorNewPassword) {
+      errorMessageStore = { Error: errorNewPassword.data.error.message };
+      dispatch(FetchLoginFailure(errorMessageStore));
+    } else if (errorUpdateUserInfo) {
+      errorMessageStore = { Error: errorUpdateUserInfo.data.error.message };
+      dispatch(FetchLoginFailure(errorMessageStore));
     }
-  }, [loginData, AccessToken]); */
+  }, [errorLogIn, errorSignUp, errorNewPassword, errorUpdateUserInfo]);
+
+  const writeLoginDataStorage = (data) =>
+    sessionStorage.setItem('skyFitnessLoginData', JSON.stringify(data));
+  useEffect(() => {
+    if (dataLogIn) {
+      dispatch(FetchLoginSuccess(dataLogIn));
+      writeLoginDataStorage(dataLogIn);
+    } else if (dataSignUp) {
+      dispatch(FetchLoginSuccess(dataSignUp));
+      writeLoginDataStorage(dataSignUp);
+    } else if (dataNewPassword) {
+      // navigate("/login");
+    } else if (dataUpdateUserInfo) {
+      dispatch(FetchUpdateName(dataUpdateUserInfo));
+      // navigate("/login");
+    }
+    // navigate("/");
+  }, [dataLogIn, dataSignUp, dataUpdateUserInfo]);
+  const GetListFields = () => {
+    let typeListFields;
+    if (typeBlock === 'login') {
+      typeListFields = InputFields;
+    } else if (typeBlock === 'changePassword') {
+      typeListFields = InputFieldsChangePassword;
+    } else if (typeBlock === 'changeLoginName') {
+      typeListFields = InputFieldsChangeLoginName;
+    }
+    return typeListFields;
+  };
   return (
-    <S.LoginInputsBlock>
-      <LoginMenu
-        isLoading={isLoading}
-        list={InputFields}
-        count={signUp ? 4 : 2}
-        loginStates={loginStates}
-      />
-      {Object.keys(errorMessage).length > 0 && (
-        <S.ErrorArea>
-          <ShowErrors errorMessage={errorMessage} />
-        </S.ErrorArea>
+    <S.LoginChangeBlock>
+      {typeBlock === 'changePassword' && (
+        <S.changeLabel>Новый пароль:</S.changeLabel>
       )}
-      {!signUp && (
-        <ButtonLogIn
+      {typeBlock === 'changeLoginName' && (
+        <S.changeLabel>Новый имя пользователя:</S.changeLabel>
+      )}
+      <S.LoginInputsBlock>
+        <LoginMenu
+          typeBlock={typeBlock}
           isLoading={isLoading}
-          loginStates={loginStates.states}
-          dispatch={dispatch}
+          list={GetListFields()}
+          count={signUp ? 3 : 2}
+          loginStates={loginStates}
         />
-      )}
-      <ButtonGetSignUp
-        signUp={signUp}
-        setSignUp={setSignUp}
-        dispatch={dispatch}
-        loginStates={loginStates.states}
-      />
-    </S.LoginInputsBlock>
+        {Object.keys(errorMessage).length > 0 && (
+          <S.ErrorArea>
+            <ShowErrors errorMessage={errorMessage} />
+          </S.ErrorArea>
+        )}
+        {!signUp && typeBlock === 'login' && (
+          <ButtonLogIn
+            isLoading={isLoading}
+            loginStates={loginStates.states}
+            loginFunc={loginStates.funcStates}
+            dispatch={dispatch}
+            setLogInfo={setLogInfo}
+          />
+        )}
+        {typeBlock === 'login' && (
+          <ButtonGetSignUp
+            signUp={signUp}
+            isLoading={isLoading}
+            dispatch={dispatch}
+            loginStates={loginStates.states}
+            loginFunc={loginStates.funcStates}
+            setLogInfo={setLogInfo}
+          />
+        )}
+        {typeBlock === 'changePassword' && (
+          <ButtonChangePassword
+            isLoading={isLoading}
+            dispatch={dispatch}
+            loginStates={loginStates.states}
+            loginFunc={loginStates.funcStates}
+            setLogInfo={setLogInfo}
+          />
+        )}
+        {typeBlock === 'changeLoginName' && (
+          <ButtonChangeUserName
+            isLoading={isLoading}
+            dispatch={dispatch}
+            loginStates={loginStates.states}
+            loginFunc={loginStates.funcStates}
+            setLogInfo={setLogInfo}
+          />
+        )}
+      </S.LoginInputsBlock>
+    </S.LoginChangeBlock>
   );
 }
 function ShowErrors({ errorMessage }) {
@@ -173,55 +269,19 @@ function ShowErrors({ errorMessage }) {
   ));
   return keys;
 }
-const LoginMenu = ({ list, count, loginStates, isLoading }) => {
-  const { states } = loginStates;
-  const { funcStates } = loginStates;
-
+const LoginMenu = ({ list, count, isLoading, typeBlock }) => {
   const content = [];
-  function ChangeInput(e) {
-    const { target } = e;
-    switch (target.name) {
-      case 'userName':
-        funcStates.setUserName(target.value);
-        break;
-      case 'login':
-        funcStates.setLoginMail(target.value);
-        break;
-      case 'Password':
-        funcStates.setPassword(target.value);
-        break;
-      case 'ReturnPassword':
-        funcStates.setRepeatPassword(target.value);
-        break;
-      default:
-        throw new Error('Отсутствует поле в форме Login');
-    }
-  }
-  function getValue(key) {
-    switch (key) {
-      case '1':
-        return states.loginMail;
-      case '2':
-        return states.password;
-      case '3':
-        return states.repeatPassword;
-      case '4':
-        return states.userName;
-      default:
-        throw new Error('Отсутствует state в форме Login');
-    }
-  }
   list.forEach((inputElem, index) => {
     if (index < count) {
       content.push(
         <S.InputField
+          $typeBlock={typeBlock}
           type={inputElem.type}
           disabled={isLoading}
-          value={getValue(inputElem.key)}
+          id={inputElem.key}
           name={inputElem.name}
           placeholder={inputElem.placeholder}
           key={inputElem.key}
-          onChange={(e) => ChangeInput(e)}
         />
       );
     }
@@ -229,17 +289,90 @@ const LoginMenu = ({ list, count, loginStates, isLoading }) => {
   return content;
 };
 
-export function ButtonLogIn({ dispatch, loginStates, isLoading }) {
+function GetLogParams(stateParams) {
+  const objParams = {};
+  // eslint-disable-next-line no-plusplus
+  for (let index = 1; index < 4; index++) {
+    const element = document.getElementById(String(index));
+    if (element) {
+      objParams[element.name] = element.value;
+    }
+  }
+  stateParams(objParams);
+}
+const CheckPassword = (dispatch) => {
+  const pass = document.getElementsByName('password')[0].value;
+  const repPass = document.getElementsByName('ReturnPassword')[0].value;
+  if (pass !== repPass) {
+    dispatch(
+      FetchSignUpPassNotEqual({ SignUpPassNotEqual: 'Пароли не совпадают' })
+    );
+  }
+  return true;
+};
+export function ButtonChangePassword({
+  isLoading,
+  loginFunc,
+  setLogInfo,
+  dispatch,
+}) {
+  // eslint-disable-next-line consistent-return
+  function handelClickBtnChangePassword() {
+    if (!CheckPassword(dispatch)) {
+      return;
+    }
+    GetLogParams(setLogInfo);
+    loginFunc.setSkipChangePassword(false);
+  }
+
+  return (
+    <S.groupButtonGetSignUp $signUp={false} $changeGroup>
+      <Button.s18.blue
+        width="278px"
+        height="52px"
+        disabled={isLoading}
+        onClick={() => handelClickBtnChangePassword()}
+      >
+        Сохранить
+      </Button.s18.blue>
+    </S.groupButtonGetSignUp>
+  );
+}
+
+export function ButtonChangeUserName({
+  isLoading,
+  loginFunc,
+  setLogInfo,
+  dispatch,
+}) {
+  // eslint-disable-next-line consistent-return
+  function handelClickBtnChangeUserName() {
+    GetLogParams(setLogInfo);
+    loginFunc.setSkipChangeUserName(false);
+  }
+
+  return (
+    <S.groupButtonGetSignUp $signUp={false} $changeGroup>
+      <Button.s18.blue
+        width="278px"
+        height="52px"
+        disabled={isLoading}
+        onClick={() => handelClickBtnChangeUserName()}
+      >
+        Сохранить
+      </Button.s18.blue>
+    </S.groupButtonGetSignUp>
+  );
+}
+
+export function ButtonLogIn({ isLoading, loginFunc, setLogInfo }) {
   // eslint-disable-next-line consistent-return
   function handelClickBtnLogin() {
-    const loginDataObj = {
-      email: loginStates.loginMail,
-      password: loginStates.password,
-    };
-
-    //  dispatch(fetchLogin(loginDataObj));
+    loginFunc.setSkipSignUp(true);
+    GetLogParams(setLogInfo);
+    loginFunc.setSkipLogIn(false);
   }
-  /* disabled={isLoading} onClick={() => handelClickBtnLogin()} */
+
   return (
     <S.groupButtonLogIn>
       <Button.s18.blue
@@ -254,35 +387,33 @@ export function ButtonLogIn({ dispatch, loginStates, isLoading }) {
   );
 }
 
-function ButtonGetSignUp({ signUp, setSignUp, dispatch, loginStates }) {
-  const navigate = useNavigate();
-  const CheckPassword = () => {
-    const { password: pass, repeatPassword: repPass } = loginStates;
-    return pass === repPass;
-  };
+function ButtonGetSignUp({
+  dispatch,
+  loginStates,
+  loginFunc,
+  isLoading,
+  setLogInfo,
+}) {
+  // const navigate = useNavigate();
+
   function HandelClickBtnSignUp() {
-    const signUpDataObj = {
-      username: loginStates.userName,
-      email: loginStates.loginMail,
-      password: loginStates.password,
-    };
-    if (!signUp) {
-      setSignUp((prev) => !prev);
-    } else {
-      // eslint-disable-next-line no-lonely-if
-      if (!CheckPassword()) {
-        /* dispatch(
-          FetchSignUpPassNotEqual({ SignUpPassNotEqual: "Пароли не совпадают" })
-        ); */
-        
-      }
-      // dispatch(fetchSignUp(signUpDataObj));
+    // eslint-disable-next-line no-lonely-if
+    loginFunc.setSkipLogIn(true);
+    if (!loginStates.signUp) {
+      loginFunc.setSignUp(true);
+      return;
     }
+    if (!CheckPassword(dispatch)) {
+      return;
+    }
+    GetLogParams(setLogInfo);
+    loginFunc.setSkipSignUp(false);
   }
-  /* $signUp={signUp} onClick={() => HandelClickBtnSignUp()} */
+
   return (
-    <S.groupButtonGetSignUp $signUp={signUp}>
+    <S.groupButtonGetSignUp $signUp={loginStates.signUp} $changeGroup={false}>
       <Button.s18.white
+        disabled={isLoading}
         width="278px"
         height="52px"
         onClick={() => HandelClickBtnSignUp()}

@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-unused-vars */
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const CenterBlock = styled.div`
   height: 100vh;
@@ -11,7 +11,7 @@ export const CenterBlock = styled.div`
 `;
 
 export const LoginMainBlock = styled.div`
-  height: 439px;
+  // height: 439px;
   width: 366px;
   background: #ffffff;
   border-radius: 12px;
@@ -26,10 +26,16 @@ export const groupLogoImg = styled.div`
 `;
 
 export const LoginInputsBlock = styled.div`
-  margin-top: 14px;
+  margin-top: ${({ $typeBlock }) => ($typeBlock === 'login' ? '14px' : '0px')};
   display: inherit;
-  align-items: inherit;
+  align-items: center;
   flex-direction: inherit;
+`;
+
+export const LoginChangeBlock = styled.div`
+  margin-top: 37px;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const InputField = styled.input`
@@ -39,7 +45,7 @@ export const InputField = styled.input`
   font-size: 18px;
   line-height: 24px;
   letter-spacing: -0.05px;
-  font-feature-settings: "pnum" on, "lnum" on;
+  font-feature-settings: 'pnum' on, 'lnum' on;
   border: none;
   color: #000000;
   border-bottom: 1px solid #d0cece;
@@ -47,7 +53,7 @@ export const InputField = styled.input`
     font-size: 18px;
     line-height: 24px;
     letter-spacing: -0.003em;
-    font-feature-settings: "pnum" on, "lnum" on;
+    font-feature-settings: 'pnum' on, 'lnum' on;
     color: #d0cece;
   }
 `;
@@ -56,6 +62,14 @@ export const ErrorArea = styled.div`
   margin-top: 10px;
   //height: 40px;
   width: 278px;
+`;
+
+export const changeLabel = styled.label`
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: -0.05px;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  color: #000000;
 `;
 
 export const ErrorSpan = styled.span`
@@ -74,15 +88,23 @@ export const groupButtonLogIn = styled.div`
 export const groupButtonGetSignUp = styled.div`
   width: 278px;
   height: 52px;
-  margin-top: 20px;
-  ${({ $signUp }) =>
-    $signUp
-      ? css`
-          margin-top: 60px;
-        `
-      : css`
-          margin-top: 20px;
-        `};
+
+  margin-bottom: 47px;
+  ${({ $signUp, $changeGroup }) => {
+    if ($signUp && !$changeGroup) {
+      return css`
+        margin-top: 60px;
+      `;
+    }
+    if (!$signUp && $changeGroup) {
+      return css`
+        margin-top: 50px;
+      `;
+    }
+    return css`
+      margin-top: 20px;
+    `;
+  }}
 `;
 
 export const ErrorUserNotExist = styled.p`
