@@ -33,6 +33,12 @@ export const userNameDataSelector = (store) =>
   JSON.parse(sessionStorage.getItem('skyFitnessLoginData'))?.displayName ??
   '';
 
+export const userLogInSelector = (store) =>
+  skyFitnessSelector(store)?.userLogIn ??
+  Object.keys(JSON.parse(sessionStorage.getItem('skyFitnessLoginData')))
+    .length > 0 ??
+  false;
+
 export const loginDataApiSelector = (store) =>
   skyFitnessApiSelector(store)?.queries || {};
 /*
