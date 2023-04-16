@@ -3,7 +3,7 @@ import {
   // useDispatch,
   useSelector,
 } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { loginDataSelector as getUserStoreData } from 'store/selectors/selectors';
 import Header from 'components/header/Header';
@@ -29,6 +29,12 @@ export default () => {
 };
 
 const Page = ({ course = 'yoga' }) => {
+  useEffect(() => {
+    const wrapper = document.querySelector('.wrapper');
+    if (wrapper) {
+      wrapper.style = 'background-color: #ffffff';
+    }
+  }); // добавил для фона Bogdanov AG
   const userStoreData = useSelector(getUserStoreData);
   const { getDBdata } = devFunx;
 
