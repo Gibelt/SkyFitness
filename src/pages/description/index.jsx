@@ -1,104 +1,63 @@
+import { Routes, Route } from 'react-router-dom';
+import {
+  // useDispatch,
+  useSelector,
+} from 'react-redux';
+import { useState } from 'react';
+
+import { loginDataSelector as getUserStoreData } from 'store/selectors/selectors';
 import Header from 'components/header/Header';
-import { Button } from 'components/commonComponents/button/button';
+import Styled from './styledComponents';
+import Recording from './recording';
+import Title from './title';
 import Guide from './guide';
 
-import Styled from './styledComponents';
+import localData from './data';
+import devFunx from './devFunx';
+// import clickFunx from './clickFunx';
 
-export default function WorkoutVideoPage({ course = 'yoga' }) {
-  const settings = {
-    yoga: {
-      title: `Йога`,
-      bgFile: `yoga.png`,
-    },
-  };
-  const { title, bgFile } = settings[course];
-  const src = `/img/pages/workoutVideo/title/${bgFile}`;
+export default () => {
+  const courses = Object.keys(localData.Page);
+  const routeList = new Array();
+  for (let i = 0; i < courses.length; i++) {
+    const course = courses[i];
+    routeList.push(
+      <Route path={course} element={<Page course={course} />} key={i} />
+    );
+  }
+  return <Routes>{routeList}</Routes>;
+};
 
-  return (
-    <Styled.Wrapper>
+const Page = ({ course = 'yoga' }) => {
+  const userStoreData = useSelector(getUserStoreData);
+  const { getDBdata } = devFunx;
+
+  const [courseData, setCourseData] = useState();
+  const [userData, setUserData] = useState();
+
+  // userStoreData = 'james';
+  // console.log(userData, Boolean(userData));
+
+  if (!courseData) getDBdata(setCourseData, { course });
+  else if (userData !== userStoreData) setUserData(userStoreData);
+
+  const { Wrapper } = Styled;
+  return courseData ? (
+    <Wrapper>
       <Header />
-      <Main data={{ title, src }} />
-    </Styled.Wrapper>
-  );
-}
+      <Main data={{ courseData, userData }} />
+    </Wrapper>
+  ) : null;
+};
 
-function Main({ data: { title, src } }) {
+const Main = ({ data }) => {
+  const { courseData } = data;
+  const Wrapper = Styled.Main;
   return (
-    <Styled.Main>
-      <Title title={title} src={src} />
-      <Guide />
-      <Recording />
-    </Styled.Main>
+    <Wrapper>
+      <Title data={data} />
+      <Guide data={courseData.remote} />
+      <Recording data={data} />
+    </Wrapper>
   );
-}
-
-function Title({
-  title = 'Заголовок',
-  width = '100%',
-  height = '300px',
-  activity = false,
-  src = '',
-  bgColor = '#F5F5F5',
-}) {
-  return (
-    <Styled.Title.Box
-      style={{
-        src,
-        width,
-        height,
-        activity,
-        bgColor,
-      }}
-    >
-      <h1>{title}</h1>
-      <Styled.Title.Content>
-        <Button.s18.blue
-          width="max-content"
-          onClick={() => {
-            console.log('Курс добавлен');
-          }}
-        >
-          Добавить курс
-        </Button.s18.blue>
-      </Styled.Title.Content>
-    </Styled.Title.Box>
-  );
-}
-
-function Recording({
-  width = '100%',
-  height = '300px',
-  activity = false,
-  src = '/img/pages/workoutVideo/Signup.png',
-  bgColor = '#F9EBFF',
-}) {
-  return (
-    <Styled.Recording.Box
-      style={{
-        src,
-        width,
-        height,
-        activity,
-        bgColor,
-      }}
-    >
-      <Styled.Recording.Content>
-        <p>
-          Оставьте заявку на пробное занятие, мы свяжемся с вами, поможем с
-          выбором направления и тренера, с которым тренировки принесут здоровье
-          и радость!
-        </p>
-
-        <Button.s18.blue
-          width="max-content"
-          height="max-content"
-          onClick={() => {
-            console.log('Вы записаны на урок');
-          }}
-        >
-          Записаться на тренировку
-        </Button.s18.blue>
-      </Styled.Recording.Content>
-    </Styled.Recording.Box>
-  );
-}
+};
