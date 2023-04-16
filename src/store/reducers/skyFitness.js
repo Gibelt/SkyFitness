@@ -8,7 +8,7 @@ export const initialState = {
   idRefTokenInt: null,
   refreshToken: null,
   errorMessage: {},
-  userLogIn: false,
+  userLogIn: null,
 };
 
 // eslint-disable-next-line default-param-last
