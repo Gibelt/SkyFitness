@@ -35,7 +35,7 @@ export const userNameDataSelector = (store) =>
 
 export const userLogInSelector = (store) =>
   skyFitnessSelector(store)?.userLogIn ??
-  Object.keys(JSON.parse(sessionStorage.getItem('skyFitnessLoginData')))
+  Object.keys(JSON.parse(sessionStorage.getItem('skyFitnessLoginData')) ?? {})
     .length > 0 ??
   false;
 

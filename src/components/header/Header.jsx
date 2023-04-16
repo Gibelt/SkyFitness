@@ -1,20 +1,17 @@
-import * as s from "./HeaderStyle";
+import { useNavigate } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
+import LogInUserView from 'components/commonComponents/login/logInUserview';
+import * as s from './HeaderStyle';
 
 export default function Header() {
+  const navigate = useNavigate();
+
   return (
     <s.Content>
       <s.Logo>
-        <s.LogoImg src="/img/logo-black.svg" />
+        <s.LogoImg src="/img/logo-black.svg" onClick={() => navigate('/')} />
       </s.Logo>
-      <s.User>
-        <s.UserImg />
-        <s.UserText>
-          <s.UserName>Сергей</s.UserName>
-          <s.UserArrow>
-            <s.UserArrowImg src="../../icons/arrow.svg" />
-          </s.UserArrow>
-        </s.UserText>
-      </s.User>
+      <LogInUserView />
     </s.Content>
   );
 }
