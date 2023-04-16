@@ -1,33 +1,20 @@
-import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import * as s from './ExerciseSyle';
 import Header from '../../components/header/Header';
 import Tasks from '../../components/tasks/Tasks';
 import Execution from '../../components/tasksProgress/TasksProgress';
-import ProgressForm from '../../components/progressForm/ProgressForm';
-
-const title = 'Йога';
-const subtitle = 'Красота и здоровье / Йога на каждый день / 2 день';
-const videoURL = 'oqe98Dxivns';
-
-const tasksExapmle = [
-  'Наклон вперед (10 повторений)',
-  'Наклон назад (10 повторений)',
-  'Поднятие ног, согнутых в коленях (5 повторений)',
-];
+import { getWorkoutInfo } from '../../mocks';
 
 export default function Exercise() {
-  const [isProgressClick, setIsProgressClick] = useState(false);
+  const workoutId = useParams().id;
+
+  const { title, subtitle, videoURL, exercises } = getWorkoutInfo(workoutId);
+
   return (
     <s.Container>
       <Header />
       <s.Title>{title}</s.Title>
       <s.Subtitle>{subtitle}</s.Subtitle>
-      {isProgressClick && (
-        <ProgressForm
-          tasks={tasksExapmle}
-          onClick={() => setTimeout(() => setIsProgressClick(false), 2000)}
-        />
-      )}
       <s.Video>
         <iframe
           width="100%"
@@ -39,8 +26,8 @@ export default function Exercise() {
         />
       </s.Video>
       <s.TasksAndProgress>
-        <Tasks tasks={tasksExapmle} onClick={() => setIsProgressClick(true)} />
-        <Execution tasks={tasksExapmle} />
+        <Tasks tasks={exercises} />
+        <Execution tasks={exercises} />
       </s.TasksAndProgress>
     </s.Container>
   );
