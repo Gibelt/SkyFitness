@@ -1,33 +1,51 @@
-import * as s from "./SelectWorkoutStyle";
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { getDataByRef, ref } from '../../backEnd';
+import * as s from './SelectWorkoutStyle';
 
-const workoutsDefault = [
-  {text: "Утренняя практика / Йога на каждый день / 1 день", complete: true},
-  {text: "Красота и здоровье / Йога на каждый день / 2 день", complete: true},
-  {text: "Асаны стоя / Йога на каждый день / 3 день", complete: false},
-  {text: "Растягиваем мышцы бедра / Йога на каждый день / 4 день", complete: true},
-  {text: "Гибкость спины / Йога на каждый день / 5 день", complete: false},
-  {text: "Гибкость спины / Йога на каждый день / 5 день", complete: false},
-  {text: "Гибкость спины / Йога на каждый день / 5 день", complete: false},
-  {text: "Гибкость спины / Йога на каждый день / 5 день", complete: false},
-];
+const userId = 'd8addebe6113416aa67d134d2538f873';
+const courseId = '37cd2b14182e4e69aad6e60e6c25015e';
 
-export default function SelectWorkout({ workouts = workoutsDefault }) {
-  const list = workouts.map((item) => (
-    <s.Item key={item.text.toString()} style={{border: `${item.complete ? "1px solid #06B16E" : ''}`}}>
-      <s.ItemText style={{color: `${item.complete ? "#06B16E" : ''}`}}>
-      <s.ItemTitle>{item.text.split("/")[0]}</s.ItemTitle>
-      <s.ItemDesc>{`${item.text.split("/")[1]  }/${  item.text.split("/")[2]}`}</s.ItemDesc>
-      </s.ItemText> {
-        item.complete &&
-      <s.ItemComplete src="/img/exercise-complete.svg" />
-         }
-    </s.Item>
+export default function SelectWorkout() {
+  const [workouts, setWorkouts] = useState({});
+
+  const handleClick = (id) => {
+    window.localStorage.setItem('exerciseID', id);
+  };
+  const parseData = (responseData) => {
+    setWorkouts(responseData.data[userId].courses[courseId].workouts);
+  };
+
+  useEffect(() => {
+    getDataByRef(parseData, { ref: ref('users') });
+  }, []);
+
+  const list = Object.entries(workouts).map(([id, value]) => (
+    <Link
+      key={value.name.toString()}
+      to="/exercise"
+      style={{ textDecoration: 'none' }}
+      onClick={() => handleClick(id)}
+    >
+      <s.Item
+        style={{ border: `${value.complete ? '1px solid #06B16E' : ''}` }}
+      >
+        <s.ItemText style={{ color: `${value.complete ? '#06B16E' : ''}` }}>
+          <s.ItemTitle>{value.name.split('/')[0] || value.name}</s.ItemTitle>
+          <s.ItemDesc>
+            {value.name.split('/')[1]
+              ? `${value.name.split('/')[1]}/${value.text.split('/')[2]}`
+              : ''}
+          </s.ItemDesc>
+        </s.ItemText>{' '}
+        {value.complete && <s.ItemComplete src="/img/exercise-complete.svg" />}
+      </s.Item>
+    </Link>
   ));
   return (
     <s.Content>
-      <s.Title>Ваш прогресс засчитан!</s.Title>
-      <s.List>
-        {list}
-      </s.List>
+      <s.Title>Выберите тренировку</s.Title>
+      <s.List>{list}</s.List>
     </s.Content>
-  )};
+  );
+}
