@@ -1,5 +1,5 @@
 const data = {
-  Page: {
+  default: {
     yoga: {
       name: `Йога`,
     },
@@ -20,9 +20,9 @@ const data = {
 };
 
 const imgFolderPath = `/img/pages/description/title`;
-const courses = data.Page;
+const courses = data.default;
 for (const courseName of Object.keys(courses))
-  courses[courseName].bgFile = `${imgFolderPath}/${courseName}.png`;
+  courses[courseName].bgSrc = `${imgFolderPath}/${courseName}.png`;
 
 data.Recording.msg =
   'Оставьте заявку на пробное занятие, мы свяжемся с вами, поможем с выбором направления и тренера, с которым тренировки принесут здоровье и радость!';

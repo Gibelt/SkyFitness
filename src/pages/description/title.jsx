@@ -1,45 +1,54 @@
-// import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 import { Button as StandartButton } from 'components/commonComponents/button/button';
+import { addUserCourse, getUserCoursesData } from 'mocks';
 import Styled from './styledComponents';
 
-import clickFunx from './clickFunx';
-
-export default ({ data: { courseData, userData = null } }) => {
-  // const navigate = useNavigate();
-  // const goToCoursesPageFunc = () => navigate(`/`, { replace: true });
-
+export default ({ data }) => {
+  const { courseData, userData } = data;
   const localData = courseData.local;
   const courseName = localData.name;
-  const src = localData.bgFile;
+  const courseBGsrc = localData.bgSrc;
+  const userID = userData.id;
 
-  const isUserLogIn = Boolean(userData);
-  const buttonName = isUserLogIn ? 'Добавить курс' : 'Требуется авторизация';
+  const [addingState, setAddingState] = useState(false);
+  getUserCoursesData(
+    (data) => {
+      for (const engName of Object.keys(data))
+        if (data[engName].name === courseName) setAddingState(true);
+    },
+    { userID }
+  );
 
   const { Title } = Styled;
   const { Content } = Title;
   const { Box } = Title;
-  const boxStyle = {
-    src,
-    width: '100%',
-    height: '300px',
-    bgColor: '#F5F5F5',
-    activity: false,
+  const buttonName = {
+    disable: 'Требуется авторизация',
+    enable: addingState
+      ? `Курс «${courseName}» добавлен`
+      : `Добавить курс «${courseName}»`,
   };
-
   return (
-    <Box style={boxStyle}>
+    <Box
+      style={{
+        width: '100%',
+        height: '300px',
+        bgColor: '#F5F5F5',
+        src: courseBGsrc,
+        activity: false,
+      }}
+    >
       <h1>{courseName}</h1>
       <Content>
         <Button
-          onClick={() => clickFunx.addCourse(courseName)}
-          disabled={!isUserLogIn}
+          onClick={() =>
+            addUserCourse(() => setAddingState(true), { userID, courseName })
+          }
+          disabled={!userID || addingState}
         >
-          {buttonName}
+          {buttonName[userID ? 'enable' : 'disable']}
         </Button>
-        {/* <Button onClick={goToCoursesPageFunc} disabled={false}>
-          Вернуться к списку курсов
-        </Button> */}
       </Content>
     </Box>
   );
