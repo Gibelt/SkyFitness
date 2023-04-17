@@ -37,6 +37,7 @@
     "no-underscore-dangle": "off",
     "no-restricted-syntax": "off",
     "no-array-constructor": "off",
+    "no-new-object": "off",
     "no-plusplus": "off",
     "no-console": "off",
     "no-shadow": "off"

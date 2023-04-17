@@ -1,58 +1,61 @@
+import { useState } from 'react';
+
 import { Button as StandartButton } from 'components/commonComponents/button/button';
 import Styled from './styledComponents';
+import pageData from './pageData';
 
-import localData from './data';
-import clickFunx from './clickFunx';
+export default ({ data }) => {
+  const { courseData, userData } = data;
+  const localData = courseData.local;
+  const courseName = localData.name;
+  const userID = userData.id;
+  const { msg } = pageData.Recording;
 
-export default ({
-  data: { courseData, userData = null },
-  width = '100%',
-  height = '300px',
-  activity = false,
-  src = '/img/pages/description/Signup.png',
-  bgColor = '#F9EBFF',
-}) => {
-  const courseName = courseData.local.name;
-
-  const isUserLogIn = Boolean(userData);
-  const { msg } = localData.Recording;
-  const buttonName = isUserLogIn
-    ? 'Записаться на тренировку'
-    : 'Для записи на урок требуется авторизация';
+  const [recordState, setRecordState] = useState(false);
 
   const { Recording } = Styled;
   const { Content } = Recording;
   const { Box } = Recording;
-  const boxStyle = {
-    src,
-    width,
-    height,
-    activity,
-    bgColor,
+  const buttonName = {
+    disable: 'Для записи на урок требуется авторизация',
+    enable: recordState
+      ? `Отменить запись на тренировку по «${courseName}»`
+      : `Записаться на тренировку по «${courseName}»`,
   };
-
   return (
-    <Box style={boxStyle}>
+    <Box
+      style={{
+        src: '/img/pages/description/Signup.png',
+        width: '100%',
+        height: '300px',
+        activity: false,
+        bgColor: '#F9EBFF',
+      }}
+    >
       <Content>
         <p>{msg}</p>
         <Button
-          onClick={() => clickFunx.recordToLesson(courseName)}
-          disabled={!isUserLogIn}
+          onClick={() => setRecordState(!recordState)}
+          recordState={recordState}
+          disabled={!userID}
         >
-          {buttonName}
+          {buttonName[userID ? 'enable' : 'disable']}
         </Button>
       </Content>
     </Box>
   );
 };
 
-const Button = ({ onClick, disabled, children }) => (
-  <StandartButton.s18.blue
-    onClick={onClick}
-    disabled={disabled}
-    width="max-content"
-    height="max-content"
-  >
-    {children}
-  </StandartButton.s18.blue>
-);
+const Button = ({ onClick, recordState, disabled, children }) => {
+  const Btn = StandartButton.s18[recordState ? 'white' : 'blue'];
+  return (
+    <Btn
+      onClick={onClick}
+      disabled={disabled}
+      width="max-content"
+      height="max-content"
+    >
+      {children}
+    </Btn>
+  );
+};
