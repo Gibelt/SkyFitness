@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const Content = styled.div`
+  
+`;
+
 export const Title = styled.p`
   text-align: center;
   font-size: 32px;

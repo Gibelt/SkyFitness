@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import ActionCompleted from 'components/actionCompleted';
-import Popover from 'components/popover';
+// import ActionCompleted from 'components/actionCompleted';
+// import Popover from 'components/popover';
 import * as s from './ProgressFormStyle';
 import { Button } from '../commonComponents/button/button';
 import { updateDataByRef, ref } from '../../backEnd';
@@ -15,7 +15,7 @@ const tasksDefault = [
 export default function ProgressForm({ onClick, tasks = tasksDefault }) {
   const [isClick, setIsClick] = useState(false);
   const [values, setValues] = useState({});
-  const [comp, setComp] = useState({});
+  const [complete, setComplete] = useState({});
 
   const userId = 'd8addebe6113416aa67d134d2538f873';
   const courseId = '37cd2b14182e4e69aad6e60e6c25015e';
@@ -37,8 +37,8 @@ export default function ProgressForm({ onClick, tasks = tasksDefault }) {
     });
 
     if (e.target.value >= Number(e.target.id)) {
-      setComp({
-        ...comp,
+      setComplete({
+        ...complete,
         [e.target.name]: { done: 'complete' },
       });
     }
@@ -50,7 +50,7 @@ export default function ProgressForm({ onClick, tasks = tasksDefault }) {
       const newData = { [item]: value };
       updateDataByRef(() => {}, { ref: bd, newData });
     });
-    if (Object.keys(comp).length === Object.keys(tasks).length) {
+    if (Object.keys(complete).length === Object.keys(tasks).length) {
       const newData = { complete: true };
       updateDataByRef(() => {}, { ref: bdComplete, newData });
     }
@@ -69,7 +69,7 @@ export default function ProgressForm({ onClick, tasks = tasksDefault }) {
         onChange={onChange}
       />
 
-/*
+{/* /*
 export default function ProgressForm({ onCloseHandler, tasks = tasksDefault }) {
   const [isActionCompleted, setIsActionCompeleted] = useState(false);
 
@@ -86,18 +86,18 @@ export default function ProgressForm({ onCloseHandler, tasks = tasksDefault }) {
         Сколько раз вы сделали {item.split('(')[0].toLowerCase().trim()}?
       </s.Text>
       <s.Input type="number" placeholder="Введите значение" />
-      */
+      */ }
 
     </s.Item>
   ));
 
-  return isActionCompleted ? (
-    <Popover closeBtnRequired={false}>
-      <ActionCompleted msg="Ваш прогресс засчитан!" />
-    </Popover>
-  ) : (
-
-    <s.Content>
+  return isClick ? (
+    <s.ContentComplete>
+    <s.TitleComplete>Ваш прогресс засчитан!</s.TitleComplete>
+    <s.ImgComplete src="../../img/complete.svg" />
+  </s.ContentComplete>
+) : (
+  <s.Content>
       <s.Title>Мой прогресс</s.Title>
       <s.List onSubmit={handleSubmit}>
         {list}
@@ -109,6 +109,11 @@ export default function ProgressForm({ onCloseHandler, tasks = tasksDefault }) {
       </s.List>
     </s.Content>
 
+// return isActionCompleted ? (
+//   <Popover closeBtnRequired={false}>
+//     <ActionCompleted msg="Ваш прогресс засчитан!" />
+//   </Popover>
+// ) : (
 /*
     <Popover onClose={onCloseHandler}>
       <s.Content>

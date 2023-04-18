@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { getDataByRef, ref } from '../../backEnd';
 import * as s from './ExerciseSyle';
@@ -89,12 +88,12 @@ export default function Exercise() {
         </s.TasksAndProgress>
       )}
 
-/*
+{/* /*
       <s.TasksAndProgress>
         <Tasks tasks={exercises} />
         <Execution tasks={exercises} />
       </s.TasksAndProgress>
-      */
+      */ }
 
     </s.Container>
   );
