@@ -16,20 +16,35 @@ export const Title = styled.p`
   color: #000000;
 `;
 
+
+export const TitleComplete = styled.p`
+  font-size: 40px;
+  line-height: 48px;
+  text-align: center;
+  color: #000000;
+  max-width: 268px;
+  margin-bottom: 12px;
+`;
+
+export const ImgComplete = styled.img``;
+
+export const List = styled.form`
+
+/*
 export const List = styled.div`
+*/
+
   display: flex;
   flex-direction: column;
   gap: 30px;
   padding: 30px 0 40px;
 `;
 
-export const Item = styled.div`
+export const Item = styled.label`
   display: flex;
   flex-direction: column;
   gap: 20px;
-`;
 
-export const Text = styled.p`
   font-size: 18px;
   line-height: 24px;
   letter-spacing: -0.05px;
@@ -59,4 +74,8 @@ export const Input = styled.input`
   border-bottom: 1px solid #d0cece;
   padding-bottom: 7px;
   outline: none;
+`;
+
+export const ButtonContainer = styled.div`
+  align-self: center;
 `;

@@ -3,6 +3,11 @@ import ProgressForm from 'components/progressForm/ProgressForm';
 import * as s from './TasksStyle';
 import { Button } from '../commonComponents/button/button';
 
+
+export default function Tasks({ onClick, tasks }) {
+  const items = Object.keys(tasks).map((item) => (
+
+/*
 export default function Tasks({ tasks }) {
   const [isProgressFormVisible, setProgressFormVisibility] = useState(false);
 
@@ -15,6 +20,8 @@ export default function Tasks({ tasks }) {
   };
 
   const items = tasks.map((item) => (
+  8?
+
     <s.Item key={item.toString()}>{item}</s.Item>
   ));
 

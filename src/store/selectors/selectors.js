@@ -10,6 +10,7 @@ const apiSelectorUserSignUp =
 
 const apiSelectorUserLogIn =
   skyFitnessQueryApiAuth.endpoints.postSignInWithPassword.select();
+
 // export const getThingForId = (state, id) => api.endpoints.getThingById.select(id)(state)?.data ?? {};
 
 export const loginDataErrorMSGSelector = (store) =>
