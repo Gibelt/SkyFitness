@@ -2,7 +2,7 @@
 import * as MyType from '../actions/types/types';
 
 export const initialState = {
-  userName: '',
+  userName: null,
   error: null,
   loginData: null,
   idRefTokenInt: null,
@@ -25,6 +25,14 @@ export default function skyFitness(state = initialState, action) {
         userLogIn: true,
         loginData: action.payload,
         userName: action.payload?.displayName,
+      };
+    }
+    case MyType.USER_LOGOUT: {
+      return {
+        ...state,
+        userLogIn: false,
+        loginData: null,
+        userName: null,
       };
     }
     case MyType.USER_UPDATE_NAME: {

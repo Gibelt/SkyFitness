@@ -23,3 +23,8 @@ export const FetchUpdateName = (data) => ({
   type: MyType.USER_UPDATE_NAME,
   payload: data,
 });
+
+export const FetchLogOut = () => ({
+  type: MyType.USER_LOGOUT,
+  payload: {},
+});

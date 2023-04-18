@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-pascal-case */
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userLogInSelector } from 'store/selectors/selectors';
@@ -12,25 +13,20 @@ import { CourseCard } from '../../components/commonComponents/courseCard/courseC
 
 export default function Main() {
   const navigate = useNavigate();
-  const userLogIn = useSelector(userLogInSelector);
+  // const userLogIn = useSelector(userLogInSelector);
   const HendleClickCours = (srcPage) => navigate(`/description/${srcPage}`);
-  useEffect(() => {
+  /*   useEffect(() => {
     const wrapper = document.querySelector('.wrapper');
     if (wrapper) {
       wrapper.style = 'background-color: #271a58';
     }
-  });
+  }); */
   return (
     <S.mainWrapper>
       <S.groupLogo>
         <Logo color="white" />
         <S.groupBtn>
-          {!userLogIn && (
-            <Button.s16.blue width="77px" onClick={() => navigate('/login')}>
-              Войти
-            </Button.s16.blue>
-          )}
-          {userLogIn && <LogInUserView />}
+          <LogInUserView />
         </S.groupBtn>
       </S.groupLogo>
       <S.groupBigHeader>
