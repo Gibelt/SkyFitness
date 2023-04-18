@@ -21,7 +21,7 @@ import {
   FetchSignUpPassNotEqual,
   FetchLoginSuccess,
   FetchLoginFailure,
-  FetchUpdateName
+  FetchUpdateName,
 } from '../../store/actions/creators/creators';
 
 const InputFields = [
@@ -177,12 +177,20 @@ export function LoginBlock({ typeBlock }) {
     if (dataLogIn) {
       dispatch(FetchLoginSuccess(dataLogIn));
       writeLoginDataStorage(dataLogIn);
+      navigate('/');
     } else if (dataSignUp) {
       dispatch(FetchLoginSuccess(dataSignUp));
       writeLoginDataStorage(dataSignUp);
+      navigate('/');
     } else if (dataNewPassword) {
       // navigate("/login");
     } else if (dataUpdateUserInfo) {
+      const loginDataStorage = JSON.parse(
+        sessionStorage.getItem('skyFitnessLoginData')
+      );
+      console.log(loginDataStorage);
+      loginDataStorage.displayName = dataUpdateUserInfo.displayName;
+      sessionStorage.setItem('skyFitnessLoginData', loginDataStorage);
       dispatch(FetchUpdateName(dataUpdateUserInfo));
       // navigate("/login");
     }
