@@ -1,8 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-
 import './App.css';
-
 import AppRoutes from './routes';
 
 function App() {
