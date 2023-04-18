@@ -1,104 +1,71 @@
+import { Routes, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+
+import { loginDataSelector } from 'store/selectors/selectors';
 import Header from 'components/header/Header';
-import { Button } from 'components/commonComponents/button/button';
-import Guide from './guide';
+import { getCorseData } from 'mocks';
 
 import Styled from './styledComponents';
+import Title from './title';
+import Guide from './guide';
+import Recording from './recording';
+import pageData from './pageData';
 
-export default function WorkoutVideoPage({ course = 'yoga' }) {
-  const settings = {
-    yoga: {
-      title: `Йога`,
-      bgFile: `yoga.png`,
-    },
-  };
-  const { title, bgFile } = settings[course];
-  const src = `/img/pages/workoutVideo/title/${bgFile}`;
+export default () => {
+  // description routes
+  const routeList = new Array();
+  const courses = Object.keys(pageData.default);
+  const page = (course) => <Page course={course} />;
+  const route = (elm) => <Route path={elm} element={page(elm)} key={elm} />;
+  for (let i = 0; i < courses.length; i++) routeList.push(route(courses[i]));
+  return <Routes>{routeList}</Routes>;
+};
 
-  return (
-    <Styled.Wrapper>
+const Page = ({ course = 'yoga' }) => {
+  const [courseData, setCourseData] = useState();
+  const [userData, setUserData] = useState();
+
+  const userStoreData = useSelector(loginDataSelector);
+  if (!courseData) getDBdata(setCourseData, { course });
+  else if (userData !== userStoreData) setUserData(userStoreData);
+
+  const { Wrapper } = Styled;
+  return courseData ? (
+    <Wrapper>
       <Header />
-      <Main data={{ title, src }} />
-    </Styled.Wrapper>
-  );
-}
+      <Main
+        data={{
+          courseData,
+          // userData,
+          userData: { id: 'd8addebe6113416aa67d134d2538f873' },
+        }}
+      />
+    </Wrapper>
+  ) : null;
+};
 
-function Main({ data: { title, src } }) {
+const Main = ({ data }) => {
+  const { courseData } = data;
+  const Wrapper = Styled.Main;
   return (
-    <Styled.Main>
-      <Title title={title} src={src} />
-      <Guide />
-      <Recording />
-    </Styled.Main>
+    <Wrapper>
+      <Title data={data} />
+      <Guide data={courseData.remote} />
+      <Recording data={data} />
+    </Wrapper>
   );
-}
+};
 
-function Title({
-  title = 'Заголовок',
-  width = '100%',
-  height = '300px',
-  activity = false,
-  src = '',
-  bgColor = '#F5F5F5',
-}) {
-  return (
-    <Styled.Title.Box
-      style={{
-        src,
-        width,
-        height,
-        activity,
-        bgColor,
-      }}
-    >
-      <h1>{title}</h1>
-      <Styled.Title.Content>
-        <Button.s18.blue
-          width="max-content"
-          onClick={() => {
-            console.log('Курс добавлен');
-          }}
-        >
-          Добавить курс
-        </Button.s18.blue>
-      </Styled.Title.Content>
-    </Styled.Title.Box>
+const getDBdata = (setDBdata, { course }) => {
+  const localData = pageData.default[course];
+  getCorseData(
+    (remoteData) =>
+      remoteData
+        ? setDBdata({ local: localData, remote: remoteData })
+        : console.error(
+            'Неизвестная ошибка: данные курса с удаленного сервера не получены'
+          ),
+    { courseName: localData.name }
   );
-}
-
-function Recording({
-  width = '100%',
-  height = '300px',
-  activity = false,
-  src = '/img/pages/workoutVideo/Signup.png',
-  bgColor = '#F9EBFF',
-}) {
-  return (
-    <Styled.Recording.Box
-      style={{
-        src,
-        width,
-        height,
-        activity,
-        bgColor,
-      }}
-    >
-      <Styled.Recording.Content>
-        <p>
-          Оставьте заявку на пробное занятие, мы свяжемся с вами, поможем с
-          выбором направления и тренера, с которым тренировки принесут здоровье
-          и радость!
-        </p>
-
-        <Button.s18.blue
-          width="max-content"
-          height="max-content"
-          onClick={() => {
-            console.log('Вы записаны на урок');
-          }}
-        >
-          Записаться на тренировку
-        </Button.s18.blue>
-      </Styled.Recording.Content>
-    </Styled.Recording.Box>
-  );
-}
+};

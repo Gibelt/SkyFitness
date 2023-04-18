@@ -1,15 +1,80 @@
-import * as S from "./styles";
-import { coursesImages } from '../../constants';
+import SelectWorkout from 'components/selectWorkout/SelectWorkout';
+import { useState } from 'react';
+import LoginUpdate from 'components/loginUpdate';
+import PasswordUpdate from 'components/passwordUpdate';
+import * as S from './styles';
 import { CourseCard } from '../../components/commonComponents/courseCard/courseCard';
 import { Button } from '../../components/commonComponents/button/button';
 import Header from '../../components/header/Header';
+import { getUserCourses } from '../../mocks';
 
 export default function Profile() {
-  const myCourses = [
-    { id: 1, title: 'Йога' },
-    { id: 2, title: 'Стретчинг' },
-    { id: 3, title: 'Бодифлекс' },
-  ];
+  const myCourses = getUserCourses('testUser');
+
+  // отображение поповера выбора тренировок
+  const [
+    { isSelectWorkoutVisible, courseIdProp },
+    toggleSelectWorkoutPopoverVisibility,
+  ] = useState({ isSelectWorkoutVisible: false, courseIdProp: false });
+
+  function openCourseWorkoutsClickHandler(courseId) {
+    return () => {
+      toggleSelectWorkoutPopoverVisibility({
+        isSelectWorkoutVisible: true,
+        courseIdProp: courseId,
+      });
+    };
+  }
+
+  const closeCourseWorkoutsClickHandler = () => {
+    toggleSelectWorkoutPopoverVisibility({
+      isSelectWorkoutVisible: false,
+      courseIdProp: '',
+    });
+  };
+
+  // отображение поповера смены логина
+  const [isLoginChangePopoverVisible, toggleLoginChangePopoverVisibility] =
+    useState(false);
+
+  const openLoginChangeClickHandler = () => {
+    toggleLoginChangePopoverVisibility(true);
+  };
+
+  const closeLoginChangeClickHandler = () => {
+    toggleLoginChangePopoverVisibility(false);
+  };
+
+  // отображение поповера смены пароля
+  const [
+    isPasswordChangePopoverVisible,
+    togglePasswordChangePopoverVisibility,
+  ] = useState(false);
+
+  const openPasswordChangeClickHandler = () => {
+    togglePasswordChangePopoverVisibility(true);
+  };
+
+  const closePasswordChangeClickHandler = () => {
+    togglePasswordChangePopoverVisibility(false);
+  };
+
+  function appendCourseCard(course) {
+    return (
+      <S.CourseCardWrapper>
+        <CourseCard key={course.id} title={course.title} src={course.imgSrc}>
+          <S.CourseCardActionButton>
+            <Button.s20.green
+              width="136px"
+              onClick={openCourseWorkoutsClickHandler(course.id)}
+            >
+              Перейти →
+            </Button.s20.green>
+          </S.CourseCardActionButton>
+        </CourseCard>
+      </S.CourseCardWrapper>
+    );
+  }
 
   return (
     <S.ProfilePageWrapper>
@@ -26,27 +91,35 @@ export default function Profile() {
         </S.ProfileInfo>
       </div>
       <S.ProfileInfoActions>
-        <Button.s18.blue width="275px">Редактировать логин</Button.s18.blue>
-        <Button.s18.blue width="275px">Редактировать пароль</Button.s18.blue>
+        <Button.s18.blue width="275px" onClick={openLoginChangeClickHandler}>
+          Редактировать логин
+        </Button.s18.blue>
+        {isLoginChangePopoverVisible ? (
+          <LoginUpdate onCloseHandler={closeLoginChangeClickHandler} />
+        ) : (
+          ''
+        )}
+        <Button.s18.blue width="275px" onClick={openPasswordChangeClickHandler}>
+          Редактировать пароль
+        </Button.s18.blue>
+        {isPasswordChangePopoverVisible ? (
+          <PasswordUpdate onCloseHandler={closePasswordChangeClickHandler} />
+        ) : (
+          ''
+        )}
       </S.ProfileInfoActions>
       <S.ProfileTextHeader2>Мои курсы</S.ProfileTextHeader2>
       <S.ProfileCourses>
-        {myCourses.map((course) => (
-          <S.CourseCardWrapper>
-            <CourseCard
-              key={course.id}
-              title={course.title}
-              src={
-                coursesImages.find((ci) => ci.courseId === course.id)?.img ?? ''
-              }
-            >
-              <S.CourseCardActionButton>
-                <Button.s20.green width="136px">Перейти →</Button.s20.green>
-              </S.CourseCardActionButton>
-            </CourseCard>
-          </S.CourseCardWrapper>
-        ))}
+        {myCourses?.map((course) => appendCourseCard(course))}
       </S.ProfileCourses>
+      {isSelectWorkoutVisible ? (
+        <SelectWorkout
+          courseId={courseIdProp}
+          onCloseHandler={closeCourseWorkoutsClickHandler}
+        />
+      ) : (
+        ''
+      )}
     </S.ProfilePageWrapper>
   );
 }

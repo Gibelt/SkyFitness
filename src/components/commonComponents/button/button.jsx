@@ -18,6 +18,7 @@ function btn(fontSize, color) {
           height,
           size: sizeStyles[fontSize],
           color: colorStyles[fontSize][color],
+          activity: !disabled,
         }}
         disabled={disabled}
       >

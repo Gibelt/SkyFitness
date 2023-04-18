@@ -4,29 +4,8 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 444px;
-  border-radius: 12px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 36px 41px 44px;
-  background: #fff;
-  box-sizing: border-box;
-`;
-
-export const ContentComplete = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 444px;
-  border-radius: 12px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding-top: 41px;
-  background: #fff;
+  width: 361px;
+  padding-bottom: 44px;
   box-sizing: border-box;
 `;
 
@@ -36,6 +15,7 @@ export const Title = styled.p`
   line-height: 40px;
   color: #000000;
 `;
+
 
 export const TitleComplete = styled.p`
   font-size: 40px;
@@ -49,6 +29,11 @@ export const TitleComplete = styled.p`
 export const ImgComplete = styled.img``;
 
 export const List = styled.form`
+
+/*
+export const List = styled.div`
+*/
+
   display: flex;
   flex-direction: column;
   gap: 30px;

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { getDataByRef, ref } from '../../backEnd';
 import * as s from './ExerciseSyle';
@@ -42,17 +43,34 @@ export default function Exercise() {
     getDataByRef(parseData, { ref: ref('users') });
   }, [isProgressClick]);
 
+
+/*
+import { useParams } from 'react-router-dom';
+import * as s from './ExerciseSyle';
+import Header from '../../components/header/Header';
+import Tasks from '../../components/tasks/Tasks';
+import Execution from '../../components/tasksProgress/TasksProgress';
+import { getWorkoutInfo } from '../../mocks';
+
+export default function Exercise() {
+  const workoutId = useParams().id;
+
+  const { title, subtitle, videoURL, exercises } = getWorkoutInfo(workoutId);
+*/
+
   return (
     <s.Container>
       <Header />
       <s.Title>{title}</s.Title>
       <s.Subtitle>{subtitle}</s.Subtitle>
+
       {isProgressClick && (
         <ProgressForm
           tasks={tasks}
           onClick={() => setTimeout(() => setIsProgressClick(false), 2000)}
         />
       )}
+
       <s.Video>
         <iframe
           width="100%"
@@ -63,12 +81,21 @@ export default function Exercise() {
           allowFullScreen
         />
       </s.Video>
+
       {tasks && (
         <s.TasksAndProgress>
           <Tasks tasks={tasks} onClick={() => setIsProgressClick(true)} />
           <TasksProgress tasks={tasks} />
         </s.TasksAndProgress>
       )}
+
+/*
+      <s.TasksAndProgress>
+        <Tasks tasks={exercises} />
+        <Execution tasks={exercises} />
+      </s.TasksAndProgress>
+      */
+
     </s.Container>
   );
 }
