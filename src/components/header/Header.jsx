@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-// import { useSelector } from 'react-redux';
 import LogInUserView from 'components/commonComponents/login/logInUserview';
 import * as s from './HeaderStyle';
 
