@@ -1,4 +1,5 @@
 import { ref, getDataByRef } from 'backEnd';
+import { dbDataHandler } from './backEnd/controllers/db/handlers/index';
 
 /* ========================================= LOCAL DB =================================================== */
 
@@ -121,8 +122,20 @@ export const getCourseWorkouts = (courseId) =>
     ?.workouts?.sort((a, b) => a.order - b.order);
 
 /* Получение информации о курсе по id */
+/*
 function getCourseById(courseId) {
   return courses.find((c) => c.id === courseId);
+}
+*/
+
+async function getCourseById(courseId) {
+  const coursesRef = ref('courses');
+  const courseRef = coursesRef.child(courseId);
+
+  const response = await courseRef.once('value');
+  const result = dbDataHandler({ response, courseRef });
+
+  return result;
 }
 
 /* получение данных о тренировке по id тренировки */
@@ -143,6 +156,7 @@ export function getWorkoutInfo(workoutId) {
 
 // Получение списка курсов для пользователя, насыщая данные называниями курсов
 // (это необходимая информация для карточки страницы авторизованного пользователя)
+/*
 export const getUserCourses = (userId) =>
   users
     .find((u) => u.id === userId)
@@ -154,6 +168,31 @@ export const getUserCourses = (userId) =>
         imgSrc: userCourse.img,
       };
     });
+*/
+
+export async function getUserCourses(userID) {
+  const usersRef = ref('users');
+  const userRef = usersRef.child(userID);
+
+  return userRef
+    .once('value')
+    .then((response) => dbDataHandler({ response, userRef }))
+    .then(async (result) => {
+      const userCourses = result?.data?.courses;
+      const promisesArr = [];
+      for (const c of Object.keys(userCourses)) {
+        promisesArr.push(
+          getCourseById(c).then((cd) => ({
+            id: c,
+            title: cd.data?.name,
+            cardImgSrc: cd.data?.cardImgSrc,
+          }))
+        );
+      }
+      return promisesArr;
+    })
+    .then((pa) => Promise.all(pa).then((values) => values));
+}
 
 // Поиск статуса тренировки (workoutId) для пользователя (userId)
 export const getWorkoutStatus = (userId, workoutId) =>

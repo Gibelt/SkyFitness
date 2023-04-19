@@ -1,7 +1,10 @@
 import SelectWorkout from 'components/selectWorkout/SelectWorkout';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import LoginUpdate from 'components/loginUpdate';
 import PasswordUpdate from 'components/passwordUpdate';
+import { loginDataSelector as getUserStoreData } from 'store/selectors/selectors';
+import Popover from 'components/popover';
 import * as S from './styles';
 import { CourseCard } from '../../components/commonComponents/courseCard/courseCard';
 import { Button } from '../../components/commonComponents/button/button';
@@ -9,7 +12,20 @@ import Header from '../../components/header/Header';
 import { getUserCourses } from '../../mocks';
 
 export default function Profile() {
-  const myCourses = getUserCourses('testUser');
+  const userStoreData = useSelector(getUserStoreData);
+
+  const { localId } = userStoreData;
+
+  const [userCourses, setUserCourses] = useState();
+
+  useEffect(() => {
+    async function getUserCoursesData() {
+      const response = await getUserCourses(localId);
+      setUserCourses(response);
+    }
+
+    if (!userCourses) getUserCoursesData();
+  }, []);
 
   // отображение поповера выбора тренировок
   const [
@@ -62,7 +78,11 @@ export default function Profile() {
   function appendCourseCard(course) {
     return (
       <S.CourseCardWrapper>
-        <CourseCard key={course.id} title={course.title} src={course.imgSrc}>
+        <CourseCard
+          key={course.id}
+          title={course.title}
+          src={course.cardImgSrc}
+        >
           <S.CourseCardActionButton>
             <Button.s20.green
               width="136px"
@@ -110,13 +130,17 @@ export default function Profile() {
       </S.ProfileInfoActions>
       <S.ProfileTextHeader2>Мои курсы</S.ProfileTextHeader2>
       <S.ProfileCourses>
-        {myCourses?.map((course) => appendCourseCard(course))}
+        {userCourses
+          ? userCourses?.map((course) => appendCourseCard(course))
+          : ''}
       </S.ProfileCourses>
       {isSelectWorkoutVisible ? (
-        <SelectWorkout
-          courseId={courseIdProp}
-          onCloseHandler={closeCourseWorkoutsClickHandler}
-        />
+        <Popover
+          onClose={closeCourseWorkoutsClickHandler}
+          closeBtnRequired={false}
+        >
+          <SelectWorkout courseId={courseIdProp} />
+        </Popover>
       ) : (
         ''
       )}

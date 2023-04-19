@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ProfilePageWrapper = styled.div`
   width: 100%;
@@ -49,7 +49,6 @@ export const ProfileCourses = styled.div`
   flex-direction: row;
   flex-flow: row wrap;
   gap: 40px;
-  justify-content: space-between;
 `;
 
 export const CourseCardActionButton = styled.div`
