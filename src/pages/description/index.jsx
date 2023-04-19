@@ -16,17 +16,21 @@ export default () => {
   // description routes
   const routeList = new Array();
   const courses = Object.keys(pageData.default);
-  const page = (course) => <Page course={course} />;
-  const route = (elm) => <Route path={elm} element={page(elm)} key={elm} />;
-  for (let i = 0; i < courses.length; i++) routeList.push(route(courses[i]));
+  for (let i = 0; i < courses.length; i++) {
+    const course = courses[i];
+    routeList.push(
+      <Route path={course} element={<Page course={course} />} key={i} />
+    );
+  }
   return <Routes>{routeList}</Routes>;
 };
 
 const Page = ({ course = 'yoga' }) => {
   const [courseData, setCourseData] = useState();
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState({});
 
   const userStoreData = useSelector(loginDataSelector);
+
   if (!courseData) getDBdata(setCourseData, { course });
   else if (userData !== userStoreData) setUserData(userStoreData);
 
@@ -36,9 +40,11 @@ const Page = ({ course = 'yoga' }) => {
       <Header />
       <Main
         data={{
+          course,
           courseData,
-          // userData,
-          userData: { id: 'd8addebe6113416aa67d134d2538f873' },
+          userData: userData.localId
+            ? userData
+            : { localId: 'd8addebe6113416aa67d134d2538f873' },
         }}
       />
     </Wrapper>
@@ -48,6 +54,7 @@ const Page = ({ course = 'yoga' }) => {
 const Main = ({ data }) => {
   const { courseData } = data;
   const Wrapper = Styled.Main;
+
   return (
     <Wrapper>
       <Title data={data} />
@@ -59,13 +66,15 @@ const Main = ({ data }) => {
 
 const getDBdata = (setDBdata, { course }) => {
   const localData = pageData.default[course];
+
   getCorseData(
-    (remoteData) =>
-      remoteData
-        ? setDBdata({ local: localData, remote: remoteData })
-        : console.error(
-            'Неизвестная ошибка: данные курса с удаленного сервера не получены'
-          ),
-    { courseName: localData.name }
+    (remoteData) => {
+      if (remoteData) setDBdata({ local: localData, remote: remoteData });
+      else
+        console.error(
+          'Неизвестная ошибка: данные курса с удаленного сервера не получены'
+        );
+    },
+    { courseName: course }
   );
 };
