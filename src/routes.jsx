@@ -6,7 +6,7 @@ import Exercise from 'pages/exercise';
 import Main from 'pages/main/index';
 import LoginPage from 'pages/loginPage';
 import Profile from 'pages/profile';
-import Description from 'pages/description';
+// import Description from 'pages/description';
 
 export default function AppRoutes() {
   return (
@@ -15,8 +15,7 @@ export default function AppRoutes() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/exercise/:id" element={<Exercise />} />
-      <Route path="/description/*" element={<Description />} />
-      {/* <Route path="/registration" element="Registration" /> */}
+      {/* <Route path="/description/*" element={<Description />} /> */}
 
       <Route
         path={ProtectionEnable ? '/:id/*' : '/mock/*'}
