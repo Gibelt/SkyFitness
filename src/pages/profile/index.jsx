@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux';
 import LoginUpdate from 'components/loginUpdate';
 import PasswordUpdate from 'components/passwordUpdate';
 import { loginDataSelector as getUserStoreData } from 'store/selectors/selectors';
-import Popover from 'components/popover';
+// import Popover from 'components/popover';
 import * as S from './styles';
 import { CourseCard } from '../../components/commonComponents/courseCard/courseCard';
 import { Button } from '../../components/commonComponents/button/button';
 import Header from '../../components/header/Header';
-import { getUserCourses } from '../../mocks';
+import { getUserData, mapCourseData } from '../../mocks'; // getUserCourses
 
 export default function Profile() {
   const userStoreData = useSelector(getUserStoreData);
@@ -20,8 +20,11 @@ export default function Profile() {
 
   useEffect(() => {
     async function getUserCoursesData() {
+      /*
       const response = await getUserCourses(localId);
-      setUserCourses(response);
+      console.log('response', response);
+      */
+      getUserData(setUserCourses, { userID: localId });
     }
 
     if (!userCourses) getUserCoursesData();
@@ -42,12 +45,14 @@ export default function Profile() {
     };
   }
 
+  /*
   const closeCourseWorkoutsClickHandler = () => {
     toggleSelectWorkoutPopoverVisibility({
       isSelectWorkoutVisible: false,
       courseIdProp: '',
     });
   };
+  */
 
   // отображение поповера смены логина
   const [isLoginChangePopoverVisible, toggleLoginChangePopoverVisibility] =
@@ -76,6 +81,10 @@ export default function Profile() {
   };
 
   function appendCourseCard(course) {
+    if (!course) {
+      return '';
+    }
+
     return (
       <S.CourseCardWrapper>
         <CourseCard
@@ -131,16 +140,18 @@ export default function Profile() {
       <S.ProfileTextHeader2>Мои курсы</S.ProfileTextHeader2>
       <S.ProfileCourses>
         {userCourses
-          ? userCourses?.map((course) => appendCourseCard(course))
+          ? Object.keys(userCourses.courses).map((key) =>
+              appendCourseCard(mapCourseData(key))
+            )
           : ''}
       </S.ProfileCourses>
       {isSelectWorkoutVisible ? (
-        <Popover
-          onClose={closeCourseWorkoutsClickHandler}
-          closeBtnRequired={false}
-        >
+        /*
+        <Popover onClose={closeCourseWorkoutsClickHandler}>
           <SelectWorkout courseId={courseIdProp} />
         </Popover>
+        */
+        <SelectWorkout courseId={courseIdProp} />
       ) : (
         ''
       )}
