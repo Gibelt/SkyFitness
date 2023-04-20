@@ -15,8 +15,8 @@ export default function AppRoutes() {
       <Route path="/" element={<Main />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/description/*" element={<Description />} />
-      <Route path="/profile" element={<Profile />} />
       <Route element={<ProtectedRoute isAllowed={isLogin} />}>
+      <Route path="/profile" element={<Profile />} />
         <Route path="/exercise" element={<Exercise />} />
       </Route>
     </Routes>
