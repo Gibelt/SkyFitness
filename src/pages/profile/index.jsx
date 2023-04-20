@@ -1,10 +1,11 @@
 import SelectWorkout from 'components/selectWorkout/SelectWorkout';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import LoginUpdate from 'components/loginUpdate';
-import PasswordUpdate from 'components/passwordUpdate';
+// import LoginUpdate from 'components/loginUpdate';
+// import PasswordUpdate from 'components/passwordUpdate';
 import { loginDataSelector as getUserStoreData } from 'store/selectors/selectors';
-// import Popover from 'components/popover';
+import Popover from 'components/popover';
+import Login from 'components/loginComp/Login';
 import * as S from './styles';
 import { CourseCard } from '../../components/commonComponents/courseCard/courseCard';
 import { Button } from '../../components/commonComponents/button/button';
@@ -124,16 +125,24 @@ export default function Profile() {
           Редактировать логин
         </Button.s18.blue>
         {isLoginChangePopoverVisible ? (
-          <LoginUpdate onCloseHandler={closeLoginChangeClickHandler} />
+          <Popover onClose={closeLoginChangeClickHandler}>
+            <Login type="changeLoginName" />
+          </Popover>
         ) : (
+          /*
+          <LoginUpdate onCloseHandler={closeLoginChangeClickHandler} />
+          */
           ''
         )}
         <Button.s18.blue width="275px" onClick={openPasswordChangeClickHandler}>
           Редактировать пароль
         </Button.s18.blue>
         {isPasswordChangePopoverVisible ? (
-          <PasswordUpdate onCloseHandler={closePasswordChangeClickHandler} />
+          <Popover onClose={closePasswordChangeClickHandler}>
+            <Login type="changePassword" />
+          </Popover>
         ) : (
+          /* <PasswordUpdate onCloseHandler={closePasswordChangeClickHandler} /> */
           ''
         )}
       </S.ProfileInfoActions>
