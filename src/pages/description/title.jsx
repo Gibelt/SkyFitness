@@ -10,18 +10,19 @@ export default ({ data }) => {
   const rusCourseName = localData.name;
   const engCourseName = course;
   const courseBGsrc = localData.bgSrc;
-  const userID = userData.localId;
+  const userID = userData?.localId;
 
   const [addingState, setAddingState] = useState(false);
 
-  if (!addingState)
-    getUserCoursesData(
-      (data) => {
-        for (const engName of Object.keys(data))
-          if (data[engName].name === rusCourseName) setAddingState(true);
-      },
-      { userID }
-    );
+  if (userID)
+    if (!addingState)
+      getUserCoursesData(
+        (data) => {
+          for (const engName of Object.keys(data))
+            if (data[engName].name === engCourseName) setAddingState(true);
+        },
+        { userID }
+      );
 
   const { Title } = Styled;
   const { Content } = Title;
