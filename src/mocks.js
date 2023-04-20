@@ -170,6 +170,21 @@ export const getUserCourses = (userId) =>
     });
 */
 
+// костыль
+export const mapCourseData = (courseEngName) => {
+  const foundCourse = courses.find((course) => course.name === courseEngName);
+
+  if (foundCourse) {
+    return {
+      name: courseEngName,
+      title: foundCourse.title,
+      cardImgSrc: foundCourse.img,
+    };
+  }
+
+  return null;
+};
+
 export async function getUserCourses(userID) {
   const usersRef = ref('users');
   const userRef = usersRef.child(userID);
