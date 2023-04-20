@@ -39,8 +39,9 @@
     "no-array-constructor": "off",
     "no-new-object": "off",
     "no-plusplus": "off",
-    "prefer-const":"off",
+    "prefer-const": "off",
     "no-console": "off",
-    "no-shadow": "off"
+    "no-shadow": "off",
+    "import/no-unresolved": "off"
   }
 }
