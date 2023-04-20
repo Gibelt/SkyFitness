@@ -10,18 +10,20 @@ import Styled from './styledComponents';
 import Title from './title';
 import Guide from './guide';
 import Recording from './recording';
-import pageData from './pageData';
 
 export default () => {
-  // description routes
-  const routeList = new Array();
-  const courses = Object.keys(pageData.default);
-  for (let i = 0; i < courses.length; i++) {
-    const course = courses[i];
-    routeList.push(
-      <Route path={course} element={<Page course={course} />} key={i} />
-    );
-  }
+  const courses = [
+    'yoga',
+    'bodyflex',
+    'dance-fitness',
+    'stretching',
+    'step-aerobics',
+  ];
+
+  const routeList = courses.map((course) => (
+    <Route path={course} element={<Page course={course} />} key={course} />
+  ));
+
   return <Routes>{routeList}</Routes>;
 };
 
@@ -56,18 +58,16 @@ const Main = ({ data }) => {
   return (
     <Wrapper>
       <Title data={data} />
-      <Guide data={courseData.remote} />
+      <Guide data={courseData} />
       <Recording data={data} />
     </Wrapper>
   );
 };
 
 const getDBdata = (setDBdata, { course }) => {
-  const localData = pageData.default[course];
-
   getCorseData(
     (remoteData) => {
-      if (remoteData) setDBdata({ local: localData, remote: remoteData });
+      if (remoteData) setDBdata(remoteData);
       else
         console.error(
           'Неизвестная ошибка: данные курса с удаленного сервера не получены'
