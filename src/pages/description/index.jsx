@@ -42,9 +42,7 @@ const Page = ({ course = 'yoga' }) => {
         data={{
           course,
           courseData,
-          userData: userData.localId
-            ? userData
-            : { localId: 'd8addebe6113416aa67d134d2538f873' },
+          userData,
         }}
       />
     </Wrapper>
