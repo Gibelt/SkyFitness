@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { loginDataSelector } from '../../store/selectors/selectors';
 import { getDataByRef, ref } from '../../backEnd';
 import * as s from './ExerciseSyle';
 import Header from '../../components/header/Header';
@@ -18,10 +20,11 @@ export default function Exercise() {
   const [subtitle, setSubtitle] = useState('');
   const [videoURL, setVideoURL] = useState('');
   const [tasks, setTasks] = useState(tasksExapmle);
+  const { localId } = useSelector(loginDataSelector);
 
-  const userId = 'd8addebe6113416aa67d134d2538f873';
-  const courseId = '37cd2b14182e4e69aad6e60e6c25015e';
-  const workoutId = window.localStorage.getItem('exerciseID');
+  const userId = localId;
+  const courseId = window.localStorage.getItem('courseID');
+  const workoutId = window.localStorage.getItem('workoutID');
 
   const parseData = (responseData) => {
     setTitle(responseData.data[userId].courses[courseId].name);
@@ -40,22 +43,8 @@ export default function Exercise() {
 
   useEffect(() => {
     getDataByRef(parseData, { ref: ref('users') });
+    console.log(tasks);
   }, [isProgressClick]);
-
-
-/*
-import { useParams } from 'react-router-dom';
-import * as s from './ExerciseSyle';
-import Header from '../../components/header/Header';
-import Tasks from '../../components/tasks/Tasks';
-import Execution from '../../components/tasksProgress/TasksProgress';
-import { getWorkoutInfo } from '../../mocks';
-
-export default function Exercise() {
-  const workoutId = useParams().id;
-
-  const { title, subtitle, videoURL, exercises } = getWorkoutInfo(workoutId);
-*/
 
   return (
     <s.Container>
@@ -66,6 +55,7 @@ export default function Exercise() {
       {isProgressClick && (
         <ProgressForm
           tasks={tasks}
+          userID={localId}
           onClick={() => setTimeout(() => setIsProgressClick(false), 2000)}
         />
       )}
@@ -87,14 +77,6 @@ export default function Exercise() {
           <TasksProgress tasks={tasks} />
         </s.TasksAndProgress>
       )}
-
-{/* /*
-      <s.TasksAndProgress>
-        <Tasks tasks={exercises} />
-        <Execution tasks={exercises} />
-      </s.TasksAndProgress>
-      */ }
-
     </s.Container>
   );
 }
