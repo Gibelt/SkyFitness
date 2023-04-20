@@ -176,6 +176,7 @@ export const mapCourseData = (courseEngName) => {
 
   if (foundCourse) {
     return {
+      id: foundCourse.name,
       name: courseEngName,
       title: foundCourse.title,
       cardImgSrc: foundCourse.img,
