@@ -20,7 +20,7 @@ export default function Exercise() {
   const [subtitle, setSubtitle] = useState('');
   const [videoURL, setVideoURL] = useState('');
   const [tasks, setTasks] = useState(tasksExapmle);
-  const {localId} = useSelector(loginDataSelector);
+  const { localId } = useSelector(loginDataSelector);
 
   const userId = localId;
   const courseId = window.localStorage.getItem('courseID');
@@ -43,23 +43,8 @@ export default function Exercise() {
 
   useEffect(() => {
     getDataByRef(parseData, { ref: ref('users') });
-    console.log(tasks)
+    console.log(tasks);
   }, [isProgressClick]);
-
-
-/*
-import { useParams } from 'react-router-dom';
-import * as s from './ExerciseSyle';
-import Header from '../../components/header/Header';
-import Tasks from '../../components/tasks/Tasks';
-import Execution from '../../components/tasksProgress/TasksProgress';
-import { getWorkoutInfo } from '../../mocks';
-
-export default function Exercise() {
-  const workoutId = useParams().id;
-
-  const { title, subtitle, videoURL, exercises } = getWorkoutInfo(workoutId);
-*/
 
   return (
     <s.Container>
@@ -92,14 +77,6 @@ export default function Exercise() {
           <TasksProgress tasks={tasks} />
         </s.TasksAndProgress>
       )}
-
-{/* /*
-      <s.TasksAndProgress>
-        <Tasks tasks={exercises} />
-        <Execution tasks={exercises} />
-      </s.TasksAndProgress>
-      */ }
-
     </s.Container>
   );
 }
