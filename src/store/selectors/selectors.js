@@ -39,11 +39,9 @@ export const userNameDataSelector = (store) => {
   )?.displayName;
   const combinedName =
     // eslint-disable-next-line no-nested-ternary
-    storeName === ''
-      ? 'не задано'
-      : storeName ?? storageName === ''
-      ? 'не задано'
-      : storageName ?? 'не задано';
+    (storeName === '' ? 'не задано' : storeName) ??
+    (storageName === '' ? 'не задано' : storageName) ??
+    'не задано';
   return combinedName;
 };
 
