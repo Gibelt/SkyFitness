@@ -1,9 +1,10 @@
+/* eslint-disable consistent-return */
 /* eslint-disable react/jsx-pascal-case */
 /* eslint-disable object-curly-newline */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, redirect } from 'react-router-dom';
 import {
   usePostSignInWithPasswordQuery,
   usePostSignUpQuery,
@@ -66,7 +67,7 @@ const InputFieldsChangeLoginName = [
     type: 'text',
   },
 ];
-function Login({ type = 'login' }) {
+function Login({ type = 'login'  }) {
   return (
     <S.CenterBlock>
       <S.LoginMainBlock>
@@ -153,7 +154,9 @@ export function LoginBlock({ typeBlock }) {
     isLoadingLogIn ||
     isLoadingNewPassword ||
     isLoadingUpdateUserInfo;
-
+  useEffect(() => {
+    dispatch(FetchLoginFailure({}));
+  }, []);
   useEffect(() => {
     let errorMessageStore = {};
     if (errorSignUp) {
