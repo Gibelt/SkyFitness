@@ -284,6 +284,9 @@ export const getUserCoursesData = (responseFunc, { userID }) => {
 export const addUserCourse = (responseFunc, { userID, courseName }) => {
   const courseInitData = { name: courseName, workouts: null };
 
+  for (const course of courses)
+    if (course.name === courseName) courseInitData.name = course.title;
+
   getCorseData(getWorkouts, { courseName });
   function getWorkouts(data) {
     if (!data) console.error('addUserCourse: unknown error');

@@ -19,7 +19,7 @@ export default ({ data }) => {
       getUserCoursesData(
         (data) => {
           for (const engName of Object.keys(data))
-            if (data[engName].name === engCourseName) setAddingState(true);
+            if (engName === engCourseName) setAddingState(true);
         },
         { userID }
       );
