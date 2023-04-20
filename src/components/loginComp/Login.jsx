@@ -147,7 +147,7 @@ export function LoginBlock({ typeBlock }) {
     },
     { skip: skipChangeUserName }
   );
-
+  console.log(dataUpdateUserInfo);
   const isLoading =
     isLoadingSignUp ||
     isLoadingLogIn ||
@@ -190,8 +190,8 @@ export function LoginBlock({ typeBlock }) {
       );
       console.log(loginDataStorage);
       loginDataStorage.displayName = dataUpdateUserInfo.displayName;
-      sessionStorage.setItem('skyFitnessLoginData', loginDataStorage);
-      dispatch(FetchUpdateName(dataUpdateUserInfo));
+      sessionStorage.setItem('skyFitnessLoginData', JSON.stringify(loginDataStorage) );
+      dispatch(FetchUpdateName({ ...dataUpdateUserInfo }));
       // navigate("/login");
     }
     // navigate("/");

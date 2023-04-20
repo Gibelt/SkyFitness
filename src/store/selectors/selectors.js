@@ -31,8 +31,11 @@ export const loginDataSelector = (store) =>
   {};
 export const userNameDataSelector = (store) => {
   const storeName = skyFitnessSelector(store)?.userName;
-  const storageName = JSON.parse(
-    sessionStorage.getItem('skyFitnessLoginData')
+  const storageLoginData = sessionStorage.getItem('skyFitnessLoginData');
+  const storageName = (
+    storageLoginData
+      ? JSON.parse(sessionStorage.getItem('skyFitnessLoginData'))
+      : undefined
   )?.displayName;
   const combinedName =
     // eslint-disable-next-line no-nested-ternary

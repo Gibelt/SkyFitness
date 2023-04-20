@@ -21,7 +21,7 @@ export const FetchLoginFailure = (error) => ({
 
 export const FetchUpdateName = (data) => ({
   type: MyType.USER_UPDATE_NAME,
-  payload: data,
+  payload: {...data},
 });
 
 export const FetchLogOut = () => ({
