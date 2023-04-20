@@ -8,7 +8,7 @@ export default ({ data }) => {
   const { courseData, userData } = data;
   const localData = courseData.local;
   const courseName = localData.name;
-  const userID = userData.id;
+  const userID = userData?.localId;
   const { msg } = pageData.Recording;
 
   const [recordState, setRecordState] = useState(false);

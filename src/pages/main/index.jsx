@@ -1,8 +1,8 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-pascal-case */
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+
 import { useNavigate } from 'react-router-dom';
-import { userLogInSelector } from 'store/selectors/selectors';
 import LogInUserView from 'components/commonComponents/login/logInUserview';
 import * as S from './indexStyle';
 import * as Comp from '../../components/main/mainPage';
@@ -12,25 +12,14 @@ import { CourseCard } from '../../components/commonComponents/courseCard/courseC
 
 export default function Main() {
   const navigate = useNavigate();
-  const userLogIn = useSelector(userLogInSelector);
   const HendleClickCours = (srcPage) => navigate(`/description/${srcPage}`);
-  useEffect(() => {
-    const wrapper = document.querySelector('.wrapper');
-    if (wrapper) {
-      wrapper.style = 'background-color: #271a58';
-    }
-  });
+  // const HandleClickUp = ()=> {scroll(0,0);}
   return (
     <S.mainWrapper>
       <S.groupLogo>
         <Logo color="white" />
         <S.groupBtn>
-          {!userLogIn && (
-            <Button.s16.blue width="77px" onClick={() => navigate('/login')}>
-              Войти
-            </Button.s16.blue>
-          )}
-          {userLogIn && <LogInUserView />}
+          <LogInUserView />
         </S.groupBtn>
       </S.groupLogo>
       <S.groupBigHeader>
@@ -68,7 +57,9 @@ export default function Main() {
         />
       </S.groupTrainingCards>
       <S.groupBtnRedirect>
-        <Button.s24.green width="147px">Перейти ↑</Button.s24.green>
+        <Button.s24.green onClick={() => scroll(0, 0)} width="147px">
+          Перейти ↑
+        </Button.s24.green>
       </S.groupBtnRedirect>
     </S.mainWrapper>
   );

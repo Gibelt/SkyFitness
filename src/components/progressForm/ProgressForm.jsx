@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import ActionCompleted from 'components/actionCompleted';
-import Popover from 'components/popover';
 import * as s from './ProgressFormStyle';
 import { Button } from '../commonComponents/button/button';
+import { updateDataByRef, ref } from '../../backEnd';
 
 const tasksDefault = [
   'Наклон вперед (10 повторений)',
@@ -10,38 +9,85 @@ const tasksDefault = [
   'Поднятие ног, согнутых в коленях (5 повторений)',
 ];
 
-export default function ProgressForm({ onCloseHandler, tasks = tasksDefault }) {
-  const [isActionCompleted, setIsActionCompeleted] = useState(false);
+export default function ProgressForm({
+  onClick,
+  tasks = tasksDefault,
+  userID,
+}) {
+  const [isClick, setIsClick] = useState(false);
+  const [values, setValues] = useState({});
+  const [complete, setComplete] = useState({});
 
-  const onSubmitHandler = () => {
-    setIsActionCompeleted(true);
-    setTimeout(() => {
-      onCloseHandler();
-    }, 700);
+  const userId = userID;
+  const courseId = window.localStorage.getItem('courseID');
+  const workoutId = window.localStorage.getItem('workoutID');
+  const pathToFillProgress = ref(
+    `users/${userId}/courses/${courseId}/workouts/${workoutId}/exercise`
+  );
+  const pathToSetComplete = ref(
+    `users/${userId}/courses/${courseId}/workouts/${workoutId}`
+  );
+
+  const onChange = (e) => {
+    setValues({
+      ...values,
+      [e.target.name]: {
+        done: e.target.value,
+        goal: e.target.id,
+      },
+    });
+
+    if (e.target.value >= Number(e.target.id)) {
+      setComplete({
+        ...complete,
+        [e.target.name]: { done: 'complete' },
+      });
+    }
   };
 
-  const list = tasks.map((item) => (
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    Object.entries(values).forEach(([item, value]) => {
+      const newData = { [item]: value };
+      updateDataByRef(() => {}, { ref: pathToFillProgress, newData });
+    });
+    if (Object.keys(complete).length === Object.keys(tasks).length) {
+      const newData = { complete: true };
+      updateDataByRef(() => {}, { ref: pathToSetComplete, newData });
+    }
+    onClick();
+    setIsClick(true);
+  };
+
+  const list = Object.keys(tasks).map((item) => (
     <s.Item key={item.toString()}>
-      <s.Text>
-        Сколько раз вы сделали {item.split('(')[0].toLowerCase().trim()}?
-      </s.Text>
-      <s.Input type="number" placeholder="Введите значение" />
+      Сколько раз вы сделали {item.split('(')[0].toLowerCase()}?
+      <s.Input
+        type="number"
+        placeholder="Введите значение"
+        name={item}
+        id={parseInt(item.match(/\d+/), 10)}
+        onChange={onChange}
+      />
     </s.Item>
   ));
 
-  return isActionCompleted ? (
-    <Popover closeBtnRequired={false}>
-      <ActionCompleted msg="Ваш прогресс засчитан!" />
-    </Popover>
+  return isClick ? (
+    <s.ContentComplete>
+      <s.TitleComplete>Ваш прогресс засчитан!</s.TitleComplete>
+      <s.ImgComplete src="../../img/complete.svg" />
+    </s.ContentComplete>
   ) : (
-    <Popover onClose={onCloseHandler}>
-      <s.Content>
-        <s.Title>Мой прогресс</s.Title>
-        <s.List>{list}</s.List>
-        <Button.s18.blue width="278px" onClick={onSubmitHandler}>
-          Отправить
-        </Button.s18.blue>
-      </s.Content>
-    </Popover>
+    <s.Content>
+      <s.Title>Мой прогресс</s.Title>
+      <s.List onSubmit={handleSubmit}>
+        {list}
+        <s.ButtonContainer>
+          <Button.s18.blue width="278px" type="submit">
+            Отправить
+          </Button.s18.blue>
+        </s.ButtonContainer>
+      </s.List>
+    </s.Content>
   );
 }

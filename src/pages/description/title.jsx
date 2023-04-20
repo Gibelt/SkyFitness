@@ -5,20 +5,24 @@ import { addUserCourse, getUserCoursesData } from 'mocks';
 import Styled from './styledComponents';
 
 export default ({ data }) => {
-  const { courseData, userData } = data;
+  const { course, courseData, userData } = data;
   const localData = courseData.local;
-  const courseName = localData.name;
+  const rusCourseName = localData.name;
+  const engCourseName = course;
   const courseBGsrc = localData.bgSrc;
-  const userID = userData.id;
+  const userID = userData?.localId;
 
   const [addingState, setAddingState] = useState(false);
-  getUserCoursesData(
-    (data) => {
-      for (const engName of Object.keys(data))
-        if (data[engName].name === courseName) setAddingState(true);
-    },
-    { userID }
-  );
+
+  if (userID)
+    if (!addingState)
+      getUserCoursesData(
+        (data) => {
+          for (const engName of Object.keys(data))
+            if (engName === engCourseName) setAddingState(true);
+        },
+        { userID }
+      );
 
   const { Title } = Styled;
   const { Content } = Title;
@@ -26,8 +30,8 @@ export default ({ data }) => {
   const buttonName = {
     disable: 'Требуется авторизация',
     enable: addingState
-      ? `Курс «${courseName}» добавлен`
-      : `Добавить курс «${courseName}»`,
+      ? `Курс «${rusCourseName}» добавлен`
+      : `Добавить курс «${rusCourseName}»`,
   };
   return (
     <Box
@@ -39,11 +43,14 @@ export default ({ data }) => {
         activity: false,
       }}
     >
-      <h1>{courseName}</h1>
+      <h1>{rusCourseName}</h1>
       <Content>
         <Button
           onClick={() =>
-            addUserCourse(() => setAddingState(true), { userID, courseName })
+            addUserCourse(() => setAddingState(true), {
+              userID,
+              courseName: engCourseName,
+            })
           }
           disabled={!userID || addingState}
         >

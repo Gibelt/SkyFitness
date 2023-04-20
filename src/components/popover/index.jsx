@@ -1,24 +1,24 @@
 import { useRef, useEffect } from 'react';
 import * as S from './styles';
 
-export default function Popover(props) {
-  const onCloseHandler = props.onClose;
-
-  let { closeBtnRequired } = props;
-  if (closeBtnRequired !== false) {
-    closeBtnRequired = true;
-  }
+export default function Popover({
+  onClose = () => {},
+  closeBtnRequired = true,
+  children = '',
+}) {
+  const onCloseHandler = onClose;
 
   const containerRef = useRef();
   const popoverCloseBtnRef = useRef();
 
   useEffect(() => {
-    const containerWidth = containerRef.current.offsetWidth;
-    console.log('cont width', containerWidth);
-    console.log('cont', containerRef.current);
-    const popoverCloseBtnWidth = popoverCloseBtnRef.current.offsetWidth;
+    if (closeBtnRequired) {
+      const containerWidth = containerRef.current.offsetWidth;
 
-    popoverCloseBtnRef.current.style.transform = `translate(calc(${containerWidth}px / 2 - ${popoverCloseBtnWidth}px + 7px), calc(-${popoverCloseBtnWidth}px - 2px))`;
+      const popoverCloseBtnWidth = popoverCloseBtnRef.current.offsetWidth;
+
+      popoverCloseBtnRef.current.style.transform = `translate(calc(${containerWidth}px / 2 - ${popoverCloseBtnWidth}px + 7px), calc(-${popoverCloseBtnWidth}px - 2px))`;
+    }
   }, []);
 
   return (
@@ -32,7 +32,7 @@ export default function Popover(props) {
         ) : (
           ''
         )}
-        {props.children}
+        {children}
       </S.Container>
     </S.Wrapper>
   );

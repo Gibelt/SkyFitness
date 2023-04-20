@@ -1,6 +1,7 @@
-import { ref, getDataByRef } from 'backEnd';
+import { ref, getDataByRef, updateDataByRef } from 'backEnd';
+import { dbDataHandler } from 'backEnd/controllers/db/handlers/index';
 
-/* ========================================= LOCAL DB =================================================== */
+/* ========================================= LOCAL DB ========================================= */
 
 const yogaWorkouts = [
   {
@@ -112,7 +113,7 @@ const users = [
   { id: 'testUser3' },
 ];
 
-/* ======================================= LOCAL DB FUNX ================================================ */
+/* ===================================== ANASTASIA DB FUNX ===================================== */
 
 // используется для получения списка тренировок курса
 export const getCourseWorkouts = (courseId) =>
@@ -121,8 +122,20 @@ export const getCourseWorkouts = (courseId) =>
     ?.workouts?.sort((a, b) => a.order - b.order);
 
 /* Получение информации о курсе по id */
+/*
 function getCourseById(courseId) {
   return courses.find((c) => c.id === courseId);
+}
+*/
+
+async function getCourseById(courseId) {
+  const coursesRef = ref('courses');
+  const courseRef = coursesRef.child(courseId);
+
+  const response = await courseRef.once('value');
+  const result = dbDataHandler({ response, courseRef });
+
+  return result;
 }
 
 /* получение данных о тренировке по id тренировки */
@@ -143,6 +156,7 @@ export function getWorkoutInfo(workoutId) {
 
 // Получение списка курсов для пользователя, насыщая данные называниями курсов
 // (это необходимая информация для карточки страницы авторизованного пользователя)
+/*
 export const getUserCourses = (userId) =>
   users
     .find((u) => u.id === userId)
@@ -154,6 +168,47 @@ export const getUserCourses = (userId) =>
         imgSrc: userCourse.img,
       };
     });
+*/
+
+// костыль
+export const mapCourseData = (courseEngName) => {
+  const foundCourse = courses.find((course) => course.name === courseEngName);
+
+  if (foundCourse) {
+    return {
+      id: foundCourse.name,
+      name: courseEngName,
+      title: foundCourse.title,
+      cardImgSrc: foundCourse.img,
+    };
+  }
+
+  return null;
+};
+
+export async function getUserCourses(userID) {
+  const usersRef = ref('users');
+  const userRef = usersRef.child(userID);
+
+  return userRef
+    .once('value')
+    .then((response) => dbDataHandler({ response, userRef }))
+    .then(async (result) => {
+      const userCourses = result?.data?.courses;
+      const promisesArr = [];
+      for (const c of Object.keys(userCourses)) {
+        promisesArr.push(
+          getCourseById(c).then((cd) => ({
+            id: c,
+            title: cd.data?.name,
+            cardImgSrc: cd.data?.cardImgSrc,
+          }))
+        );
+      }
+      return promisesArr;
+    })
+    .then((pa) => Promise.all(pa).then((values) => values));
+}
 
 // Поиск статуса тренировки (workoutId) для пользователя (userId)
 export const getWorkoutStatus = (userId, workoutId) =>
@@ -162,19 +217,25 @@ export const getWorkoutStatus = (userId, workoutId) =>
     ?.courses?.find((c) => c.workouts?.find((wo) => wo.id === workoutId))
     ?.workouts.find((wo) => wo.id === workoutId).completed;
 
-/* ======================================= REMOTE DB FUNX ================================================ */
+/* ======================================= NIKITA DB FUNX ======================================= */
 /* responseFunc - функция в которую будет передан ответ сервера */
 
 // Получить данные курса по его названию
+// название должно быть на английском и в нижнем регистре
 export const getCorseData = (responseFunc, { courseName }) => {
+  let rusCourseName;
+  for (const item of courses)
+    if (item.name === courseName) rusCourseName = item.title;
+
   const coursesRef = ref('courses');
-  const courseRef = coursesRef.orderByChild('name').equalTo(courseName);
+  const courseRef = coursesRef.orderByChild('name').equalTo(rusCourseName);
   getDataByRef(
     (receivedData) => {
       const { data, error } = receivedData;
-      if (error) console.error(error);
-      else if (!data) console.error('User not found');
-      else responseFunc(data[Object.keys(data)[0]]);
+      const course = data ? data[Object.keys(data)[0]] : null;
+      if (error) console.error(`getCorseData: ${error}`);
+      else if (!course) console.error('getCorseData: data not found');
+      else responseFunc(course);
     },
     { ref: courseRef }
   );
@@ -182,41 +243,54 @@ export const getCorseData = (responseFunc, { courseName }) => {
 
 // Получить данные пользователя по его id
 export const getUserData = (responseFunc, { userID }) => {
-  const usersRef = ref('users');
-  const userRef = usersRef.child(userID);
+  const userRef = ref('users').child(userID);
   getDataByRef(
     (receivedData) => {
       const { data, error } = receivedData;
-      if (error) console.error(error);
-      else if (!data) console.error('User not found');
-      else responseFunc(data);
+      if (error) console.error(`getUserData: ${error}`);
+      else if (data) responseFunc(data);
+      // else console.error('getUserData: data not found');
     },
     { ref: userRef }
   );
 };
 
-// Получить данные курсов пользователя по его id и наименованию курса
-export const getUserCoursesData = (responseFunc, { userID }) => {
-  const localCoursesData = new Object();
-  for (const item of courses)
-    localCoursesData[item.name] = { ruName: item.title };
+// Добавить пользователя в Realtime Database по его id
+export const addUser = (responseFunc, { userID }) => {
+  const userInitData = { _id: userID, courses: {} };
 
-  getUserData(
+  const usersRef = ref('users');
+  getDataByRef(
     (receivedData) => {
-      const { courses } = receivedData;
-      const responseData = new Object();
-      for (const id of Object.keys(courses)) {
-        const ruName = courses[id].name;
-        responseData[ruName] = courses[id];
+      const { data, error } = receivedData;
+      if (error) console.error(`addUserData: ${error}`);
+      else if (data) console.error('addUser: user already exist');
+      else {
+        let newData = {};
+        newData[userID] = userInitData;
+        updateDataByRef(
+          (responseData) => {
+            const { data } = responseData;
+            if (data) if (data[userID]) responseFunc(data[userID]);
+          },
+          { ref: usersRef, newData }
+        );
       }
-      for (const engName of Object.keys(localCoursesData)) {
-        const { ruName } = localCoursesData[engName];
-        if (responseData[ruName]) {
-          responseData[engName] = responseData[ruName];
-          delete responseData[ruName];
-        }
+    },
+    { ref: usersRef.child(userID) }
+  );
+};
+
+// Получить все курсы пользователя по его id
+export const getUserCoursesData = (responseFunc, { userID }) => {
+  getUserData(
+    (data) => {
+      if (!data) console.error('getUserCoursesData: unknown error');
+      else {
+        const { courses } = data;
+        if (!courses) console.error('getUserCoursesData: unknown error');
+        else responseFunc(courses);
       }
-      responseFunc(responseData);
     },
     { userID }
   );
@@ -224,19 +298,48 @@ export const getUserCoursesData = (responseFunc, { userID }) => {
 
 // Добавить курс в БД пользователя по его id и наименованию курса
 export const addUserCourse = (responseFunc, { userID, courseName }) => {
-  console.log(`Курс «${courseName}» добавлен в юзеру \n ID: ${userID}`);
+  const courseInitData = { name: courseName, workouts: null };
 
-  const responseData = {};
-  responseFunc(responseData);
+  for (const course of courses)
+    if (course.name === courseName) courseInitData.name = course.title;
 
-  // const userCoursesDataHandler = (receivedData) => {
-  //   const responseData = new Object();
-  //   const { courses } = receivedData;
-  //   for (const id of Object.keys(courses)) {
-  //     const { name } = courses[id];
-  //     responseData[name] = courses[id];
-  //   }
-  //   responseFunc(responseData);
-  // };
-  // addUserDBdata(userCoursesDataHandler, { userID });
+  getCorseData(getWorkouts, { courseName });
+  function getWorkouts(data) {
+    if (!data) console.error('addUserCourse: unknown error');
+    else {
+      courseInitData.workouts = data.workouts;
+      checkUserExistence();
+    }
+  }
+
+  const usersRef = ref('users');
+  function checkUserExistence() {
+    getDataByRef(
+      (receivedData) => {
+        const { data, error } = receivedData;
+        if (error) console.error(`addUserCourse: ${error}`);
+        else if (!data) addUser(addCourse, { userID });
+        else addCourse(data);
+      },
+      { ref: usersRef.child(userID) }
+    );
+  }
+
+  const userCoursesRef = usersRef.child(userID).child('courses');
+  function addCourse() {
+    getDataByRef(
+      (receivedData) => {
+        const { data, error } = receivedData;
+        if (error) console.error(`addUserCourse: ${error}`);
+        else if (data)
+          console.error('addUserCourse: user course already exist');
+        else {
+          let newData = {};
+          newData[courseName] = courseInitData;
+          updateDataByRef(responseFunc, { ref: userCoursesRef, newData });
+        }
+      },
+      { ref: userCoursesRef.child(courseName) }
+    );
+  }
 };

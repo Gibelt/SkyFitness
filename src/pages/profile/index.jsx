@@ -1,15 +1,35 @@
 import SelectWorkout from 'components/selectWorkout/SelectWorkout';
-import { useState } from 'react';
-import LoginUpdate from 'components/loginUpdate';
-import PasswordUpdate from 'components/passwordUpdate';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+// import LoginUpdate from 'components/loginUpdate';
+// import PasswordUpdate from 'components/passwordUpdate';
+import { loginDataSelector as getUserStoreData } from 'store/selectors/selectors';
+import Popover from 'components/popover';
+import Login from 'components/loginComp/Login';
 import * as S from './styles';
 import { CourseCard } from '../../components/commonComponents/courseCard/courseCard';
 import { Button } from '../../components/commonComponents/button/button';
 import Header from '../../components/header/Header';
-import { getUserCourses } from '../../mocks';
+import { getUserData, mapCourseData } from '../../mocks'; // getUserCourses
 
 export default function Profile() {
-  const myCourses = getUserCourses('testUser');
+  const userStoreData = useSelector(getUserStoreData);
+
+  const { localId } = userStoreData;
+
+  const [userCourses, setUserCourses] = useState();
+
+  useEffect(() => {
+    async function getUserCoursesData() {
+      /*
+      const response = await getUserCourses(localId);
+      console.log('response', response);
+      */
+      getUserData(setUserCourses, { userID: localId });
+    }
+
+    if (!userCourses) getUserCoursesData();
+  }, []);
 
   // отображение поповера выбора тренировок
   const [
@@ -26,12 +46,14 @@ export default function Profile() {
     };
   }
 
+  /*
   const closeCourseWorkoutsClickHandler = () => {
     toggleSelectWorkoutPopoverVisibility({
       isSelectWorkoutVisible: false,
       courseIdProp: '',
     });
   };
+  */
 
   // отображение поповера смены логина
   const [isLoginChangePopoverVisible, toggleLoginChangePopoverVisibility] =
@@ -60,9 +82,17 @@ export default function Profile() {
   };
 
   function appendCourseCard(course) {
+    if (!course) {
+      return '';
+    }
+
     return (
       <S.CourseCardWrapper>
-        <CourseCard key={course.id} title={course.title} src={course.imgSrc}>
+        <CourseCard
+          key={course.id}
+          title={course.title}
+          src={course.cardImgSrc}
+        >
           <S.CourseCardActionButton>
             <Button.s20.green
               width="136px"
@@ -81,6 +111,7 @@ export default function Profile() {
       <Header />
       <div>
         <S.ProfileTextHeader>Мой профиль</S.ProfileTextHeader>
+        {/*
         <S.ProfileInfo>
           <S.ProfileTextRegular>
             Логин: <span>sergey.petrov96</span>
@@ -89,34 +120,49 @@ export default function Profile() {
             Пароль: <span>4fkhdj880d</span>
           </S.ProfileTextRegular>
         </S.ProfileInfo>
+        */}
       </div>
       <S.ProfileInfoActions>
         <Button.s18.blue width="275px" onClick={openLoginChangeClickHandler}>
           Редактировать логин
         </Button.s18.blue>
         {isLoginChangePopoverVisible ? (
-          <LoginUpdate onCloseHandler={closeLoginChangeClickHandler} />
+          <Popover onClose={closeLoginChangeClickHandler}>
+            <Login type="changeLoginName" />
+          </Popover>
         ) : (
+          /*
+          <LoginUpdate onCloseHandler={closeLoginChangeClickHandler} />
+          */
           ''
         )}
         <Button.s18.blue width="275px" onClick={openPasswordChangeClickHandler}>
           Редактировать пароль
         </Button.s18.blue>
         {isPasswordChangePopoverVisible ? (
-          <PasswordUpdate onCloseHandler={closePasswordChangeClickHandler} />
+          <Popover onClose={closePasswordChangeClickHandler}>
+            <Login type="changePassword" />
+          </Popover>
         ) : (
+          /* <PasswordUpdate onCloseHandler={closePasswordChangeClickHandler} /> */
           ''
         )}
       </S.ProfileInfoActions>
       <S.ProfileTextHeader2>Мои курсы</S.ProfileTextHeader2>
       <S.ProfileCourses>
-        {myCourses?.map((course) => appendCourseCard(course))}
+        {userCourses
+          ? Object.keys(userCourses.courses).map((key) =>
+              appendCourseCard(mapCourseData(key))
+            )
+          : ''}
       </S.ProfileCourses>
       {isSelectWorkoutVisible ? (
-        <SelectWorkout
-          courseId={courseIdProp}
-          onCloseHandler={closeCourseWorkoutsClickHandler}
-        />
+        /*
+        <Popover onClose={closeCourseWorkoutsClickHandler}>
+          <SelectWorkout courseId={courseIdProp} />
+        </Popover>
+        */
+        <SelectWorkout courseId={courseIdProp} />
       ) : (
         ''
       )}

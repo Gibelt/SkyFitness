@@ -1,19 +1,24 @@
 import { Routes, Route } from 'react-router-dom';
-import Exercise from './pages/exercise';
-import Main from './pages/main/index';
-import LoginPage from './pages/loginPage';
-import Profile from './pages/profile';
-import Description from './pages/description';
+import ProtectedRoute from 'components/protectedRoute/ProtectedRoute';
+import Exercise from 'pages/exercise';
+import Main from 'pages/main';
+import LoginPage from 'pages/loginPage';
+import Profile from 'pages/profile';
+import Description from 'pages/description';
+import { userLogInSelector } from 'store/selectors/selectors';
+import { useSelector } from 'react-redux';
 
 export default function AppRoutes() {
+  const isLogin = useSelector(userLogInSelector);
   return (
     <Routes>
       <Route path="/" element={<Main />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/registration" element='Registration' />
       <Route path="/description/*" element={<Description />} />
       <Route path="/profile" element={<Profile />} />
-      <Route path="/exercise/:id" element={<Exercise />} />
+      <Route element={<ProtectedRoute isAllowed={isLogin} />}>
+        <Route path="/exercise" element={<Exercise />} />
+      </Route>
     </Routes>
   );
 }
