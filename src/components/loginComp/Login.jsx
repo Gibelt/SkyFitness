@@ -183,16 +183,19 @@ export function LoginBlock({ typeBlock }) {
       writeLoginDataStorage(dataSignUp);
       navigate('/');
     } else if (dataNewPassword) {
-      // navigate("/login");
+      navigate('/profile');
     } else if (dataUpdateUserInfo) {
       const loginDataStorage = JSON.parse(
         sessionStorage.getItem('skyFitnessLoginData')
       );
       console.log(loginDataStorage);
       loginDataStorage.displayName = dataUpdateUserInfo.displayName;
-      sessionStorage.setItem('skyFitnessLoginData', JSON.stringify(loginDataStorage) );
+      sessionStorage.setItem(
+        'skyFitnessLoginData',
+        JSON.stringify(loginDataStorage)
+      );
       dispatch(FetchUpdateName({ ...dataUpdateUserInfo }));
-      // navigate("/login");
+      navigate('/profile');
     }
     // navigate("/");
   }, [dataLogIn, dataSignUp, dataUpdateUserInfo]);
@@ -315,6 +318,7 @@ const CheckPassword = (dispatch) => {
     dispatch(
       FetchSignUpPassNotEqual({ SignUpPassNotEqual: 'Пароли не совпадают' })
     );
+    return false;
   }
   return true;
 };
