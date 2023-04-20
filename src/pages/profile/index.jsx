@@ -111,6 +111,7 @@ export default function Profile() {
       <Header />
       <div>
         <S.ProfileTextHeader>Мой профиль</S.ProfileTextHeader>
+        {/*
         <S.ProfileInfo>
           <S.ProfileTextRegular>
             Логин: <span>sergey.petrov96</span>
@@ -119,6 +120,7 @@ export default function Profile() {
             Пароль: <span>4fkhdj880d</span>
           </S.ProfileTextRegular>
         </S.ProfileInfo>
+        */}
       </div>
       <S.ProfileInfoActions>
         <Button.s18.blue width="275px" onClick={openLoginChangeClickHandler}>
