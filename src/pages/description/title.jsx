@@ -2,15 +2,19 @@ import { useState } from 'react';
 
 import { Button as StandartButton } from 'components/commonComponents/button/button';
 import { addUserCourse, getUserCoursesData } from 'mocks';
+
 import Styled from './styledComponents';
+import localData from './localData';
 
 export default ({ data }) => {
-  const { course, courseData, userData } = data;
-  const localData = courseData.local;
-  const rusCourseName = localData.name;
+  const { course, userData } = data;
   const engCourseName = course;
-  const courseBGsrc = localData.bgSrc;
-  const userID = userData?.localId;
+  const userID = userData.localId;
+
+  const pageData = localData.Page[course];
+  const titleData = localData.Title[course];
+  const { rusCourseName } = pageData;
+  const { bgSrc } = titleData;
 
   const [addingState, setAddingState] = useState(false);
 
@@ -38,9 +42,9 @@ export default ({ data }) => {
       style={{
         width: '100%',
         height: '300px',
-        bgColor: '#F5F5F5',
-        src: courseBGsrc,
         activity: false,
+        bgColor: '#F5F5F5',
+        src: bgSrc,
       }}
     >
       <h1>{rusCourseName}</h1>
