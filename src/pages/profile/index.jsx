@@ -128,7 +128,7 @@ export default function Profile() {
         </Button.s18.blue>
         {isLoginChangePopoverVisible ? (
           <Popover onClose={closeLoginChangeClickHandler}>
-            <Login type="changeLoginName" />
+            <Login type="changeLoginName" close={closeLoginChangeClickHandler}/>
           </Popover>
         ) : (
           /*
@@ -141,7 +141,7 @@ export default function Profile() {
         </Button.s18.blue>
         {isPasswordChangePopoverVisible ? (
           <Popover onClose={closePasswordChangeClickHandler}>
-            <Login type="changePassword" />
+            <Login type="changePassword" close={closePasswordChangeClickHandler}/>
           </Popover>
         ) : (
           /* <PasswordUpdate onCloseHandler={closePasswordChangeClickHandler} /> */

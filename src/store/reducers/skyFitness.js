@@ -27,6 +27,17 @@ export default function skyFitness(state = initialState, action) {
         userName: action.payload?.displayName,
       };
     }
+    case MyType.USER_UPDATE_IDTOKEN: {
+      const loginCurData = {...state.loginData};
+      loginCurData.idToken = action.payload.access_token;
+      loginCurData.refreshToken = action.payload.refresh_token;
+      loginCurData.expiresIn = action.payload.expires_in;
+
+      return {
+        ...state,
+        loginData: { ...loginCurData },
+      };
+    }
     case MyType.USER_LOGOUT: {
       return {
         ...state,
