@@ -28,3 +28,11 @@ export const FetchLogOut = () => ({
   type: MyType.USER_LOGOUT,
   payload: {},
 });
+
+
+export const FetchUpdateToken = (tokenData) => ({
+  type: MyType.USER_UPDATE_IDTOKEN,
+  payload: {
+    ...tokenData,
+  },
+});
