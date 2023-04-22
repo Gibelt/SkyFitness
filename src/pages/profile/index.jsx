@@ -1,9 +1,10 @@
 import SelectWorkout from 'components/selectWorkout/SelectWorkout';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-// import LoginUpdate from 'components/loginUpdate';
-// import PasswordUpdate from 'components/passwordUpdate';
-import { loginDataSelector as getUserStoreData } from 'store/selectors/selectors';
+import {
+  loginDataSelector as getUserStoreData,
+  userNameDataSelector,
+} from 'store/selectors/selectors';
 import Popover from 'components/popover';
 import Login from 'components/loginComp/Login';
 import UserCredentialsData from 'components/userCredentialsData';
@@ -11,10 +12,11 @@ import * as S from './styles';
 import { CourseCard } from '../../components/commonComponents/courseCard/courseCard';
 import { Button } from '../../components/commonComponents/button/button';
 import Header from '../../components/header/Header';
-import { getUserData, mapCourseData } from '../../mocks'; // getUserCourses
+import { getUserData, mapCourseData } from '../../mocks';
 
 export default function Profile() {
   const userStoreData = useSelector(getUserStoreData);
+  const userName = useSelector(userNameDataSelector);
 
   const { localId } = userStoreData;
 
@@ -28,6 +30,8 @@ export default function Profile() {
       */
       getUserData(setUserCourses, { userID: localId });
     }
+
+    console.log(243243);
 
     if (!userCourses) getUserCoursesData();
   }, []);
@@ -124,11 +128,8 @@ export default function Profile() {
         */}
       </div>
 
-      <UserCredentialsData
-        login={userStoreData.displayName}
-        password="USER PASSWORD"
-      />
-      
+      <UserCredentialsData login={userName} password="USER PASSWORD" />
+
       <S.ProfileInfoActions>
         <Button.s18.blue width="275px" onClick={openLoginChangeClickHandler}>
           Редактировать логин
