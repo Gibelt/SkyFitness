@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { loginDataSelector as getUserStoreData } from 'store/selectors/selectors';
 import Popover from 'components/popover';
 import Login from 'components/loginComp/Login';
+import UserCredentialsData from 'components/userCredentialsData';
 import * as S from './styles';
 import { CourseCard } from '../../components/commonComponents/courseCard/courseCard';
 import { Button } from '../../components/commonComponents/button/button';
@@ -122,13 +123,22 @@ export default function Profile() {
         </S.ProfileInfo>
         */}
       </div>
+
+      <UserCredentialsData
+        login={userStoreData.displayName}
+        password="USER PASSWORD"
+      />
+      
       <S.ProfileInfoActions>
         <Button.s18.blue width="275px" onClick={openLoginChangeClickHandler}>
           Редактировать логин
         </Button.s18.blue>
         {isLoginChangePopoverVisible ? (
           <Popover onClose={closeLoginChangeClickHandler}>
-            <Login type="changeLoginName" close={closeLoginChangeClickHandler}/>
+            <Login
+              type="changeLoginName"
+              close={closeLoginChangeClickHandler}
+            />
           </Popover>
         ) : (
           /*
@@ -141,7 +151,10 @@ export default function Profile() {
         </Button.s18.blue>
         {isPasswordChangePopoverVisible ? (
           <Popover onClose={closePasswordChangeClickHandler}>
-            <Login type="changePassword" close={closePasswordChangeClickHandler}/>
+            <Login
+              type="changePassword"
+              close={closePasswordChangeClickHandler}
+            />
           </Popover>
         ) : (
           /* <PasswordUpdate onCloseHandler={closePasswordChangeClickHandler} /> */
@@ -151,9 +164,9 @@ export default function Profile() {
       <S.ProfileTextHeader2>Мои курсы</S.ProfileTextHeader2>
       <S.ProfileCourses>
         {userCourses
-          ? Object.keys(userCourses.courses).map((key) =>
-              appendCourseCard(mapCourseData(key))
-            )
+          ? Object.keys(userCourses.courses).map((key) => (
+              <div key={key}>{appendCourseCard(mapCourseData(key))}</div>
+            ))
           : ''}
       </S.ProfileCourses>
       {isSelectWorkoutVisible ? (
