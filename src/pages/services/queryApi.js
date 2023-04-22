@@ -9,7 +9,7 @@ export const skyFitnessQueryApiAuth = createApi({
   endpoints: (builder) => ({
     postSignUp: builder.query({
       query: ({ email, password }) => ({
-        url: `:signUp?key=${WEB_API_KEY}`,
+        url: `accounts:signUp?key=${WEB_API_KEY}`,
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: `{"email":"${email}","password":"${password}","returnSecureToken":true}`,
@@ -18,7 +18,7 @@ export const skyFitnessQueryApiAuth = createApi({
     }),
     postSignInWithPassword: builder.query({
       query: ({ email, password }) => ({
-        url: `:signInWithPassword?key=${WEB_API_KEY}`,
+        url: `accounts:signInWithPassword?key=${WEB_API_KEY}`,
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: `{"email":"${email}","password":"${password}","returnSecureToken":true}`,
@@ -27,7 +27,7 @@ export const skyFitnessQueryApiAuth = createApi({
     }),
     postUpdatePassword: builder.query({
       query: ({ idToken, newPassword }) => ({
-        url: `:update?key=${WEB_API_KEY}`,
+        url: `accounts:update?key=${WEB_API_KEY}`,
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: `{"idToken":"${idToken}","password":"${newPassword}","returnSecureToken":true}`,
@@ -36,16 +36,25 @@ export const skyFitnessQueryApiAuth = createApi({
     }),
     postUpdateUserInfo: builder.query({
       query: ({ idToken, newUserName }) => ({
-        url: `:update?key=${WEB_API_KEY}`,
+        url: `accounts:update?key=${WEB_API_KEY}`,
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: `{"idToken":"${idToken}","displayName":"${newUserName}","photoUrl":"", "returnSecureToken":true}`,
       }),
       providesTags: [{ type: 'UpdateUserInfo' }],
     }),
+    postRefreshToIdToken: builder.query({
+      query: ({ refreshToken }) => ({
+        url: `token?key=${WEB_API_KEY}`,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `grant_type=refresh_token&refresh_token=${refreshToken}`,
+      }),
+      providesTags: [{ type: 'RefreshToIdToken' }],
+    }),
   }),
 });
 
-export const { usePostSignInWithPasswordQuery, usePostSignUpQuery, usePostUpdatePasswordQuery, usePostUpdateUserInfoQuery } =
+export const { usePostSignInWithPasswordQuery, usePostSignUpQuery, usePostUpdatePasswordQuery, usePostUpdateUserInfoQuery, usePostRefreshToIdTokenQuery } =
   skyFitnessQueryApiAuth;
 

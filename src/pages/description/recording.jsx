@@ -1,15 +1,16 @@
 import { useState } from 'react';
 
 import { Button as StandartButton } from 'components/commonComponents/button/button';
+
 import Styled from './styledComponents';
-import pageData from './pageData';
+import localData from './localData';
 
 export default ({ data }) => {
-  const { courseData, userData } = data;
-  const localData = courseData.local;
-  const courseName = localData.name;
-  const userID = userData?.localId;
-  const { msg } = pageData.Recording;
+  const { course, userData } = data;
+  const userID = userData.localId;
+
+  const pageData = localData.Page[course];
+  const { rusCourseName } = pageData;
 
   const [recordState, setRecordState] = useState(false);
 
@@ -19,8 +20,8 @@ export default ({ data }) => {
   const buttonName = {
     disable: 'Для записи на урок требуется авторизация',
     enable: recordState
-      ? `Отменить запись на тренировку по «${courseName}»`
-      : `Записаться на тренировку по «${courseName}»`,
+      ? `Отменить запись на тренировку по «${rusCourseName}»`
+      : `Записаться на тренировку по «${rusCourseName}»`,
   };
   return (
     <Box
@@ -59,3 +60,6 @@ const Button = ({ onClick, recordState, disabled, children }) => {
     </Btn>
   );
 };
+
+const msg =
+  'Оставьте заявку на пробное занятие, мы свяжемся с вами, поможем с выбором направления и тренера, с которым тренировки принесут здоровье и радость!';

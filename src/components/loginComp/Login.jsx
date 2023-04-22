@@ -1,14 +1,16 @@
+/* eslint-disable consistent-return */
 /* eslint-disable react/jsx-pascal-case */
 /* eslint-disable object-curly-newline */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, redirect } from 'react-router-dom';
 import {
   usePostSignInWithPasswordQuery,
   usePostSignUpQuery,
   usePostUpdatePasswordQuery,
   usePostUpdateUserInfoQuery,
+  usePostRefreshToIdTokenQuery,
 } from '../../pages/services/queryApi';
 import { Button } from '../commonComponents/button/button';
 import * as S from './LoginStyles';
@@ -22,6 +24,7 @@ import {
   FetchLoginSuccess,
   FetchLoginFailure,
   FetchUpdateName,
+  FetchUpdateToken,
 } from '../../store/actions/creators/creators';
 
 const InputFields = [
@@ -66,21 +69,21 @@ const InputFieldsChangeLoginName = [
     type: 'text',
   },
 ];
-function Login({ type = 'login' }) {
+function Login({ type = 'login', close }) {
   return (
     <S.CenterBlock>
       <S.LoginMainBlock>
         <S.groupLogoImg>
           <Logo />
         </S.groupLogoImg>
-        <LoginBlock typeBlock={type} />
+        <LoginBlock typeBlock={type} close={close} />
       </S.LoginMainBlock>
     </S.CenterBlock>
   );
 }
 
 export default Login;
-export function LoginBlock({ typeBlock }) {
+export function LoginBlock({ typeBlock, close }) {
   const [signUp, setSignUp] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -103,6 +106,17 @@ export function LoginBlock({ typeBlock }) {
       setSkipChangeUserName,
     },
   };
+  const {
+    data: dataRefToken,
+    error: errorRefToken,
+    isLoading: isLoadingRefToken,
+  } = usePostRefreshToIdTokenQuery(
+    { refreshToken: loginDataSelected?.refreshToken },
+    {
+      skip: typeBlock === 'login',
+      refetchOnMountOrArgChange: true,
+    }
+  );
   const {
     data: dataSignUp,
     error: errorSignUp,
@@ -153,7 +167,9 @@ export function LoginBlock({ typeBlock }) {
     isLoadingLogIn ||
     isLoadingNewPassword ||
     isLoadingUpdateUserInfo;
-
+  useEffect(() => {
+    dispatch(FetchLoginFailure({}));
+  }, []);
   useEffect(() => {
     let errorMessageStore = {};
     if (errorSignUp) {
@@ -168,8 +184,17 @@ export function LoginBlock({ typeBlock }) {
     } else if (errorUpdateUserInfo) {
       errorMessageStore = { Error: errorUpdateUserInfo.data.error.message };
       dispatch(FetchLoginFailure(errorMessageStore));
+    } else if (errorRefToken) {
+      errorMessageStore = { Error: errorRefToken.data.error.message };
+      dispatch(FetchLoginFailure(errorMessageStore));
     }
-  }, [errorLogIn, errorSignUp, errorNewPassword, errorUpdateUserInfo]);
+  }, [
+    errorLogIn,
+    errorSignUp,
+    errorNewPassword,
+    errorUpdateUserInfo,
+    errorRefToken,
+  ]);
 
   const writeLoginDataStorage = (data) =>
     sessionStorage.setItem('skyFitnessLoginData', JSON.stringify(data));
@@ -183,22 +208,39 @@ export function LoginBlock({ typeBlock }) {
       writeLoginDataStorage(dataSignUp);
       navigate('/');
     } else if (dataNewPassword) {
-      navigate('/profile');
+      close();
     } else if (dataUpdateUserInfo) {
       const loginDataStorage = JSON.parse(
         sessionStorage.getItem('skyFitnessLoginData')
       );
-      console.log(loginDataStorage);
       loginDataStorage.displayName = dataUpdateUserInfo.displayName;
       sessionStorage.setItem(
         'skyFitnessLoginData',
         JSON.stringify(loginDataStorage)
       );
       dispatch(FetchUpdateName({ ...dataUpdateUserInfo }));
-      navigate('/profile');
+      close();
+    } else if (dataRefToken) {
+      const loginDataStorage = JSON.parse(
+        sessionStorage.getItem('skyFitnessLoginData')
+      );
+      loginDataStorage.refreshToken = dataRefToken.refresh_token;
+      loginDataStorage.idToken = dataRefToken.access_token;
+      loginDataStorage.expiresIn = dataRefToken.expires_in;
+      sessionStorage.setItem(
+        'skyFitnessLoginData',
+        JSON.stringify(loginDataStorage)
+      );
+      dispatch(FetchUpdateToken({ ...dataRefToken }));
     }
-    // navigate("/");
-  }, [dataLogIn, dataSignUp, dataUpdateUserInfo]);
+    dispatch(FetchLoginFailure({}));
+  }, [
+    dataLogIn,
+    dataSignUp,
+    dataUpdateUserInfo,
+    dataNewPassword,
+    dataRefToken,
+  ]);
   const GetListFields = () => {
     let typeListFields;
     if (typeBlock === 'login') {
