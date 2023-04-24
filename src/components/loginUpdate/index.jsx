@@ -4,7 +4,7 @@ import { Button } from 'components/commonComponents/button/button';
 import { useState } from 'react';
 import ActionCompleted from 'components/actionCompleted';
 import * as S from './styles';
-import { InputField } from '../loginComp/LoginStyles'; // TODO: вынести в отдельный компонент
+import { InputField } from '../loginComp/LoginStyles';
 
 export default function LoginUpdate(props) {
   const [isActionCompleted, setIsActionCompeleted] = useState(false);

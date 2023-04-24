@@ -21,7 +21,6 @@ body {
 }
 
 .content {
-  /*  width: 1440px; */
   height: 100%;
   padding-left: calc((100vw - 1160px) / 2);
   padding-right: calc((100vw - 1160px) / 2);

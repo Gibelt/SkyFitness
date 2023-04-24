@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react';
 import * as S from './styles';
 
 export default function Popover({
-  onClose = () => {},
+  onClose,
   closeBtnRequired = true,
   children = '',
 }) {

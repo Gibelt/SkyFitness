@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FetchLogOut } from 'store/actions/creators/creators';
 import { Button } from '../button/button';
 import {
@@ -11,7 +10,6 @@ import {
 import * as s from './loginViewStyle';
 
 export default function LogInUserView() {
- 
   const [isMainPageLocal, setIsMainPageLocal] = useState(false);
   useEffect(() => {
     const urlPath = new URL(document.URL).pathname;
@@ -31,7 +29,6 @@ export default function LogInUserView() {
     setClickLogOutMenu((prev) => !prev);
   };
   const HandlerClickLogOut = () => {
-    // e.preventDefault();
     sessionStorage.removeItem('skyFitnessLoginData');
     dispatch(FetchLogOut());
     navigate('/');

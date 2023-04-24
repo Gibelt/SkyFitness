@@ -1,16 +1,6 @@
-// import { useState } from 'react';
-// import { useEffect } from 'react';
 import * as St from './styled';
 
-export default ({
-  login = 'login',
-  // password = 'password'
-}) => {
-  // console.log(login);
-
-  // const [passVisibility, setPassVisibility] = useState();
-  // passVisibility ? password : hiddenPass;
-  // const hiddenPass = password.replace(/./g, '⦁');
+export default ({ login = 'login' }) => {
   const hiddenPass = '⦁⦁⦁⦁⦁⦁⦁⦁';
 
   return (
@@ -26,21 +16,7 @@ export default ({
       <St.Item>
         <St.Text> Пароль: </St.Text>
         <St.Text style={{ minWidth: '100px' }}>{hiddenPass}</St.Text>
-        {/* <EyeButton
-          passVisibility={passVisibility}
-          onClick={() => setPassVisibility(!passVisibility)}
-        /> */}
       </St.Item>
     </St.Wrapper>
   );
 };
-
-// const EyeButton = ({ passVisibility, onClick }) => {
-//   const eye = '👁';
-//   const slashEye = <del>{eye}</del>;
-//   return (
-//     <St.EyeButton onClick={onClick}>
-//       <span>{passVisibility ? eye : slashEye}</span>
-//     </St.EyeButton>
-//   );
-// };

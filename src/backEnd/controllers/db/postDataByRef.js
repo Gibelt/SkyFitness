@@ -9,7 +9,6 @@ export default () =>
   };
 
 const getDataByRef = (responseFunc, { ref }) => {
-  //   const newRef = ref.parent;
   const newRef = ref;
   newRef
     .once('value')

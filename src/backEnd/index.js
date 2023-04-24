@@ -1,18 +1,8 @@
 import app from 'firebase/compat/app';
 import 'firebase/compat/database';
 import 'firebase/compat/auth';
-
-// import 'firebase/storage';
-// import 'firebase/messaging';
-
-// import { getFirestore } from 'firebase/firestore';
-// import { getDatabase } from 'firebase/database';
-// import { initializeApp } from 'firebase/app'
-
 import firebaseConfig from './config';
 import getFunx from './funx';
-
-// ============================================================
 
 app.initializeApp(firebaseConfig);
 const db = app.database();

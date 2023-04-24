@@ -20,6 +20,5 @@ export function MainHeader() {
 }
 
 export function Sticker() {
-  // <use xlinkHref={sticker} />
   return <S.sticker src={sticker} />;
 }

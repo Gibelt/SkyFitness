@@ -42,19 +42,3 @@ export const StyledButton = styled('button')`
   overflow: hidden;
   cursor: ${(props) => (props.style.activity ? `pointer` : `default`)};
 `;
-
-// @font-face {
-//     font-family: 'StratosSkyeng';
-
-//     src: local('StratosSkyeng'), local('StratosSkyeng');
-//     /* src: local('StratosSkyeng'), local('StratosSkyeng'),
-//         url('/fonts/StratosSkyeng.woff2') format('woff2'),
-//         url('/fonts/StratosSkyeng.woff') format('woff'),
-//         url('/fonts/StratosSkyeng.ttf') format('truetype'); */
-
-//     font-weight: 400;
-//     font-style: normal;
-// }
-// font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-//     'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif, 'Courier New',
-//     monospace;

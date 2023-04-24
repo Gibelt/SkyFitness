@@ -117,7 +117,6 @@ export const getUserData = (responseFunc, { userID }) => {
       const { data, error } = receivedData;
       if (error) console.error(`getUserData: ${error}`);
       else if (data) responseFunc(data);
-      // else console.error('getUserData: data not found');
     },
     { ref: userRef }
   );

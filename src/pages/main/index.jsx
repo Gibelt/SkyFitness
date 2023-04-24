@@ -1,7 +1,4 @@
 /* eslint-disable no-restricted-globals */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-pascal-case */
-
 import { useNavigate } from 'react-router-dom';
 import LogInUserView from 'components/commonComponents/login/logInUserview';
 import * as S from './indexStyle';
@@ -13,7 +10,6 @@ import { CourseCard } from '../../components/commonComponents/courseCard/courseC
 export default function Main() {
   const navigate = useNavigate();
   const HendleClickCours = (srcPage) => navigate(`/description/${srcPage}`);
-  // const HandleClickUp = ()=> {scroll(0,0);}
   return (
     <S.mainWrapper>
       <S.groupLogo>
