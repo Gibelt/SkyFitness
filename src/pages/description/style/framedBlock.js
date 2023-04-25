@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-export const FramedBlock = styled("div")`
+export default styled('div')`
   height: ${(props) => props.style.height};
   width: ${(props) => props.style.width};
 

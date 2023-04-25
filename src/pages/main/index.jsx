@@ -4,8 +4,8 @@ import LogInUserView from 'components/commonComponents/login/logInUserview';
 import * as S from './indexStyle';
 import * as Comp from '../../components/main/mainPage';
 import Logo from '../../components/logo/Logo';
-import { Button } from '../../components/commonComponents/button/button';
-import { CourseCard } from '../../components/commonComponents/courseCard/courseCard';
+import { Button } from '../../components/commonComponents/button';
+import { CourseCard } from '../../components/commonComponents/courseCard';
 
 export default function Main() {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import Logo from 'components/logo/Logo';
 import Popover from 'components/popover';
-import { Button } from 'components/commonComponents/button/button';
+import { Button } from 'components/commonComponents/button';
 import { useState } from 'react';
 import ActionCompleted from 'components/actionCompleted';
 import * as S from './styles';

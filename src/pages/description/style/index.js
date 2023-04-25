@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-import { FramedBlock } from './styledComponents/framedBlock';
+import FramedBlockStyle from './framedBlock';
 
-const Styled = {
+export default {
   Wrapper: styled('div')`
     height: auto;
     width: 100%;
@@ -32,7 +32,7 @@ const Styled = {
   `,
 
   Title: {
-    Box: FramedBlock,
+    Box: FramedBlockStyle,
     Content: styled('div')`
       flex-grow: 1;
 
@@ -45,7 +45,7 @@ const Styled = {
   },
 
   Recording: {
-    Box: FramedBlock,
+    Box: FramedBlockStyle,
     Content: styled('div')`
       flex-grow: 1;
 
@@ -65,5 +65,3 @@ const Styled = {
     `,
   },
 };
-
-export default Styled;

@@ -1,7 +1,7 @@
 import Logo from 'components/logo/Logo';
 import Popover from 'components/popover';
 import ActionCompleted from 'components/actionCompleted';
-import { Button } from 'components/commonComponents/button/button';
+import { Button } from 'components/commonComponents/button';
 import { useState } from 'react';
 import * as S from './styles';
 import { InputField } from '../loginComp/LoginStyles';

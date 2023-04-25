@@ -9,8 +9,8 @@ import Popover from 'components/popover';
 import Login from 'components/loginComp/Login';
 import UserCredentialsData from 'components/userCredentialsData';
 import * as S from './styles';
-import { CourseCard } from '../../components/commonComponents/courseCard/courseCard';
-import { Button } from '../../components/commonComponents/button/button';
+import { CourseCard } from '../../components/commonComponents/courseCard';
+import { Button } from '../../components/commonComponents/button';
 import Header from '../../components/header/Header';
 import { getUserData, mapCourseData } from '../../mocks';
 

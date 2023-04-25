@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledСourseCard = styled("div")`
+export const СourseCard = styled("div")`
   height: ${(props) => props.style.height};
   width: ${(props) => props.style.width};
   
@@ -44,7 +44,7 @@ export const StyledСourseCard = styled("div")`
   }
 `;
 
-export const StyledCardContent = styled("div")`
+export const CardContent = styled("div")`
   flex-grow: 1;
 
   display: flex;

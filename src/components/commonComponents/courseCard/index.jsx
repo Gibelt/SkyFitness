@@ -1,4 +1,4 @@
-import { StyledСourseCard, StyledCardContent } from './styleData/commonStyles';
+import * as Styled from './style';
 
 export function CourseCard({
   title = 'Заголовок',
@@ -10,7 +10,7 @@ export function CourseCard({
   children = '',
 }) {
   return (
-    <StyledСourseCard
+    <Styled.СourseCard
       onClick={activity ? onClick : () => {}}
       style={{
         src,
@@ -20,7 +20,7 @@ export function CourseCard({
       }}
     >
       <h1>{title}</h1>
-      <StyledCardContent>{children}</StyledCardContent>
-    </StyledСourseCard>
+      <Styled.CardContent>{children}</Styled.CardContent>
+    </Styled.СourseCard>
   );
 }

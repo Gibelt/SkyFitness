@@ -1,13 +1,8 @@
 const actionDataHandler = (data) => {
-  const {
-    // operationType,
-    user,
-  } = data;
+  const { user } = data;
 
   return {
-    // operationType,
     user: userDataHandler(user),
-    // data
   };
 };
 
@@ -25,7 +20,6 @@ const errorDataHandler = (data) => {
   const error = data.code;
   return {
     error,
-    // data
   };
 };
 

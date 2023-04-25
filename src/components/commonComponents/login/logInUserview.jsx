@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FetchLogOut } from 'store/actions/creators/creators';
-import { Button } from '../button/button';
+import { Button } from '../button';
 import {
   userNameDataSelector,
   userLogInSelector,

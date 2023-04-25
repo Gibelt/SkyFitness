@@ -39,6 +39,7 @@
     "no-underscore-dangle": "off",
     "no-restricted-syntax": "off",
     "no-array-constructor": "off",
+    "no-unused-vars": "off",
     "no-new-object": "off",
     "no-plusplus": "off",
     "prefer-const": "off",
