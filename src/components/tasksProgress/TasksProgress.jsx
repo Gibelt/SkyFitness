@@ -9,6 +9,7 @@ const colors = [
 ];
 
 export default function TasksProgress({ tasks }) {
+  
   const getWidth = (item, done) => {
     const goal = parseInt(item.match(/\d+/), 10);
     if ((done / goal) * 100 < 100) {

@@ -28,7 +28,7 @@ export default function ProgressForm({
     `users/${userId}/courses/${courseId}/workouts/${workoutId}`
   );
 
-  const onChange = (e) => {
+  const onInputChange = (e) => {
     setValues({
       ...values,
       [e.target.name]: {
@@ -45,7 +45,7 @@ export default function ProgressForm({
     }
   };
 
-  const handleSubmit = (e) => {
+  const onSubmitClickHandler = (e) => {
     e.preventDefault();
     Object.entries(values).forEach(([item, value]) => {
       const newData = { [item]: value };
@@ -67,7 +67,7 @@ export default function ProgressForm({
         placeholder="Введите значение"
         name={item}
         id={parseInt(item.match(/\d+/), 10)}
-        onChange={onChange}
+        onChange={onInputChange}
       />
     </s.Item>
   ));
@@ -80,7 +80,7 @@ export default function ProgressForm({
   ) : (
     <s.Content>
       <s.Title>Мой прогресс</s.Title>
-      <s.List onSubmit={handleSubmit}>
+      <s.List onSubmit={onSubmitClickHandler}>
         {list}
         <s.ButtonContainer>
           <Button.s18.blue width="278px" type="submit">
