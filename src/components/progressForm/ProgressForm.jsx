@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import * as s from './ProgressFormStyle';
-import { Button } from '../commonComponents/button/button';
+import { Button } from '../commonComponents/button';
 import { updateDataByRef, ref } from '../../backEnd';
 
 const tasksDefault = [

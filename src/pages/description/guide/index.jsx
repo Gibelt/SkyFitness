@@ -1,11 +1,10 @@
-import Styled from './styledComponents';
+import Styled from './style';
 
-import SuitableFor from './suitableFor';
-import Directions from './directions';
+import SuitableFor from './SuitableFor';
+import Directions from './Directions';
 
-export default ({ data: { description, directions, suitableFor } }) => {
-  const { Wrapper } = Styled;
-  const { Section } = Styled;
+export default ({ data }) => {
+  const { description, directions, suitableFor } = data;
   return (
     <Wrapper>
       <Section>
@@ -24,3 +23,4 @@ export default ({ data: { description, directions, suitableFor } }) => {
     </Wrapper>
   );
 };
+const { Wrapper, Section } = Styled;

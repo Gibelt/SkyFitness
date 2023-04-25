@@ -7,7 +7,6 @@ const errorDataHandler = (data) => {
   const error = data.code;
   return {
     error,
-    // data
   };
 };
 

@@ -12,7 +12,7 @@ import {
   usePostUpdateUserInfoQuery,
   usePostRefreshToIdTokenQuery,
 } from '../../pages/services/queryApi';
-import { Button } from '../commonComponents/button/button';
+import { Button } from '../commonComponents/button';
 import * as S from './LoginStyles';
 import Logo from '../logo/Logo';
 import {

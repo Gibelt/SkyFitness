@@ -1,16 +1,15 @@
-import Styled from './styledComponents';
+import Styled from './style';
 
 export default ({ data }) => {
   const ColList = new Array();
   const colsNum = 3;
 
   for (let i = 0; i < colsNum; i++)
-    ColList.push(<Column num={i+1} data={data[i]} key={i} />);
+    ColList.push(<Column num={i + 1} data={data[i]} key={i} />);
 
   const { Box } = Recommendation;
   return <Box>{ColList}</Box>;
 };
-
 const { Recommendation } = Styled;
 
 const Column = ({ num, data }) => (

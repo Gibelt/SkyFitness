@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledButton = styled('button')`
+export default styled('button')`
   /* height: 52px; */
 
   min-height: max-content;

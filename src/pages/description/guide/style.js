@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-const Styled = {
-  Wrapper: styled("div")`
+export default {
+  Wrapper: styled('div')`
     width: 100%;
 
     display: flex;
@@ -28,7 +28,7 @@ const Styled = {
     }
   `,
 
-  Section: styled("div")`
+  Section: styled('div')`
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -37,13 +37,13 @@ const Styled = {
   `,
 
   Recommendation: {
-    Box: styled("div")`
+    Box: styled('div')`
       width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
     `,
-    Column: styled("div")`
+    Column: styled('div')`
       width: 30%;
       display: grid;
       grid-template-columns: 67px auto;
@@ -52,7 +52,7 @@ const Styled = {
       padding-left: 10px;
       padding-right: 10px;
     `,
-    NumCircle: styled("div")`
+    NumCircle: styled('div')`
       width: 67px;
       height: 67px;
 
@@ -72,13 +72,13 @@ const Styled = {
   },
 
   CourseList: {
-    Box: styled("div")`
+    Box: styled('div')`
       width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
     `,
-    Column: styled("div")`
+    Column: styled('div')`
       width: 30%;
       display: flex;
       flex-direction: row;
@@ -97,5 +97,3 @@ const Styled = {
     `,
   },
 };
-
-export default Styled;

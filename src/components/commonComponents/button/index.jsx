@@ -1,12 +1,11 @@
-import { StyledButton } from './styleData/commonStyles';
-import { sizeStyles, colorStyles } from './styleData/dynemicStyles';
+import StyledButton from './style';
+import { sizeStyles, colorStyles } from './data';
 
-function btn(fontSize, color) {
+const Btn = (fontSize, color) => {
   function StyledButtonConstructor({
     width = '100%',
     height = 'auto',
-    onClick = () =>
-      console.log(`I am a ${color} button with ${fontSize} font-size`),
+    onClick = () => {},
     children,
     disabled = false,
   }) {
@@ -27,11 +26,11 @@ function btn(fontSize, color) {
     );
   }
   return StyledButtonConstructor;
-}
+};
 
 export const Button = {
-  s16: { blue: btn(16, 'blue') },
-  s18: { blue: btn(18, 'blue'), white: btn(18, 'white') },
-  s20: { green: btn(20, 'green') },
-  s24: { green: btn(24, 'green') },
+  s16: { blue: Btn(16, 'blue') },
+  s18: { blue: Btn(18, 'blue'), white: Btn(18, 'white') },
+  s20: { green: Btn(20, 'green') },
+  s24: { green: Btn(24, 'green') },
 };

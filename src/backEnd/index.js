@@ -8,20 +8,14 @@ app.initializeApp(firebaseConfig);
 const db = app.database();
 const ref = (collection) => db.ref(collection);
 
-const {
-  // reducer,
-  funx,
-} = getFunx(app);
+const { funx } = getFunx(app);
 
 const {
-  // Auth
   createUser,
   signIn,
   signOut,
   getCurrentUser,
   updatePassword,
-
-  //  Data
   getAllData,
   getDataByRef,
   postDataByRef,
@@ -29,17 +23,13 @@ const {
   removeDataByRef,
 } = funx;
 
-// export default reducer;
 export { db, ref };
 export {
-  // Auth
   createUser,
   signIn,
   signOut,
   getCurrentUser,
   updatePassword,
-
-  //  Data
   getAllData,
   getDataByRef,
   postDataByRef,
