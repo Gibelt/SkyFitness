@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import Login from '../../components/loginComp/Login';
+import Login from '../../components/login/Login';
 
 export default function LoginPage() {
   useEffect(() => {
@@ -8,5 +8,5 @@ export default function LoginPage() {
       wrapper.style = 'background-color: #F5F5F5';
     }
   });
-  return <Login  />;
+  return <Login />;
 }

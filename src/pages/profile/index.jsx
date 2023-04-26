@@ -6,7 +6,7 @@ import {
   userNameDataSelector,
 } from 'store/selectors/selectors';
 import Popover from 'components/popover';
-import Login from 'components/loginComp/Login';
+import Login from 'components/login/Login';
 import UserCredentialsData from 'components/userCredentialsData';
 import * as S from './style';
 import { CourseCard } from '../../components/commonComponents/courseCard';
