@@ -1,4 +1,3 @@
-/* eslint-disable implicit-arrow-linebreak */
 import { createSelector } from '@reduxjs/toolkit';
 import { skyFitnessQueryApiAuth } from '../../pages/services/queryApi';
 
@@ -10,8 +9,6 @@ const apiSelectorUserSignUp =
 
 const apiSelectorUserLogIn =
   skyFitnessQueryApiAuth.endpoints.postSignInWithPassword.select();
-
-// export const getThingForId = (state, id) => api.endpoints.getThingById.select(id)(state)?.data ?? {};
 
 export const loginDataErrorMSGSelector = (store) =>
   skyFitnessSelector(store)?.errorMessage ?? {};
@@ -38,7 +35,6 @@ export const userNameDataSelector = (store) => {
       : undefined
   )?.displayName;
   const combinedName =
-    // eslint-disable-next-line no-nested-ternary
     (storeName === '' ? 'не задано' : storeName) ??
     (storageName === '' ? 'не задано' : storageName) ??
     'не задано';

@@ -49,10 +49,6 @@ export const TitleComplete = styled.p`
 export const ImgComplete = styled.img``;
 
 export const List = styled.form`
-  // /*
-  // export const List = styled.div
-  // */
-
   display: flex;
   flex-direction: column;
   gap: 30px;

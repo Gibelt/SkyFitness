@@ -4,7 +4,6 @@ export default () =>
   (responseFunc, { ref, newData }) => {
     ref
       .update(newData)
-      // .set(newData)
       .then(() => getDataByRef(responseFunc, { ref }))
       .catch((response) => responseFunc(response));
   };

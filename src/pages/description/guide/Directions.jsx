@@ -1,4 +1,4 @@
-import Styled from './styledComponents';
+import Styled from './style';
 
 export default ({ data }) => {
   const ColList = new Array();

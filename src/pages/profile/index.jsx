@@ -6,11 +6,11 @@ import {
   userNameDataSelector,
 } from 'store/selectors/selectors';
 import Popover from 'components/popover';
-import Login from 'components/loginComp/Login';
+import Login from 'components/login/Login';
 import UserCredentialsData from 'components/userCredentialsData';
-import * as S from './styles';
-import { CourseCard } from '../../components/commonComponents/courseCard/courseCard';
-import { Button } from '../../components/commonComponents/button/button';
+import * as S from './style';
+import { CourseCard } from '../../components/commonComponents/courseCard';
+import { Button } from '../../components/commonComponents/button';
 import Header from '../../components/header/Header';
 import { getUserData, mapCourseData } from '../../mocks';
 
@@ -24,14 +24,8 @@ export default function Profile() {
 
   useEffect(() => {
     async function getUserCoursesData() {
-      /*
-      const response = await getUserCourses(localId);
-      console.log('response', response);
-      */
       getUserData(setUserCourses, { userID: localId });
     }
-
-    console.log(243243);
 
     if (!userCourses) getUserCoursesData();
   }, []);
@@ -50,15 +44,6 @@ export default function Profile() {
       });
     };
   }
-
-  /*
-  const closeCourseWorkoutsClickHandler = () => {
-    toggleSelectWorkoutPopoverVisibility({
-      isSelectWorkoutVisible: false,
-      courseIdProp: '',
-    });
-  };
-  */
 
   // отображение поповера смены логина
   const [isLoginChangePopoverVisible, toggleLoginChangePopoverVisibility] =
@@ -116,16 +101,6 @@ export default function Profile() {
       <Header />
       <div>
         <S.ProfileTextHeader>Мой профиль</S.ProfileTextHeader>
-        {/*
-        <S.ProfileInfo>
-          <S.ProfileTextRegular>
-            Логин: <span>sergey.petrov96</span>
-          </S.ProfileTextRegular>
-          <S.ProfileTextRegular>
-            Пароль: <span>4fkhdj880d</span>
-          </S.ProfileTextRegular>
-        </S.ProfileInfo>
-        */}
       </div>
 
       <UserCredentialsData login={userName} password="USER PASSWORD" />
@@ -142,9 +117,6 @@ export default function Profile() {
             />
           </Popover>
         ) : (
-          /*
-          <LoginUpdate onCloseHandler={closeLoginChangeClickHandler} />
-          */
           ''
         )}
         <Button.s18.blue width="275px" onClick={openPasswordChangeClickHandler}>
@@ -158,7 +130,6 @@ export default function Profile() {
             />
           </Popover>
         ) : (
-          /* <PasswordUpdate onCloseHandler={closePasswordChangeClickHandler} /> */
           ''
         )}
       </S.ProfileInfoActions>
@@ -170,16 +141,7 @@ export default function Profile() {
             ))
           : ''}
       </S.ProfileCourses>
-      {isSelectWorkoutVisible ? (
-        /*
-        <Popover onClose={closeCourseWorkoutsClickHandler}>
-          <SelectWorkout courseId={courseIdProp} />
-        </Popover>
-        */
-        <SelectWorkout courseId={courseIdProp} />
-      ) : (
-        ''
-      )}
+      {isSelectWorkoutVisible ? <SelectWorkout courseId={courseIdProp} /> : ''}
     </S.ProfilePageWrapper>
   );
 }

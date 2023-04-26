@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-import { Button as StandartButton } from 'components/commonComponents/button/button';
+import { Button as StandartButton } from 'components/commonComponents/button';
 import { addUserCourse, getUserCoursesData } from 'mocks';
 
-import Styled from './styledComponents';
-import localData from './localData';
+import Styled from './style';
+import localData from './data';
 
 export default ({ data }) => {
   const { course, userData } = data;
@@ -28,15 +28,19 @@ export default ({ data }) => {
         { userID }
       );
 
-  const { Title } = Styled;
-  const { Content } = Title;
-  const { Box } = Title;
   const buttonName = {
     disable: 'Требуется авторизация',
     enable: addingState
       ? `Курс «${rusCourseName}» добавлен`
       : `Добавить курс «${rusCourseName}»`,
   };
+  const clickHandler = () => {
+    addUserCourse(() => setAddingState(true), {
+      userID,
+      courseName: engCourseName,
+    });
+  };
+
   return (
     <Box
       style={{
@@ -49,21 +53,14 @@ export default ({ data }) => {
     >
       <h1>{rusCourseName}</h1>
       <Content>
-        <Button
-          onClick={() =>
-            addUserCourse(() => setAddingState(true), {
-              userID,
-              courseName: engCourseName,
-            })
-          }
-          disabled={!userID || addingState}
-        >
+        <Button onClick={clickHandler} disabled={!userID || addingState}>
           {buttonName[userID ? 'enable' : 'disable']}
         </Button>
       </Content>
     </Box>
   );
 };
+const { Box, Content } = Styled.Title;
 
 const Button = ({ onClick, disabled, children }) => (
   <StandartButton.s18.blue

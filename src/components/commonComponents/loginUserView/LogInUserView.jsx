@@ -1,17 +1,15 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FetchLogOut } from 'store/actions/creators/creators';
-import { Button } from '../button/button';
+import { Button } from '../button';
 import {
   userNameDataSelector,
   userLogInSelector,
 } from '../../../store/selectors/selectors';
-import * as s from './loginViewStyle';
+import * as s from './LogInUserViewStyle';
 
 export default function LogInUserView() {
- 
   const [isMainPageLocal, setIsMainPageLocal] = useState(false);
   useEffect(() => {
     const urlPath = new URL(document.URL).pathname;
@@ -24,14 +22,13 @@ export default function LogInUserView() {
   const dispatch = useDispatch();
   const [clickLogOutMenu, setClickLogOutMenu] = useState(false);
   const navigate = useNavigate();
-  const HandlerClickUserName = () => {
+  const userNameClickHandler = () => {
     navigate('/profile');
   };
-  const HandlerClickArrowSvg = () => {
+  const arrowSvgClickHandler = () => {
     setClickLogOutMenu((prev) => !prev);
   };
-  const HandlerClickLogOut = () => {
-    // e.preventDefault();
+  const logOutClickHandler = () => {
     sessionStorage.removeItem('skyFitnessLoginData');
     dispatch(FetchLogOut());
     navigate('/');
@@ -49,18 +46,18 @@ export default function LogInUserView() {
           <s.UserText>
             <s.UserName
               $isMainPage={isMainPageLocal}
-              onClick={HandlerClickUserName}
+              onClick={userNameClickHandler}
             >
               {userName}
             </s.UserName>
             <s.UserArrowSvg
-              onClick={HandlerClickArrowSvg}
+              onClick={arrowSvgClickHandler}
               $isMainPage={isMainPageLocal}
             />
             {clickLogOutMenu && (
               <s.LogOutMenu $isMainPage={isMainPageLocal}>
                 <Button.s20.green
-                  onClick={HandlerClickLogOut}
+                  onClick={logOutClickHandler}
                   height="45px"
                   width="150px"
                 >

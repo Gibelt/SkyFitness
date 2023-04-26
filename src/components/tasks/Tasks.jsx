@@ -1,5 +1,5 @@
 import * as s from './TasksStyle';
-import { Button } from '../commonComponents/button/button';
+import { Button } from '../commonComponents/button';
 
 export default function Tasks({ onClick, tasks }) {
   const items = Object.keys(tasks).map((item) => (

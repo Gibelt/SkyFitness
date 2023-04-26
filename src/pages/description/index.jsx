@@ -2,14 +2,15 @@ import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
-import { loginDataSelector } from 'store/selectors/selectors';
-import Header from 'components/header/Header';
 import { getCorseData } from 'mocks';
+import Header from 'components/header/Header';
+import { loginDataSelector } from 'store/selectors/selectors';
 
-import Styled from './styledComponents';
-import Title from './title';
+import Styled from './style';
+
+import Title from './Title';
 import Guide from './guide';
-import Recording from './recording';
+import Recording from './Recording';
 
 export default () => {
   const courses = [
@@ -19,7 +20,6 @@ export default () => {
     'stretching',
     'step-aerobics',
   ];
-
   const routeList = courses.map((course) => (
     <Route path={course} element={<Page course={course} />} key={course} />
   ));
@@ -32,29 +32,26 @@ const Page = ({ course = 'yoga' }) => {
   const [userData, setUserData] = useState({});
 
   const userStoreData = useSelector(loginDataSelector);
-
   if (!courseData) getDBdata(setCourseData, { course });
   else if (userData !== userStoreData) setUserData(userStoreData);
 
-  const { Wrapper } = Styled;
-  return courseData ? (
-    <Wrapper>
+  const data = {
+    course,
+    courseData,
+    userData,
+  };
+
+  return (
+    <Styled.Wrapper>
       <Header />
-      <Main
-        data={{
-          course,
-          courseData,
-          userData,
-        }}
-      />
-    </Wrapper>
-  ) : null;
+      {courseData && <Main data={data} />}
+    </Styled.Wrapper>
+  );
 };
 
 const Main = ({ data }) => {
   const { courseData } = data;
   const Wrapper = Styled.Main;
-
   return (
     <Wrapper>
       <Title data={data} />
@@ -68,10 +65,6 @@ const getDBdata = (setDBdata, { course }) => {
   getCorseData(
     (remoteData) => {
       if (remoteData) setDBdata(remoteData);
-      else
-        console.error(
-          'Неизвестная ошибка: данные курса с удаленного сервера не получены'
-        );
     },
     { courseName: course }
   );

@@ -12,14 +12,12 @@ import removeDataByRef from './controllers/db/removeDataByRef';
 
 export default (app) => {
   const funx = {
-    // Auth
     createUser,
     signIn,
     signOut,
     getCurrentUser,
     updatePassword,
 
-    //  Data
     getAllData,
     getDataByRef,
     postDataByRef,
@@ -36,8 +34,6 @@ export default (app) => {
       this.db = app.database();
     }
 
-    // Auth
-
     createUser = funx.createUser;
 
     signIn = funx.signIn;
@@ -47,8 +43,6 @@ export default (app) => {
     getCurrentUser = funx.getCurrentUser;
 
     updatePassword = funx.updatePassword;
-
-    //  Data
 
     getAllData = funx.getAllData;
 

@@ -1,8 +1,6 @@
 import { ref, getDataByRef, updateDataByRef } from 'backEnd';
 import { dbDataHandler } from 'backEnd/controllers/db/handlers/index';
 
-/* ========================================= LOCAL DB ========================================= */
-
 export const courses = [
   {
     id: 'ecf0abb07a6547e09abe876e4084a843',
@@ -35,9 +33,6 @@ export const courses = [
     name: 'step-aerobics',
   },
 ];
-
-/* ===================================== DB FUNX ===================================== */
-/* responseFunc - функция в которую будет передан ответ сервера */
 
 export async function getUserCourses(userID) {
   const usersRef = ref('users');
@@ -73,7 +68,6 @@ export async function getUserCourses(userID) {
   }
 }
 
-// костыль
 export const mapCourseData = (courseEngName) => {
   const foundCourse = courses.find((course) => course.name === courseEngName);
 
@@ -89,7 +83,6 @@ export const mapCourseData = (courseEngName) => {
   return null;
 };
 
-// Получить данные курса по его названию (название на английском и в нижнем регистре)
 export const getCorseData = (responseFunc, { courseName }) => {
   let rusCourseName;
   for (const item of courses)
@@ -99,41 +92,33 @@ export const getCorseData = (responseFunc, { courseName }) => {
   const courseRef = coursesRef.orderByChild('name').equalTo(rusCourseName);
   getDataByRef(
     (receivedData) => {
-      const { data, error } = receivedData;
+      const { data } = receivedData;
       const course = data ? data[Object.keys(data)[0]] : null;
-      if (error) console.error(`getCorseData: ${error}`);
-      else if (!course) console.error('getCorseData: data not found');
-      else responseFunc(course);
+      if (course) responseFunc(course);
     },
     { ref: courseRef }
   );
 };
 
-// Получить данные пользователя по его id
 export const getUserData = (responseFunc, { userID }) => {
   const userRef = ref('users').child(userID);
   getDataByRef(
     (receivedData) => {
-      const { data, error } = receivedData;
-      if (error) console.error(`getUserData: ${error}`);
-      else if (data) responseFunc(data);
-      // else console.error('getUserData: data not found');
+      const { data } = receivedData;
+      if (data) responseFunc(data);
     },
     { ref: userRef }
   );
 };
 
-// Добавить пользователя в Realtime Database по его id
 export const addUser = (responseFunc, { userID }) => {
   const userInitData = { _id: userID, courses: {} };
 
   const usersRef = ref('users');
   getDataByRef(
     (receivedData) => {
-      const { data, error } = receivedData;
-      if (error) console.error(`addUserData: ${error}`);
-      else if (data) console.error('addUser: user already exist');
-      else {
+      const { data } = receivedData;
+      if (!data) {
         let newData = {};
         newData[userID] = userInitData;
         updateDataByRef(
@@ -149,22 +134,18 @@ export const addUser = (responseFunc, { userID }) => {
   );
 };
 
-// Получить все курсы пользователя по его id
 export const getUserCoursesData = (responseFunc, { userID }) => {
   getUserData(
     (data) => {
-      if (!data) console.error('getUserCoursesData: unknown error');
-      else {
+      if (data) {
         const { courses } = data;
-        if (!courses) console.error('getUserCoursesData: unknown error');
-        else responseFunc(courses);
+        if (courses) responseFunc(courses);
       }
     },
     { userID }
   );
 };
 
-// Добавить курс в БД пользователя по его id и наименованию курса
 export const addUserCourse = (responseFunc, { userID, courseName }) => {
   const courseInitData = { name: courseName, workouts: null };
 
@@ -173,8 +154,7 @@ export const addUserCourse = (responseFunc, { userID, courseName }) => {
 
   getCorseData(getWorkouts, { courseName });
   function getWorkouts(data) {
-    if (!data) console.error('addUserCourse: unknown error');
-    else {
+    if (data) {
       courseInitData.workouts = data.workouts;
       checkUserExistence();
     }
@@ -184,9 +164,8 @@ export const addUserCourse = (responseFunc, { userID, courseName }) => {
   function checkUserExistence() {
     getDataByRef(
       (receivedData) => {
-        const { data, error } = receivedData;
-        if (error) console.error(`addUserCourse: ${error}`);
-        else if (!data) addUser(addCourse, { userID });
+        const { data } = receivedData;
+        if (!data) addUser(addCourse, { userID });
         else addCourse(data);
       },
       { ref: usersRef.child(userID) }
@@ -197,11 +176,8 @@ export const addUserCourse = (responseFunc, { userID, courseName }) => {
   function addCourse() {
     getDataByRef(
       (receivedData) => {
-        const { data, error } = receivedData;
-        if (error) console.error(`addUserCourse: ${error}`);
-        else if (data)
-          console.error('addUserCourse: user course already exist');
-        else {
+        const { data } = receivedData;
+        if (!data) {
           let newData = {};
           newData[courseName] = courseInitData;
           updateDataByRef(responseFunc, { ref: userCoursesRef, newData });

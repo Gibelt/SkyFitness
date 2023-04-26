@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { loginDataSelector } from '../../store/selectors/selectors';
 import { getDataByRef, ref } from '../../backEnd';
-import * as s from './ExerciseSyle';
+import * as s from './style';
 import Header from '../../components/header/Header';
 import Tasks from '../../components/tasks/Tasks';
 import TasksProgress from '../../components/tasksProgress/TasksProgress';
@@ -43,7 +43,6 @@ export default function Exercise() {
 
   useEffect(() => {
     getDataByRef(parseData, { ref: ref('users') });
-    console.log(tasks);
   }, [isProgressClick]);
 
   return (

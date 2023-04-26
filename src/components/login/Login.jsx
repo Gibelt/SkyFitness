@@ -1,7 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable react/jsx-pascal-case */
-/* eslint-disable object-curly-newline */
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, redirect } from 'react-router-dom';
@@ -12,8 +8,8 @@ import {
   usePostUpdateUserInfoQuery,
   usePostRefreshToIdTokenQuery,
 } from '../../pages/services/queryApi';
-import { Button } from '../commonComponents/button/button';
-import * as S from './LoginStyles';
+import { Button } from '../commonComponents/button';
+import * as S from './LoginStyle';
 import Logo from '../logo/Logo';
 import {
   loginDataErrorMSGSelector,
@@ -26,49 +22,18 @@ import {
   FetchUpdateName,
   FetchUpdateToken,
 } from '../../store/actions/creators/creators';
+import {
+  InputFields,
+  InputFieldsChangePassword,
+  InputFieldsChangeLoginName,
+} from './InputFields';
+import ButtonGetSignUp from './BtnSignUp';
+import ButtonLogIn from './BtnLogIn';
+import ButtonChangeUserName from './BtnChangeName';
+import ButtonChangePassword from './BtnChangePassword';
+import LoginMenu from './LoginMenu';
+import ErrorArea from './Errors';
 
-const InputFields = [
-  {
-    name: 'login',
-    placeholder: 'Логин(email)',
-    key: '1',
-    type: 'email',
-  },
-  {
-    name: 'password',
-    placeholder: 'Пароль',
-    key: '2',
-    type: 'password',
-  },
-  {
-    name: 'ReturnPassword',
-    placeholder: 'Повторите пароль',
-    key: '3',
-    type: 'password',
-  },
-];
-const InputFieldsChangePassword = [
-  {
-    name: 'password',
-    placeholder: 'Пароль',
-    key: '1',
-    type: 'password',
-  },
-  {
-    name: 'ReturnPassword',
-    placeholder: 'Повторите пароль',
-    key: '2',
-    type: 'password',
-  },
-];
-const InputFieldsChangeLoginName = [
-  {
-    name: 'nameUser',
-    placeholder: 'Имя пользователя',
-    key: '1',
-    type: 'text',
-  },
-];
 function Login({ type = 'login', close }) {
   return (
     <S.CenterBlock>
@@ -269,9 +234,7 @@ export function LoginBlock({ typeBlock, close }) {
           loginStates={loginStates}
         />
         {Object.keys(errorMessage).length > 0 && (
-          <S.ErrorArea>
-            <ShowErrors errorMessage={errorMessage} />
-          </S.ErrorArea>
+          <ErrorArea errorMessage={errorMessage} />
         )}
         {!signUp && typeBlock === 'login' && (
           <ButtonLogIn
@@ -312,168 +275,5 @@ export function LoginBlock({ typeBlock, close }) {
         )}
       </S.LoginInputsBlock>
     </S.LoginChangeBlock>
-  );
-}
-function ShowErrors({ errorMessage }) {
-  let keys = Object.keys(errorMessage);
-  keys = keys.map((errorMessageKey, key) => (
-    // eslint-disable-next-line react/no-array-index-key
-    <S.ErrorSpan key={key}>{errorMessage[errorMessageKey]}</S.ErrorSpan>
-  ));
-  return keys;
-}
-const LoginMenu = ({ list, count, isLoading, typeBlock }) => {
-  const content = [];
-  list.forEach((inputElem, index) => {
-    if (index < count) {
-      content.push(
-        <S.InputField
-          $typeBlock={typeBlock}
-          type={inputElem.type}
-          disabled={isLoading}
-          id={inputElem.key}
-          name={inputElem.name}
-          placeholder={inputElem.placeholder}
-          key={inputElem.key}
-        />
-      );
-    }
-  });
-  return content;
-};
-
-function GetLogParams(stateParams) {
-  const objParams = {};
-  // eslint-disable-next-line no-plusplus
-  for (let index = 1; index < 4; index++) {
-    const element = document.getElementById(String(index));
-    if (element) {
-      objParams[element.name] = element.value;
-    }
-  }
-  stateParams(objParams);
-}
-const CheckPassword = (dispatch) => {
-  const pass = document.getElementsByName('password')[0].value;
-  const repPass = document.getElementsByName('ReturnPassword')[0].value;
-  if (pass !== repPass) {
-    dispatch(
-      FetchSignUpPassNotEqual({ SignUpPassNotEqual: 'Пароли не совпадают' })
-    );
-    return false;
-  }
-  return true;
-};
-export function ButtonChangePassword({
-  isLoading,
-  loginFunc,
-  setLogInfo,
-  dispatch,
-}) {
-  // eslint-disable-next-line consistent-return
-  function handelClickBtnChangePassword() {
-    if (!CheckPassword(dispatch)) {
-      return;
-    }
-    GetLogParams(setLogInfo);
-    loginFunc.setSkipChangePassword(false);
-  }
-
-  return (
-    <S.groupButtonGetSignUp $signUp={false} $changeGroup>
-      <Button.s18.blue
-        width="278px"
-        height="52px"
-        disabled={isLoading}
-        onClick={() => handelClickBtnChangePassword()}
-      >
-        Сохранить
-      </Button.s18.blue>
-    </S.groupButtonGetSignUp>
-  );
-}
-
-export function ButtonChangeUserName({
-  isLoading,
-  loginFunc,
-  setLogInfo,
-  dispatch,
-}) {
-  // eslint-disable-next-line consistent-return
-  function handelClickBtnChangeUserName() {
-    GetLogParams(setLogInfo);
-    loginFunc.setSkipChangeUserName(false);
-  }
-
-  return (
-    <S.groupButtonGetSignUp $signUp={false} $changeGroup>
-      <Button.s18.blue
-        width="278px"
-        height="52px"
-        disabled={isLoading}
-        onClick={() => handelClickBtnChangeUserName()}
-      >
-        Сохранить
-      </Button.s18.blue>
-    </S.groupButtonGetSignUp>
-  );
-}
-
-export function ButtonLogIn({ isLoading, loginFunc, setLogInfo }) {
-  // eslint-disable-next-line consistent-return
-  function handelClickBtnLogin() {
-    loginFunc.setSkipSignUp(true);
-    GetLogParams(setLogInfo);
-    loginFunc.setSkipLogIn(false);
-  }
-
-  return (
-    <S.groupButtonLogIn>
-      <Button.s18.blue
-        width="278px"
-        height="52px"
-        disabled={isLoading}
-        onClick={() => handelClickBtnLogin()}
-      >
-        Войти
-      </Button.s18.blue>
-    </S.groupButtonLogIn>
-  );
-}
-
-function ButtonGetSignUp({
-  dispatch,
-  loginStates,
-  loginFunc,
-  isLoading,
-  setLogInfo,
-}) {
-  // const navigate = useNavigate();
-
-  function HandelClickBtnSignUp() {
-    // eslint-disable-next-line no-lonely-if
-    loginFunc.setSkipLogIn(true);
-    if (!loginStates.signUp) {
-      loginFunc.setSignUp(true);
-      return;
-    }
-    if (!CheckPassword(dispatch)) {
-      return;
-    }
-    GetLogParams(setLogInfo);
-    loginFunc.setSkipSignUp(false);
-  }
-
-  return (
-    <S.groupButtonGetSignUp $signUp={loginStates.signUp} $changeGroup={false}>
-      <Button.s18.white
-        disabled={isLoading}
-        width="278px"
-        height="52px"
-        onClick={() => HandelClickBtnSignUp()}
-      >
-        Зарегистироваться
-      </Button.s18.white>
-    </S.groupButtonGetSignUp>
   );
 }

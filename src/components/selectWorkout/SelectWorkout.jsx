@@ -10,7 +10,7 @@ export default function SelectWorkout({ courseId }) {
   const { localId } = useSelector(loginDataSelector);
   const userId = localId;
 
-  const handleClick = (id) => {
+  const onItemClickHandler = (id) => {
     window.localStorage.setItem('workoutID', id);
     window.localStorage.setItem('courseID', courseId);
   };
@@ -31,7 +31,7 @@ export default function SelectWorkout({ courseId }) {
       key={item.name.toString()}
       to="/exercise"
       style={{ textDecoration: 'none' }}
-      onClick={() => handleClick(item._id)}
+      onClick={() => onItemClickHandler(item._id)}
     >
       <s.Item style={{ border: `${item.complete ? '1px solid #06B16E' : ''}` }}>
         <s.ItemText style={{ color: `${item.complete ? '#06B16E' : ''}` }}>

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import { Button as StandartButton } from 'components/commonComponents/button/button';
+import { Button as StandartButton } from 'components/commonComponents/button';
 
-import Styled from './styledComponents';
-import localData from './localData';
+import Styled from './style';
+import localData from './data';
 
 export default ({ data }) => {
   const { course, userData } = data;
@@ -14,15 +14,13 @@ export default ({ data }) => {
 
   const [recordState, setRecordState] = useState(false);
 
-  const { Recording } = Styled;
-  const { Content } = Recording;
-  const { Box } = Recording;
   const buttonName = {
     disable: 'Для записи на урок требуется авторизация',
     enable: recordState
       ? `Отменить запись на тренировку по «${rusCourseName}»`
       : `Записаться на тренировку по «${rusCourseName}»`,
   };
+
   return (
     <Box
       style={{
@@ -34,7 +32,7 @@ export default ({ data }) => {
       }}
     >
       <Content>
-        <p>{msg}</p>
+        <Message />
         <Button
           onClick={() => setRecordState(!recordState)}
           recordState={recordState}
@@ -46,6 +44,9 @@ export default ({ data }) => {
     </Box>
   );
 };
+
+const { Content } = Styled.Recording;
+const { Box } = Styled.Recording;
 
 const Button = ({ onClick, recordState, disabled, children }) => {
   const Btn = StandartButton.s18[recordState ? 'white' : 'blue'];
@@ -61,5 +62,9 @@ const Button = ({ onClick, recordState, disabled, children }) => {
   );
 };
 
-const msg =
-  'Оставьте заявку на пробное занятие, мы свяжемся с вами, поможем с выбором направления и тренера, с которым тренировки принесут здоровье и радость!';
+const Message = () => (
+  <p>
+    Оставьте заявку на пробное занятие, мы свяжемся с вами, поможем с выбором
+    направления и тренера, с которым тренировки принесут здоровье и радость!
+  </p>
+);

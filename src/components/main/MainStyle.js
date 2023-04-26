@@ -31,3 +31,11 @@ export const sticker = styled.img`
   position: relative;
   left: 52px;
 `;
+
+export const groupTrainingCards = styled.div`
+  padding-top: 7px;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 37px;
+  row-gap: 44px;
+`;
