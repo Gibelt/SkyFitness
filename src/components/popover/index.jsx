@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import * as S from './styles';
+import * as S from './style';
 
 export default function Popover({
   onClose,

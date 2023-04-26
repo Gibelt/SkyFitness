@@ -8,7 +8,7 @@ import {
 import Popover from 'components/popover';
 import Login from 'components/loginComp/Login';
 import UserCredentialsData from 'components/userCredentialsData';
-import * as S from './styles';
+import * as S from './style';
 import { CourseCard } from '../../components/commonComponents/courseCard';
 import { Button } from '../../components/commonComponents/button';
 import Header from '../../components/header/Header';
