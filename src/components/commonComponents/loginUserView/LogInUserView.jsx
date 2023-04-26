@@ -7,7 +7,7 @@ import {
   userNameDataSelector,
   userLogInSelector,
 } from '../../../store/selectors/selectors';
-import * as s from './loginViewStyle';
+import * as s from './LogInUserViewStyle';
 
 export default function LogInUserView() {
   const [isMainPageLocal, setIsMainPageLocal] = useState(false);
@@ -22,13 +22,13 @@ export default function LogInUserView() {
   const dispatch = useDispatch();
   const [clickLogOutMenu, setClickLogOutMenu] = useState(false);
   const navigate = useNavigate();
-  const HandlerClickUserName = () => {
+  const userNameClickHandler = () => {
     navigate('/profile');
   };
-  const HandlerClickArrowSvg = () => {
+  const arrowSvgClickHandler = () => {
     setClickLogOutMenu((prev) => !prev);
   };
-  const HandlerClickLogOut = () => {
+  const logOutClickHandler = () => {
     sessionStorage.removeItem('skyFitnessLoginData');
     dispatch(FetchLogOut());
     navigate('/');
@@ -46,18 +46,18 @@ export default function LogInUserView() {
           <s.UserText>
             <s.UserName
               $isMainPage={isMainPageLocal}
-              onClick={HandlerClickUserName}
+              onClick={userNameClickHandler}
             >
               {userName}
             </s.UserName>
             <s.UserArrowSvg
-              onClick={HandlerClickArrowSvg}
+              onClick={arrowSvgClickHandler}
               $isMainPage={isMainPageLocal}
             />
             {clickLogOutMenu && (
               <s.LogOutMenu $isMainPage={isMainPageLocal}>
                 <Button.s20.green
-                  onClick={HandlerClickLogOut}
+                  onClick={logOutClickHandler}
                   height="45px"
                   width="150px"
                 >

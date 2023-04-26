@@ -13,9 +13,7 @@ export const groupLogo = styled.div`
   padding-top: 36px;
 `;
 
-export const groupBtn = styled.div`
-  // padding-right: 140px;
-`;
+export const groupBtn = styled.div``;
 
 export const groupHeaders = styled.div`
   width: 850px;
@@ -36,8 +34,6 @@ export const groupStiker = styled.div`
   position: relative;
 `;
 export const groupTrainingCards = styled.div`
-  //width: 100%;
-  //height: 100%;
   padding-top: 7px;
   display: flex;
   flex-wrap: wrap;

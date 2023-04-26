@@ -1,4 +1,4 @@
-import * as S from "./mainPageStyle";
+import * as S from "./MainStyle";
 import logoSvg from "./img/logo.svg";
 import sticker from "./img/Sale_sticker.svg";
 

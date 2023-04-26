@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import LogInUserView from 'components/commonComponents/login/logInUserview';
+import LogInUserView from 'components/commonComponents/loginUserView/LogInUserView';
 import * as s from './HeaderStyle';
 
 export default function Header() {
